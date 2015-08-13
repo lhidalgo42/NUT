@@ -10,7 +10,8 @@ class TherapistsController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('therapists.index');
+		$therapists = Therapist::all();
+		return View::make('therapists.index')->with(compact('therapists'));
 	}
 
 	/**

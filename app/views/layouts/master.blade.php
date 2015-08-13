@@ -24,6 +24,7 @@
 
     <!-- Custom CSS -->
     <link href="/css/sb-admin-2.css" rel="stylesheet">
+    <link href="/css/fade.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
     <link href="/packages/morrisjs/morris.css" rel="stylesheet">
@@ -37,6 +38,12 @@
 
     <!-- Bootstrap DateTimePicker -->
     <link href="/packages/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+
+    <!-- DataTables -->
+    {{HTML::style('/packages/datatables/media/css/jquery.dataTables.min.css')}}
+
+            <!-- DataTables Plugins Bootstrap-->
+    {{HTML::style('/packages/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css')}}
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -80,11 +87,30 @@
     <script src="/packages/raphael/raphael-min.js"></script>
     <script src="/packages/morrisjs/morris.min.js"></script>
 
+    <!-- Sweetalert JavaScript -->
+    <script src="/packages/sweetalert/dist/sweetalert.min.js"></script>
+
+    <!-- DataTables -->
+    <script src='/packages/datatables/media/js/jquery.dataTables.min.js'></script>
+    <script src='/packages/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.js'></script>
+
     <!-- Custom Theme JavaScript -->
     <script src="/js/sb-admin-2.js"></script>
 </head>
 
 <body>
+<img id="bg" src="/img/fondo.jpg">
+<script>
+    $(document).ready(function(){
+        var ahs = 0;
+        var fondos = ['fondo.jpg','fondo1.jpg','fondo2.jpg'];
+        setInterval(function(){
+            if(fondos.length == ahs){ahs = 0;}
+            $("#bg").attr('src','/img/'+fondos[ahs]);
+            ahs++;
+        },5000);
+    });
+</script>
 @yield('content')
 
 </body>

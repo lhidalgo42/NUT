@@ -21,7 +21,7 @@ class CreateTherapistsTable extends Migration {
             $table->string('phone');
             $table->string('cellphone');
             $table->string('email');
-            $table->integer('recommendation_id');
+            $table->string('color');
 			$table->timestamps();
 		});
 	}

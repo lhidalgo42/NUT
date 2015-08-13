@@ -19,9 +19,6 @@
     $('#patient').typeahead({
         ajax: '/patient/list'
     });
-    $("#patient").change(function(){
-
-    });
     $('#therapist').typeahead({
         ajax: '/therapist/list'
     });
@@ -31,8 +28,6 @@
     $(function () {
         $('#start').datetimepicker();
     });
-    function enviar(){
 
-    }
 
 </script>

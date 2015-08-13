@@ -11,7 +11,6 @@ class PatientsTableSeeder extends Seeder {
             'phone' => '+56979496212',
             'email' => 'lhidalgo@alumnos.uai.cl',
             'recommendation_id' => '1'
-
         ]);
 
 	}

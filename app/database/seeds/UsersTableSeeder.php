@@ -9,7 +9,7 @@ class UsersTableSeeder extends Seeder {
         'password' => 'l30ntun4',
         'img' => 'avatar_2x.png',
         'name' => 'Leonardo Hidalgo'
-    ]);
+        ]);
         User::create([
             'email' => 'eortega@inia.cl',
             'password' => '1234',

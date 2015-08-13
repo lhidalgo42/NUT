@@ -31,25 +31,35 @@
 <body>
 <div class="container">
     <div class="row">
-        <div class="col-sm-6 col-md-4 col-md-offset-4">
+        <div style="text-align: center;padding-top: 30px;" class="fadeout-2" id="logo">
+            <img src="/img/logo.png" style="width: 25%">
+        </div>
+        <div class="col-sm-6 col-md-4 col-md-offset-4 fadein-2" style="display: none;" id="form">
             <div class="account-wall">
-                <img class="profile-img" src="img/avatar_2x.png" alt="">
+                <img class="profile-img" src="img/logo-top.png" alt="">
                 {{ Form::open(['route'=> 'sessions.store','class' => 'form-signin']) }}
-                    {{ Form::email('email', Input::old('email'), array('placeholder' => 'Correo','class' => 'form-control','id' => 'mail','required','autofocus')) }}
-                    {{ Form::password('password',array('placeholder' => 'Contraseña','class' => 'form-control', 'id' => 'pass' ,'required')) }}
-                    <div class="input-group">
-                        {{ Form::checkbox('remember', true,array('class' => 'form-control')) }} Recordarme
-                    </div>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit" id="login">Sign in</button>
+                {{ Form::email('email', Input::old('email'), array('placeholder' => 'Correo','class' => 'form-control','id' => 'mail','required','autofocus')) }}
+                {{ Form::password('password',array('placeholder' => 'Contraseña','class' => 'form-control', 'id' => 'pass' ,'required')) }}
+                <div class="input-group">
+                    {{ Form::checkbox('remember', true,array('class' => 'form-control')) }} Recordarme
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" id="login">Ingresar</button>
                 @if(Session::has('error'))
                     <span class="text-danger">{{Session::get('error')}}</span>
                 @endif
-                    <a href="#" class="pull-right need-help">Olvide mi Clave ? </a><span class="clearfix"></span>
                 {{ Form::close() }}
             </div>
-            <a href="#" class="text-center new-account">Create an account </a>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        setTimeout(function () {
+           $("#logo").css('display','none');
+            $("#form").css('display','block');
+
+        },2000);
+    })
+</script>
 </body>
 </html>

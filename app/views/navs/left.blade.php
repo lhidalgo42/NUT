@@ -16,6 +16,9 @@
                 <a href="/"><i class="fa fa-home"></i> Inicio</a>
             </li>
             <li>
+                <a href="/calendar"><i class="fa fa-calendar"></i> Calendario</a>
+            </li>
+            <li>
                 <a href="/patients"><i class="fa fa-users"></i> Pacientes</a>
             </li>
             <li>

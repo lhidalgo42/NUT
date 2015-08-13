@@ -18,10 +18,11 @@ class CreateScheduleTable extends Migration {
             $table->integer('users_id');
             $table->integer('patients_id');
             $table->integer('therapists_id');
+			$table->integer('payments_id');
             $table->integer('rooms_id');
-            $table->dateTime('start');
-            $table->string('duration');
-            $table->string('price');
+            $table->timestamp('start');
+            $table->timestamp('end');
+			$table->string('status');
 			$table->timestamps();
 		});
 	}

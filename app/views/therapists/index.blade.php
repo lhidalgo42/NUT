@@ -20,9 +20,44 @@
 
             <!-- /.row -->
             <div class="row">
-
+                <table id="dtes">
+                    <thead>
+                    <th>RUT</th>
+                    <th>Nombre</th>
+                    <th>Fecha</th>
+                    <th>Telefono</th>
+                    <th>Celular</th>
+                    <th>Email</th>
+                    <th>Fecha de Creacion</th>
+                    <th>Editar</th>
+                    <th>Borrar</th>
+                    </thead>
+                    <tbody>
+                    @foreach($therapists as $therapist)
+                        <tr>
+                            <td>{{$therapist->rut}}</td>
+                            <td>{{$therapist->name}}</td>
+                            <td>{{$therapist->birth}}</td>
+                            <td>{{$therapist->phone}}</td>
+                            <td>{{$therapist->cellphone}}</td>
+                            <td>{{$therapist->email}}</td>
+                            <td>{{$therapist->created_at}}</td>
+                            <td class="text-info"><a href="#{{$therapist->id}}"><i class="fa fa-pencil-square-o"></i></a></td>
+                            <td class="text-danger"><a href="#{{$therapist->id}}"><i class="fa fa-trash-o"></i></a></td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
-            <!-- /.row -->
+            <script>
+                $(document).ready(function(){
+                    $('#dtes').DataTable({
+                        "language": {
+                            "url": "https://cdn.datatables.net/plug-ins/1.10.7/i18n/Spanish.json"
+                        }
+                    });
+                });
+            </script>
         </div>
         <!-- /#page-wrapper -->
 

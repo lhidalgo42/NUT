@@ -21,7 +21,7 @@ class ScheduleController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		return View::make('calendar.add');
 	}
 
 	/**
