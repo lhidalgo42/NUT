@@ -1,22 +1,22 @@
 <?php
 
-class TherapistdurationTableSeeder extends Seeder {
+class TherapistDurationTableSeeder extends Seeder {
 
 	public function run()
 	{
-		Therapistduration::create([
+		TherapistDuration::create([
             'therapists_id' => 1,
             'duration_id' => 4
 		]);
-        Therapistduration::create([
+        TherapistDuration::create([
             'therapists_id' => 1,
             'duration_id' => 5
         ]);
-        Therapistduration::create([
+        TherapistDuration::create([
             'therapists_id' => 1,
             'duration_id' => 6
         ]);
-        Therapistduration::create([
+        TherapistDuration::create([
             'therapists_id' => 1,
             'duration_id' => 3
         ]);

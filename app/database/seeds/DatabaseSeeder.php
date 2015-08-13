@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder {
 		 $this->call('PaymentTableSeeder');
 		 $this->call('ScheduleTableSeeder');
 		 $this->call('DurationTableSeeder');
-		 $this->call('TherapistdurationTableSeeder');
+		 $this->call('TherapistDurationTableSeeder');
 	}
 
 }
