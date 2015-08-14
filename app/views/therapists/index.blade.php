@@ -42,8 +42,8 @@
                             <td>{{$therapist->cellphone}}</td>
                             <td>{{$therapist->email}}</td>
                             <td>{{$therapist->created_at}}</td>
-                            <td class="text-info"><a href="#{{$therapist->id}}"><i class="fa fa-pencil-square-o"></i></a></td>
-                            <td class="text-danger"><a href="#{{$therapist->id}}"><i class="fa fa-trash-o"></i></a></td>
+                            <td><a href="#{{$therapist->id}}" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;"></i></a></td>
+                            <td><a href="#{{$therapist->id}}" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;"></i></a></td>
                         </tr>
                     @endforeach
                     </tbody>

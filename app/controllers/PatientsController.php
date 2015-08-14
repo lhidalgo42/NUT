@@ -43,7 +43,7 @@ class PatientsController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show(){
+	public function showList(){
         $find = $_REQUEST['query'];
         $patients = Patient::where('name', 'like', $find.'%')->get();
         return $patients;
@@ -56,9 +56,9 @@ class PatientsController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function show($id)
 	{
-		//
+		return Patient::find($id);
 	}
 
 	/**
@@ -68,9 +68,17 @@ class PatientsController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update()
 	{
-		//
+		$patient = Patient::find(Input::get('id'));
+        $patient->rut = Input::get('rut');
+        $patient->name = Input::get('name');
+        $patient->birth = Input::get('birth');
+        $patient->phone = Input::get('phone');
+        $patient->cellphone = Input::get('cellphone');
+        $patient->email = Input::get('email');
+        $patient->save();
+        return $patient;
 	}
 
 	/**

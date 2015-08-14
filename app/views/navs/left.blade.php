@@ -25,6 +25,9 @@
                     <li>
                         <a href="/patients">Ver Listado de Pacientes</a>
                     </li>
+                    <li>
+                        <a href="/patients/calendar">Consultar Calendario</a>
+                    </li>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>

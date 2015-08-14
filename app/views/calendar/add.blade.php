@@ -20,7 +20,7 @@
 
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-4">
                     <div class="form-group" id="patient-div">
                         <label for="patient">Paciente</label>
                         {{ Form::text('patient', Input::old('patient'), array('placeholder' => 'Paciente','class' => 'form-control','id' => 'patient','autocomplete' => 'off')) }}
@@ -29,13 +29,16 @@
                         <label for="therapist">Terapeuta</label>
                         {{ Form::text('therapist', Input::old('therapist'), array('placeholder' => 'Terapeuta','class' => 'form-control','id' => 'therapist','autocomplete' => 'off')) }}
                     </div>
-                    <div id="calendar" style="display: none;"></div>
+
                     <!-- /.panel -->
                 </div>
                 <div class="col-lg-4">
                     <a href="#" class="btn btn-primary btn-block" id="next">Siguente</a>
                     <a href="#" class="btn btn-primary btn-block" id="next2" style="display: none;">Siguente</a>
                     <a href="#" class="btn btn-primary btn-block" id="next3" style="display: none;">Siguente</a>
+                </div>
+                <div class="col-lg-8">
+                    <div id="calendar" style="display: none;"></div>
                 </div>
                 <script>
                     $('#patient').typeahead({
@@ -77,7 +80,7 @@
                                 header: {
                                     left: 'prev,next today',
                                     center: 'title',
-                                    right: 'agendaWeek,agendaDay'
+                                    right: 'month,agendaWeek,agendaDay'
                                 },
                                 dayClick: function(date, jsEvent, view) {
 
