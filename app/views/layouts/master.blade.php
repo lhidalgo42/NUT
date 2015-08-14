@@ -99,14 +99,17 @@
 </head>
 
 <body>
-<img id="bg" src="/img/fondo.jpg">
+<img id="bg" src="/img/fondo.jpg" class="fadebgin-1">
 <script>
     $(document).ready(function(){
         var ahs = 0;
         var fondos = ['fondo.jpg','fondo1.jpg','fondo2.jpg'];
         setInterval(function(){
-            if(fondos.length == ahs){ahs = 0;}
-            $("#bg").attr('src','/img/'+fondos[ahs]);
+            if(fondos.length == ahs+1){ahs = 0;}
+            $("#bg").removeClass('fadebgin-1').addClass('fadebgout-1');
+            setTimeout(function(){
+                $("#bg").attr('src','/img/'+fondos[ahs]).removeClass('fadebgout-1').addClass('fadebgin-1');
+            },1000);
             ahs++;
         },5000);
     });

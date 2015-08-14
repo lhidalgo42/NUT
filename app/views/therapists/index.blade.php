@@ -10,8 +10,8 @@
         </nav>
 
 
-        <div id="page-wrapper">
-            <div class="row">
+        <div id="page-wrapper" style="background-color: whitesmoke;opacity: 1">
+            <div class="row" style="opacity: 1;">
                 <div class="col-lg-12">
                     <h1 class="page-header">Terapeutas</h1>
                 </div>
@@ -20,8 +20,8 @@
 
             <!-- /.row -->
             <div class="row">
-                <table id="dtes">
-                    <thead>
+                <table id="dtes" class="table table-striped table-bordered">
+                    <thead style="background-color: white;position: relative;">
                     <th>RUT</th>
                     <th>Nombre</th>
                     <th>Fecha</th>

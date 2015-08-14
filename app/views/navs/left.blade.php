@@ -1,28 +1,47 @@
 <div class="navbar-default sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
-            <li class="sidebar-search">
-                <div class="input-group custom-search-form">
-                    <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                </div>
-                <!-- /input-group -->
-            </li>
             <li>
                 <a href="/"><i class="fa fa-home"></i> Inicio</a>
             </li>
             <li>
-                <a href="/calendar"><i class="fa fa-calendar"></i> Calendario</a>
+                <a href="#"><i class="fa fa-calendar"></i> Calendario<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse" aria-expanded="false">
+                    <li>
+                        <a href="/calendar/add">Agregar Hora</a>
+                    </li>
+                    <li>
+                        <a href="/calendar/therapists">Consultar Calendario Terapeutas.</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
             </li>
             <li>
-                <a href="/patients"><i class="fa fa-users"></i> Pacientes</a>
+                <a href="#"><i class="fa fa-users"></i> Pacientes<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse" aria-expanded="false">
+                    <li>
+                        <a href="/patients/add">Agregar Paciente</a>
+                    </li>
+                    <li>
+                        <a href="/patients">Ver Listado de Pacientes</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
             </li>
             <li>
-                <a href="/therapists"><i class="fa fa-users"></i> Terapeutas</a>
+                <a href="#"><i class="fa fa-users"></i> Terapeutas<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse" aria-expanded="false">
+                    <li>
+                        <a href="/patients/add">Agregar Terapeuta</a>
+                    </li>
+                    <li>
+                        <a href="/therapists">Ver Listado de Terapeutas</a>
+                    </li>
+                    <li>
+                        <a href="/therapists/calendar">Consultar Calendario</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
             </li>
 
             <li>

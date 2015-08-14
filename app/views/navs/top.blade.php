@@ -5,7 +5,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+        <a class="navbar-brand" href="/"><img src="/img/logo-top.png" style="width: 2%;position: absolute;"> <span style="margin-left: 35px;">NUT</span></a>
     </div>
     <!-- /.navbar-header -->
 

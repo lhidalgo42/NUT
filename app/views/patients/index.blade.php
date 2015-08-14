@@ -20,8 +20,8 @@
 
             <!-- /.row -->
             <div class="row">
-                <table id="dtes" class="table">
-                    <thead>
+                <table id="dtes" class="table table-striped table-bordered">
+                    <thead style="background-color: white;position: relative;">
                     <th>RUT</th>
                     <th>Nombre</th>
                     <th>Fecha</th>
