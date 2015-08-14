@@ -26,10 +26,12 @@ Route::group(array('before' => 'auth'), function() {
     Route::get('/rooms', ['as' => 'room', 'uses' => 'RoomsController@index']);
     Route::post('/schedule/create','ScheduleController@create');
     Route::get('/room/list','RoomsController@show');
-    Route::get('/patient/list','PatientsController@showList');
+    Route::post('/patient/list','PatientsController@showList');
     Route::post('/patient/show/{id}','PatientsController@show');
     Route::post('/patient/save','PatientsController@update');
-    Route::get('/therapist/list','TherapistsController@show');
+    Route::post('/patient/new','PatientsController@new');
+    Route::post('/patient/delete/{id}','PatientsController@delete');
+    Route::post('/therapist/list','TherapistsController@show');
 });
 
 

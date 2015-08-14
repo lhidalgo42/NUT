@@ -19,107 +19,146 @@
             </div>
 
             <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="form-group" id="patient-div">
+            <div class="row" id="inputs">
+                <div class="col-lg-6"  id="patient-div">
+                    <div class="form-group">
                         <label for="patient">Paciente</label>
                         {{ Form::text('patient', Input::old('patient'), array('placeholder' => 'Paciente','class' => 'form-control','id' => 'patient','autocomplete' => 'off')) }}
+
                     </div>
-                    <div class="form-group" id="therapist-div" style="display: none;">
+                    <table class="table table-bordered"  style="background-color: white;position: relative;">
+                        <tr>
+                            <th>Nombre</th>
+                            <th style="text-align: center;"> / </th>
+                        </tr>
+                        <tbody id="patient-body">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-lg-6" id="therapist-div" style="display: none;">
+                    <div class="form-group">
                         <label for="therapist">Terapeuta</label>
                         {{ Form::text('therapist', Input::old('therapist'), array('placeholder' => 'Terapeuta','class' => 'form-control','id' => 'therapist','autocomplete' => 'off')) }}
                     </div>
+                    <table class="table table-bordered"  style="background-color: white;position: relative;">
+                        <tr>
+                            <th>Nombre</th>
+                            <th style="text-align: center;"> / </th>
+                        </tr>
+                        <tbody id="therapist-body">
 
-                    <!-- /.panel -->
+                        </tbody>
+                    </table>
                 </div>
-                <div class="col-lg-4">
-                    <a href="#" class="btn btn-primary btn-block" id="next">Siguente</a>
-                    <a href="#" class="btn btn-primary btn-block" id="next2" style="display: none;">Siguente</a>
-                    <a href="#" class="btn btn-primary btn-block" id="next3" style="display: none;">Siguente</a>
-                </div>
-                <div class="col-lg-8">
-                    <div id="calendar" style="display: none;"></div>
-                </div>
+            </div>
+            <div class="row" id="calendar-div" style="display: none;">
+                    <div id="calendar"></div>
                 <script>
-                    $('#patient').typeahead({
-                        ajax: '/patient/list'
-                    });
-                    $('#therapist').typeahead({
-                        ajax: '/therapist/list'
-                    });
-                    $("#next").click(function(){
-                        if($("#patient").val() == ''){
-                            alert('El campo de Paciente esta vacio');
-                            return false;
-                        }
-                        $("#patient-div").addClass('fadeout-1');
-                        $("#next").addClass('fadeout-1');
-                        setTimeout(function(){
-                            $("#patient-div").css('display','none');
-                            $("#therapist-div").css('display','block').addClass('fadein-1');
-                            $("#next").css('display','none');
-                            $("#next2").css('display','block');
-                            $("#next2").addClass('fadein-1');
-                        },1000);
-                    });
-                    $("#next2").click(function(){
-                        if($("#therapist").val() == ''){
-                            alert('El campo de Terapeuta esta vacio');
-                            return false;
-                        }
-                        $("#therapist-div").addClass('fadeout-1');
-                        $("#next2").addClass('fadeout-1');
-                        setTimeout(function(){
-                            $("#therapist-div").css('display','none');
-                            $("#calendar").css('display','block').addClass('fadein-1');
-                            $("#next2").css('display','none');
-                            $("#next3").css('display','block');
-                            $("#next3").addClass('fadein-1');
-                            $('#calendar').fullCalendar({
-                                theme: true,
-                                header: {
-                                    left: 'prev,next today',
-                                    center: 'title',
-                                    right: 'month,agendaWeek,agendaDay'
-                                },
-                                dayClick: function(date, jsEvent, view) {
 
-                                    //alert('Clicked on: ' + date.format()+' / '+view.name);
-                                        $("#resumen").modal('show');
-                                        $("#table-therapist-name").html($("#therapist").val());
-                                        $("#table-patient-name").html($("#patient").val());
-                                        $("#table-time").html(date.format());
-
-                                },
-                                allDaySlot:false,
-                                slotDuration:'00:15:00',
-                                scrollTime:'07:00:00',
-                                minTime:'07:00:00',
-                                maxTime:'20:00:00',
-                                weekends:true,
-                                defaultDate: new Date(),
-                                timeFormat:'H:mm',
-                                editable: false,
-                                eventLimit: true, // allow "more" link when too many events
-                                eventSources: [
-
-                                    // your event source
-                                    {
-                                        url: '/calendar/hours',
-                                        type: 'POST',
+                    $('#patient').keyup(function(){
+                        $.ajax({
+                            url: "/patient/list",
+                            type: "POST",
+                            data:{
+                                name:$("#patient").val()
+                            },
+                            success:function(data){
+                                $("#patient-body").html('');
+                                for(var i =0;i<data.length;i++){
+                                    $("#patient-body").append('<tr>' +
+                                                                '<td style="text-align: center;">'+data[i]['name']+'</td>' +
+                                                                '<td style="text-align: center;"><a href="#" class="btn btn-primary" patient-name ="'+data[i]['name']+'" patient-phone="'+data[i]['phone']+'" patient-cellphone="'+data[i]['cellphone']+'" patient-id="'+data[i]['id']+'"> Seleccionar</a></td>' +
+                                                              '</tr>');
+                                }
+                                $("#patient-body a").click(function(){
+                                    $(this).attr('disabled','disabled');
+                                    $("#therapist-div").css('display','block').addClass('fadein-1');
+                                    $("#table-patient-name").html($(this).attr('patient-name'))
+                                    $("#table-patient-cellphone").html($(this).attr('patient-cellphone'));
+                                    $("#table-patient-phone").html($(this).attr('patient-phone'))
+                                });
+                            }
+                        });
+                    });
+                    $('#therapist').keyup(function() {
+                                    $.ajax({
+                                        url: "/therapist/list",
+                                        type: "POST",
                                         data: {
                                             name: $("#therapist").val()
                                         },
-                                        error: function() {
-                                            alert('there was an error while fetching events!');
+                                        success: function (data) {
+                                            $("#therapist-body").html('');
+                                            for (var i = 0; i < data.length; i++) {
+                                                $("#therapist-body").append('<tr>' +
+                                                        '<td style="text-align: center;">' + data[i]['name'] + '</td>' +
+                                                        '<td style="text-align: center;"><a href="#" class="btn btn-primary" therapist-name ="'+data[i]['name']+'" therapist-phone="'+data[i]['phone']+'" therapist-cellphone="'+data[i]['cellphone']+'" therapist-id="' + data[i]['id'] + '"> Seleccionar</a></td>' +
+                                                        '</tr>');
+                                            }
+                                            $("#therapist-body a").click(function () {
+                                                $(this).attr('disabled', 'disabled');
+                                                var id = $(this).attr('therapist-id');
+                                                $("#inputs").addClass('fadeout-1');
+                                                $("#table-therapist-name").html($(this).attr('therapist-name'));
+                                                $("#table-therapist-cellphone").html($(this).attr('therapist-cellphone'));
+                                                $("#table-therapist-phone").html($(this).attr('therapist-phone'));
+                                                setTimeout(function(){
+                                                    $("#inputs").css('display', 'none');
+                                                    $("#calendar-div").css('display', 'block').addClass('fadein-1');
+                                                    $('#calendar').fullCalendar({
+                                                        theme: true,
+                                                        header: {
+                                                            left: 'prev,next today',
+                                                            center: 'title',
+                                                            right: 'month,agendaWeek,agendaDay'
+                                                        },
+                                                        dayClick: function (date, jsEvent, view) {
+
+                                                            //alert('Clicked on: ' + date.format()+' / '+view.name);
+                                                            $("#resumen").modal('show');
+                                                            $("#table-time").html(date.format());
+
+                                                        },
+                                                        allDaySlot: false,
+                                                        slotDuration: '00:15:00',
+                                                        scrollTime: '07:00:00',
+                                                        minTime: '07:00:00',
+                                                        maxTime: '20:00:00',
+                                                        weekends: true,
+                                                        defaultDate: new Date(),
+                                                        timeFormat: 'H:mm',
+                                                        editable: false,
+                                                        eventLimit: true, // allow "more" link when too many events
+                                                        eventSources: [
+
+                                                            // your event source
+                                                            {
+                                                                url: '/calendar/hours',
+                                                                type: 'POST',
+                                                                data: {
+                                                                    id: id
+                                                                },
+                                                                error: function () {
+                                                                    alert('there was an error while fetching events!');
+                                                                }
+                                                            }
+
+                                                            // any other sources...
+
+                                                        ]
+                                                    });
+                                                },1000);
+                                            });
                                         }
-                                    }
+                                    });
+                                });
+                    $("#next2").click(function() {
+                        $("#therapist-div").addClass('fadeout-1');
+                        $("#next2").addClass('fadeout-1');
+                        setTimeout(function () {
 
-                                    // any other sources...
 
-                                ]
-                            });
-                        },1000);
+                        }, 1000);
                     });
                 </script>
 
@@ -129,33 +168,43 @@
             <!-- /.row -->
         </div>
         <!-- /#page-wrapper -->
-        <div class="modal fade bs-example-modal-lg" id="resumen" tabindex="-1" role="dialog" aria-labelledby="resumen">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content" id="">
-                    <table class="table">
-                        <tr>
-                            <td colspan="2">Terapeuta</td><td colspan="2" id="table-therapist-name"></td>
-                        </tr>
-                        <tr><td>Celular</td><td id="table-therapist-cellphone"></td><td>Telefono</td><td id="table-therapist-phone"></td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Paciente</td><td colspan="2" id="table-patient-name"></td>
-                        </tr>
-                        <tr><td>Celular</td><td id="table-patient-cellphone"></td><td>Telefono</td><td id="table-patient-phone"></td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Hora de Inicio</td><td colspan="2" id="table-time"></td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Duracion</td><td colspan="2"></td>
-                        </tr>
-                    </table>
-
+        <div class="modal fade" id="resumen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <tr>
+                                <td colspan="2">Terapeuta</td><td colspan="2" id="table-therapist-name"></td>
+                            </tr>
+                            <tr><td>Celular</td><td id="table-therapist-cellphone"></td><td>Telefono</td><td id="table-therapist-phone"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Paciente</td><td colspan="2" id="table-patient-name"></td>
+                            </tr>
+                            <tr><td>Celular</td><td id="table-patient-cellphone"></td><td>Telefono</td><td id="table-patient-phone"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Hora de Inicio</td><td colspan="2" id="table-time"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Duracion</td><td colspan="2"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary">Guardar</button>
+                    </div>
                 </div>
-                <button type=button" id="guardar">Guardar</button>
             </div>
         </div>
+
     </div>
+
     <!-- /#wrapper -->
 
 @stop

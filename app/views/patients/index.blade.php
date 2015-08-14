@@ -48,6 +48,7 @@
                     @endforeach
                     </tbody>
                 </table>
+                <a id="create" class="btn btn-success" style="position: relative;">Agregar Nuevo Paciente</a>
             </div>
             <script>
                 $(document).ready(function(){
@@ -94,6 +95,7 @@
                                 email:$("#email").val()
                             },
                             success:function(data){
+                                $("#dataModal").modal('hide');
                                 $("#id").val('');
                                 $("#rut").val('');
                                 $("#name").val('');

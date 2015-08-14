@@ -45,7 +45,7 @@ class TherapistsController extends \BaseController {
 	 */
 	public function show()
 	{
-        $find = $_REQUEST['query'];
+        $find = Input::get('name');
         $therapists = Therapist::where('name', 'like', $find.'%')->get();
         return $therapists;
 	}

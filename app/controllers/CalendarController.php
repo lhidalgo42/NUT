@@ -43,8 +43,8 @@ class CalendarController extends \BaseController {
 	 * @return Response
 	 */
 	public function show(){
-        $name = Input::get('name');
-		$therapist = Therapist::where('name','like',$name)->get()->first();
+        $id = Input::get('id');
+		$therapist = Therapist::find($id);
         $calendar = Schedule::join('rooms','rooms.id','=','schedule.rooms_id')->join('patients','patients.id','=','schedule.patients_id')->where('therapists_id',$therapist->id)->select('patients.name as name','schedule.start','schedule.end','schedule.rooms_id','rooms.name as room','schedule.id')->get();
         foreach($calendar as $schedule){
             $datos['id'] = $schedule->id;

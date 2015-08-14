@@ -44,7 +44,7 @@ class PatientsController extends \BaseController {
 	 * @return Response
 	 */
 	public function showList(){
-        $find = $_REQUEST['query'];
+        $find = Input::get('name');
         $patients = Patient::where('name', 'like', $find.'%')->get();
         return $patients;
 	}
