@@ -28,7 +28,6 @@
                     <th>Telefono</th>
                     <th>Celular</th>
                     <th>Email</th>
-                    <th>Fecha de Actualizaci&oacute;n</th>
                     <th>Editar</th>
                     <th>Borrar</th>
                     </thead>
@@ -41,7 +40,6 @@
                             <td>{{$patient->phone}}</td>
                             <td>{{$patient->cellphone}}</td>
                             <td>{{$patient->email}}</td>
-                            <td>{{$patient->updated_at}}</td>
                             <td><a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" patient-id="{{$patient->id}}"></i></a></td>
                             <td><a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" patient-id="{{$patient->id}}"></i></a></td>
                         </tr>
@@ -65,6 +63,8 @@
                         });
                     } );
                     $('#dtes tbody').on( 'click', 'i.fa-pencil-square-o', function () {
+                        $("#save").css('display','block');
+                        $("#save2").css('display','none');
                         $.ajax({
                             url: "/patient/show/"+$(this).attr('patient-id'),
                             type: "POST",
@@ -78,9 +78,61 @@
                                 $("#cellphone").val(data.cellphone);
                                 $("#email").val(data.email);
                                 $("#dataModal").modal('show');
+                                }
+                        });
+
+                    } );
+                    $("#create").click(function(){
+                        $("#save2").css('display','block');
+                        $("#save").css('display','none');
+                        $("#dataModal").modal('show');
+                    });
+                    $("#cancel").click(function () {
+                        $("#dataModal").modal('hide');
+                        $("#dataTitle").html('Paciente Agregar/Editar');
+                        $("#id").val('');
+                        $("#rut").val('');
+                        $("#name").val('');
+                        $("#birth").val('');
+                        $("#phone").val('');
+                        $("#cellphone").val('');
+                        $("#email").val('');
+                    });
+                    $("#save2").click(function () {
+                        $.ajax({
+                            url: "/patient/create",
+                            type: "POST",
+                            data: {
+                                rut: $("#rut").val(),
+                                name: $("#name").val(),
+                                birth: $("#birth").val(),
+                                phone: $("#phone").val(),
+                                cellphone: $("#cellphone").val(),
+                                email: $("#email").val()
+                            },
+                            success: function (data) {
+                                table.row.add([
+                                    data.rut,
+                                    data.name,
+                                    data.birth,
+                                    data.phone,
+                                    data.cellphone,
+                                    data.email,
+                                    '<a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" patient-id="'+data.id+'"></i></a>',
+                                    '<a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" patient-id="'+data.id+'"></i></a>'
+                                ]).draw();
+                                $("#dataModal").modal('hide');
+                                $("#dataTitle").html('Paciente Agregar/Editar');
+                                $("#id").val('');
+                                $("#rut").val('');
+                                $("#name").val('');
+                                $("#birth").val('');
+                                $("#phone").val('');
+                                $("#cellphone").val('');
+                                $("#email").val('');
                             }
                         });
-                    } );
+                    });
                     $("#save").click(function(){
                         $.ajax({
                             url: "/patient/save",
@@ -95,7 +147,9 @@
                                 email:$("#email").val()
                             },
                             success:function(data){
+                                table.row( $(this).parents('tr') ).remove().draw();
                                 $("#dataModal").modal('hide');
+                                $("#dataTitle").html('Paciente Agregar/Editar');
                                 $("#id").val('');
                                 $("#rut").val('');
                                 $("#name").val('');
@@ -148,7 +202,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal" id="cancel">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="save">Guardar Cambios</button>
+                        <button type="button" class="btn btn-primary" id="save" style="display: block;">Guardar Cambios</button>
+                        <button type="button" class="btn btn-primary" id="save2" style="display: none;">Guardar Cambios</button>
                     </div>
                 </div>
             </div>

@@ -29,9 +29,14 @@ Route::group(array('before' => 'auth'), function() {
     Route::post('/patient/list','PatientsController@showList');
     Route::post('/patient/show/{id}','PatientsController@show');
     Route::post('/patient/save','PatientsController@update');
-    Route::post('/patient/new','PatientsController@new');
-    Route::post('/patient/delete/{id}','PatientsController@delete');
+    Route::post('/patient/create','PatientsController@create');
+    Route::post('/patient/delete/{id}','PatientsController@destroy');
     Route::post('/therapist/list','TherapistsController@show');
+    Route::post('/therapist/duration','TherapistsController@duration');
+    Route::post('/therapist/duration/new','TherapistsController@durationNew');
+    Route::post('/therapist/duration/save','TherapistsController@durationSave');
+    Route::post('/therapist/duration/delete','TherapistsController@durationDelete');
+    Route::get('/therapists/config','TherapistsController@configDuracion');
 });
 
 

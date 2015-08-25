@@ -41,6 +41,9 @@
                         <a href="/therapists">Ver Listado de Terapeutas</a>
                     </li>
                     <li>
+                        <a href="/therapists/config">Configuraciones</a>
+                    </li>
+                    <li>
                         <a href="/therapists/calendar">Consultar Calendario</a>
                     </li>
                 </ul>

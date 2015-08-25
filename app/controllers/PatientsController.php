@@ -22,7 +22,15 @@ class PatientsController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		$patient = new Patient();
+        $patient->rut = Input::get('rut');
+        $patient->name = Input::get('name');
+        $patient->birth = Input::get('birth');
+        $patient->phone = Input::get('phone');
+        $patient->cellphone = Input::get('cellphone');
+        $patient->email = Input::get('email');
+        $patient->save();
+        return $patient;
 	}
 
 	/**
@@ -90,7 +98,8 @@ class PatientsController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$patient = Patient::find($id);
+        $patient->delete();
 	}
 
 }

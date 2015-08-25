@@ -31,10 +31,44 @@ class TherapistsController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function duration()
 	{
-		//
+		$id = Input::get('id');
+        $durations = TherapistDuration::join('duration','therapists_duration.duration_id','=','duration.id')->where('therapists_duration.therapists_id',$id)->get();
+        return $durations;
+
 	}
+
+    public function durationNew()
+    {
+        $id = Input::get('id');
+        $ids = TherapistDuration::join('duration','therapists_duration.duration_id','=','duration.id')->where('therapists_duration.therapists_id',$id)->select('duration.id')->get()->toArray();
+        $durations = Duration::whereNotIn('id',$ids)->get();
+        return $durations;
+
+    }
+
+    public function durationDelete()
+    {
+        $id = Input::get('id');
+        $therapist = Input::get('therapist');
+        $therapist =  TherapistDuration::where('therapists_id',$therapist)->where('duration_id',$id)->get()->first();
+        $therapist->delete();
+    }
+
+    public function durationSave()
+    {
+        $id = Input::get('id');
+        $therapist = Input::get('therapist');
+        $therapistDuration = new TherapistDuration();
+        $therapistDuration->therapists_id = $therapist;
+        $therapistDuration->duration_id = $id;
+        $therapistDuration->save();
+        return 1;
+    }
+    public function configDuracion(){
+        return View::make('therapists.config');
+    }
 
 	/**
 	 * Display the specified resource.

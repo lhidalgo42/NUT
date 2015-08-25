@@ -73,7 +73,8 @@
                                 $("#patient-body a").click(function(){
                                     $(this).attr('disabled','disabled');
                                     $("#therapist-div").css('display','block').addClass('fadein-1');
-                                    $("#table-patient-name").html($(this).attr('patient-name'))
+                                    $("#table-patient-name").html($(this).attr('patient-name'));
+                                    $("#patient").val($(this).attr('therapist-name'));
                                     $("#table-patient-cellphone").html($(this).attr('patient-cellphone'));
                                     $("#table-patient-phone").html($(this).attr('patient-phone'))
                                 });
@@ -100,17 +101,32 @@
                                                 var id = $(this).attr('therapist-id');
                                                 $("#inputs").addClass('fadeout-1');
                                                 $("#table-therapist-name").html($(this).attr('therapist-name'));
+                                                $("#therapist").val($(this).attr('patient-name'));
                                                 $("#table-therapist-cellphone").html($(this).attr('therapist-cellphone'));
                                                 $("#table-therapist-phone").html($(this).attr('therapist-phone'));
+                                                $.ajax({
+                                                    url: "/therapist/duration",
+                                                    type: "POST",
+                                                    data: { id: $(this).attr('therapist-id')
+                                                    },
+                                                    success: function( data ) {
+                                                       var duration = $("#duration");
+                                                        duration.html('');
+                                                        for (var i = 0; i<data.length;i++){
+                                                            duration.append('<option value="'+data[i]['id']+'">'+data[i]['name']+'</option>');
+                                                        }
+                                                    }
+                                                });
                                                 setTimeout(function(){
                                                     $("#inputs").css('display', 'none');
                                                     $("#calendar-div").css('display', 'block').addClass('fadein-1');
                                                     $('#calendar').fullCalendar({
                                                         theme: true,
+                                                        defaultView: 'agendaWeek',
                                                         header: {
                                                             left: 'prev,next today',
                                                             center: 'title',
-                                                            right: 'month,agendaWeek,agendaDay'
+                                                            right: 'agendaWeek,agendaDay'
                                                         },
                                                         dayClick: function (date, jsEvent, view) {
 
@@ -178,20 +194,20 @@
                     <div class="modal-body">
                         <table class="table">
                             <tr>
-                                <td colspan="2">Terapeuta</td><td colspan="2" id="table-therapist-name"></td>
+                                <td colspan="2"><strong>Terapeuta</strong></td><td colspan="2" id="table-therapist-name"></td>
                             </tr>
-                            <tr><td>Celular</td><td id="table-therapist-cellphone"></td><td>Telefono</td><td id="table-therapist-phone"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">Paciente</td><td colspan="2" id="table-patient-name"></td>
-                            </tr>
-                            <tr><td>Celular</td><td id="table-patient-cellphone"></td><td>Telefono</td><td id="table-patient-phone"></td>
+                            <tr><td><strong>Celular</strong></td><td id="table-therapist-cellphone"></td><td><strong>Telefono</strong></td><td id="table-therapist-phone"></td>
                             </tr>
                             <tr>
-                                <td colspan="2">Hora de Inicio</td><td colspan="2" id="table-time"></td>
+                                <td colspan="2"><strong>Paciente</strong></td><td colspan="2" id="table-patient-name"></td>
+                            </tr>
+                            <tr><td><strong>Celular</strong></td><td id="table-patient-cellphone"></td><td><strong>Telefono</strong></td><td id="table-patient-phone"></td>
                             </tr>
                             <tr>
-                                <td colspan="2">Duracion</td><td colspan="2"></td>
+                                <td colspan="2"><strong>Hora de Inicio</strong></td><td colspan="2" id="table-time"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Duracion</td><td colspan="2"></td><td><select class="form-control" name="duration" id="duration"></select></td>
                             </tr>
                         </table>
                     </div>
