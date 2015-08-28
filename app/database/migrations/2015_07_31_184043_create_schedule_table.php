@@ -22,6 +22,7 @@ class CreateScheduleTable extends Migration {
             $table->integer('rooms_id');
             $table->timestamp('start');
             $table->timestamp('end');
+            $table->text('observation');
 			$table->string('status');
 			$table->timestamps();
 		});

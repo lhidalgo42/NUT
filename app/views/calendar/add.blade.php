@@ -84,6 +84,9 @@
                             <tr>
                                 <td colspan="2">Duracion</td><td colspan="2"><select class="form-control" name="duration" id="duration"></select></td>
                             </tr>
+                            <tr>
+                                <td colspan="4"><input id="observation" name="observation" placeholder="Observaciones" class="form-control" style="width: 100%"></td>
+                            </tr>
                         </table>
                     </div>
                     <div class="modal-footer">
@@ -228,7 +231,8 @@
                         therapist: $(this).attr('therapist-id'),
                         patient : $(this).attr('patient-id'),
                         start: $("#table-time").html(),
-                        duration: $("#duration").val()
+                        duration: $("#duration").val(),
+                        observation: $("#observation").val()
                     },
                     success: function (data) {
                         window.location.href = '/';

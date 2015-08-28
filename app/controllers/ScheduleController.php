@@ -31,6 +31,7 @@ class ScheduleController extends \BaseController {
         $therapist = Input::get('therapist');
         $duration = Input::get('duration');
         $start = strtotime(Input::get('start'));
+        $observation = Input::get('observation');
         $duration = Duration::find($duration);
         $end = $start+ $duration->timestamp;
         $schedule = new Schedule();
@@ -41,6 +42,7 @@ class ScheduleController extends \BaseController {
         $schedule->start = date("Y-m-d H:i:s",$start);
         $schedule->end =  date("Y-m-d H:i:s",$end);
         $schedule->status = 1;
+        $schedule->observation = $observation;
         if($schedule->save()) {
             return Redirect::route('home')->with('Success', 'Hora Agendada Correctamente');
         }
