@@ -209,8 +209,15 @@
             </div>
         </div>
         <script>
-
+            $(function () {
+                $('#birth').datetimepicker({
+                    format: 'DD-MM-YYYY',
+                    locale: 'es',
+                    viewMode: 'years'
+                });
+            });
         </script>
+
 
     </div>
     <!-- /#wrapper -->
