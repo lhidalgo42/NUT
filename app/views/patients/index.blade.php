@@ -177,11 +177,11 @@
                         {{Form::hidden('id',Input::old('id'),array('id'=> 'id'))}}
                         <div class="form-group">
                             <label for="rut">RUT</label>
-                            {{ Form::text('rut', Input::old('rut'), array('placeholder' => 'RUT','class' => 'form-control','id' => 'rut')) }}
+                            {{ Form::text('rut', Input::old('rut'), array('placeholder' => 'RUT','class' => 'form-control','id' => 'rut','required' => 'required')) }}
                         </div>
                         <div class="form-group">
                             <label for="name">Nombre</label>
-                            {{ Form::text('name', Input::old('name'), array('placeholder' => 'Nombre','class' => 'form-control','id' => 'name')) }}
+                            {{ Form::text('name', Input::old('name'), array('placeholder' => 'Nombre','class' => 'form-control','id' => 'name','required' => 'required')) }}
                         </div>
                         <div class="form-group">
                             <label for="birth">Fecha de Nacimiento</label>
@@ -193,7 +193,7 @@
                         </div>
                         <div class="form-group">
                             <label for="cellphone">Telefono Celular</label>
-                            {{ Form::text('cellphone', Input::old('cellphone'), array('placeholder' => 'Telefono Celular','class' => 'form-control','id' => 'cellphone')) }}
+                            {{ Form::text('cellphone', Input::old('cellphone'), array('placeholder' => 'Telefono Celular','class' => 'form-control','id' => 'cellphone','required' => 'required')) }}
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>

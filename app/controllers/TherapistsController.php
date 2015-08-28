@@ -88,7 +88,7 @@ class TherapistsController extends \BaseController {
 	public function showList()
 	{
         $find = Input::get('name');
-        $therapists = Therapist::where('name', 'like', $find.'%')->get();
+        $therapists = Therapist::where('name', 'like', $find.'%')->get()->take(15);
         return $therapists;
 	}
 
