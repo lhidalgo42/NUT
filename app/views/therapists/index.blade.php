@@ -185,11 +185,11 @@
                         </div>
                         <div class="form-group">
                             <label for="birth">Fecha de Nacimiento</label>
-                            {{ Form::text('birth', Input::old('birth'), array('placeholder' => 'Fecha de Nacimiento','class' => 'form-control','id' => 'birth')) }}
+                            {{ Form::text('birth', Input::old('birth'), array('placeholder' => 'Fecha de Nacimiento','class' => 'form-control','id' => 'birth','required' => 'required')) }}
                         </div>
                         <div class="form-group">
                             <label for="phone">Telefono Fijo</label>
-                            {{ Form::text('phone', Input::old('phone'), array('placeholder' => 'Telefono Fijo','class' => 'form-control','id' => 'phone')) }}
+                            {{ Form::text('phone', Input::old('phone'), array('placeholder' => 'Telefono Fijo','class' => 'form-control','id' => 'phone','required' => 'required')) }}
                         </div>
                         <div class="form-group">
                             <label for="cellphone">Telefono Celular</label>
@@ -197,7 +197,7 @@
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            {{ Form::email('email', Input::old('email'), array('placeholder' => 'Email','class' => 'form-control','id' => 'email')) }}
+                            {{ Form::email('email', Input::old('email'), array('placeholder' => 'Email','class' => 'form-control','id' => 'email','required' => 'required')) }}
                         </div>
                     </div>
                     <div class="modal-footer">

@@ -79,7 +79,7 @@
                             <tr><td><strong>Celular</strong></td><td id="table-patient-cellphone"></td><td><strong>Telefono</strong></td><td id="table-patient-phone"></td>
                             </tr>
                             <tr>
-                                <td colspan="2"><strong>Hora de Inicio</strong></td><td colspan="2" id="table-time"></td>
+                                <td colspan="2"><strong>Hora de Inicio</strong></td><td colspan="2" id="table-time" class="h4"></td>
                             </tr>
                             <tr>
                                 <td colspan="2">Duracion</td><td colspan="2"><select class="form-control" name="duration" id="duration"></select></td>
