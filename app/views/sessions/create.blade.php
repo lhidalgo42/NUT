@@ -31,7 +31,7 @@
 <body>
 <div class="container">
     <div class="row">
-        <div style="text-align: center;padding-top: 30px;" class="fadeout-2" id="logo">
+        <div style="text-align: center;padding-top: 30px;" class="" id="logo">
             <img src="/img/logo.png" style="width: 25%">
         </div>
         <div class="col-sm-6 col-md-4 col-md-offset-4 fadein-2" style="display: none;" id="form">
@@ -54,11 +54,14 @@
 </div>
 <script>
     $(document).ready(function(){
-        setTimeout(function () {
-           $("#logo").css('display','none');
-            $("#form").css('display','block');
+        var timer = setTimeout(function(){
+            $("#logo").addClass('fadeout-2');
+            var out = setTimeout(function () {
+               $("#logo").css('display','none');
+                $("#form").css('display','block');
 
-        },2000);
+            },2000);
+        },2000)
     })
 </script>
 </body>

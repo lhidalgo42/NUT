@@ -20,10 +20,18 @@ class TherapistsController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function create()
-	{
-		//
-	}
+    public function create()
+    {
+        $therapist = new Therapist();
+        $therapist->rut = Input::get('rut');
+        $therapist->name = Input::get('name');
+        $therapist->birth = Input::get('birth');
+        $therapist->phone = Input::get('phone');
+        $therapist->cellphone = Input::get('cellphone');
+        $therapist->email = Input::get('email');
+        $therapist->save();
+        return $therapist;
+    }
 
 	/**
 	 * Store a newly created resource in storage.
@@ -77,47 +85,64 @@ class TherapistsController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show()
+	public function showList()
 	{
         $find = Input::get('name');
         $therapists = Therapist::where('name', 'like', $find.'%')->get();
         return $therapists;
 	}
 
-	/**
-	 * Show the form for editing the specified resource.
-	 * GET /therapists/{id}/edit
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
 
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /therapists/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
+    /**
+     * Show the form for editing the specified resource.
+     * GET /patients/{id}/edit
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        return Therapist::find($id);
+    }
 
-	/**
-	 * Remove the specified resource from storage.
-	 * DELETE /therapists/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
+    /**
+     * Update the specified resource in storage.
+     * PUT /patients/{id}
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function update()
+    {
+        $therapist = Therapist::find(Input::get('id'));
+        $therapist->rut = Input::get('rut');
+        $therapist->name = Input::get('name');
+        $therapist->birth = Input::get('birth');
+        $therapist->phone = Input::get('phone');
+        $therapist->cellphone = Input::get('cellphone');
+        $therapist->email = Input::get('email');
+        $therapist->save();
+        return $therapist;
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * DELETE /patients/{id}
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        $exist = Schedule::where('therapists_id','=',$id)->count();
+        if($exist == 0) {
+            $therapist = Therapist::find($id);
+            $therapist->delete();
+        }
+        else{
+            return Redirect::route('home')->with('No puede Borrar un Paciente que Tenga Horas Asignadas.');
+        }
+
+    }
 
 }

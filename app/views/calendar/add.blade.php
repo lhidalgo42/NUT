@@ -53,131 +53,6 @@
             </div>
             <div class="row" id="calendar-div" style="display: none;">
                     <div id="calendar"></div>
-                <script>
-
-                    $('#patient').keyup(function(){
-                        $.ajax({
-                            url: "/patient/list",
-                            type: "POST",
-                            data:{
-                                name:$("#patient").val()
-                            },
-                            success:function(data){
-                                $("#patient-body").html('');
-                                for(var i =0;i<data.length;i++){
-                                    $("#patient-body").append('<tr>' +
-                                                                '<td style="text-align: center;">'+data[i]['name']+'</td>' +
-                                                                '<td style="text-align: center;"><a href="#" class="btn btn-primary" patient-name ="'+data[i]['name']+'" patient-phone="'+data[i]['phone']+'" patient-cellphone="'+data[i]['cellphone']+'" patient-id="'+data[i]['id']+'"> Seleccionar</a></td>' +
-                                                              '</tr>');
-                                }
-                                $("#patient-body a").click(function(){
-                                    $(this).attr('disabled','disabled');
-                                    $("#therapist-div").css('display','block').addClass('fadein-1');
-                                    $("#table-patient-name").html($(this).attr('patient-name'));
-                                    $("#patient").val($(this).attr('therapist-name'));
-                                    $("#table-patient-cellphone").html($(this).attr('patient-cellphone'));
-                                    $("#table-patient-phone").html($(this).attr('patient-phone'))
-                                });
-                            }
-                        });
-                    });
-                    $('#therapist').keyup(function() {
-                                    $.ajax({
-                                        url: "/therapist/list",
-                                        type: "POST",
-                                        data: {
-                                            name: $("#therapist").val()
-                                        },
-                                        success: function (data) {
-                                            $("#therapist-body").html('');
-                                            for (var i = 0; i < data.length; i++) {
-                                                $("#therapist-body").append('<tr>' +
-                                                        '<td style="text-align: center;">' + data[i]['name'] + '</td>' +
-                                                        '<td style="text-align: center;"><a href="#" class="btn btn-primary" therapist-name ="'+data[i]['name']+'" therapist-phone="'+data[i]['phone']+'" therapist-cellphone="'+data[i]['cellphone']+'" therapist-id="' + data[i]['id'] + '"> Seleccionar</a></td>' +
-                                                        '</tr>');
-                                            }
-                                            $("#therapist-body a").click(function () {
-                                                $(this).attr('disabled', 'disabled');
-                                                var id = $(this).attr('therapist-id');
-                                                $("#inputs").addClass('fadeout-1');
-                                                $("#table-therapist-name").html($(this).attr('therapist-name'));
-                                                $("#therapist").val($(this).attr('patient-name'));
-                                                $("#table-therapist-cellphone").html($(this).attr('therapist-cellphone'));
-                                                $("#table-therapist-phone").html($(this).attr('therapist-phone'));
-                                                $.ajax({
-                                                    url: "/therapist/duration",
-                                                    type: "POST",
-                                                    data: { id: $(this).attr('therapist-id')
-                                                    },
-                                                    success: function( data ) {
-                                                       var duration = $("#duration");
-                                                        duration.html('');
-                                                        for (var i = 0; i<data.length;i++){
-                                                            duration.append('<option value="'+data[i]['id']+'">'+data[i]['name']+'</option>');
-                                                        }
-                                                    }
-                                                });
-                                                setTimeout(function(){
-                                                    $("#inputs").css('display', 'none');
-                                                    $("#calendar-div").css('display', 'block').addClass('fadein-1');
-                                                    $('#calendar').fullCalendar({
-                                                        theme: true,
-                                                        defaultView: 'agendaWeek',
-                                                        header: {
-                                                            left: 'prev,next today',
-                                                            center: 'title',
-                                                            right: 'agendaWeek,agendaDay'
-                                                        },
-                                                        dayClick: function (date, jsEvent, view) {
-
-                                                            //alert('Clicked on: ' + date.format()+' / '+view.name);
-                                                            $("#resumen").modal('show');
-                                                            $("#table-time").html(date.format());
-
-                                                        },
-                                                        allDaySlot: false,
-                                                        slotDuration: '00:15:00',
-                                                        scrollTime: '07:00:00',
-                                                        minTime: '07:00:00',
-                                                        maxTime: '20:00:00',
-                                                        weekends: true,
-                                                        defaultDate: new Date(),
-                                                        timeFormat: 'H:mm',
-                                                        editable: false,
-                                                        eventLimit: true, // allow "more" link when too many events
-                                                        eventSources: [
-
-                                                            // your event source
-                                                            {
-                                                                url: '/calendar/hours',
-                                                                type: 'POST',
-                                                                data: {
-                                                                    id: id
-                                                                },
-                                                                error: function () {
-                                                                    alert('there was an error while fetching events!');
-                                                                }
-                                                            }
-
-                                                            // any other sources...
-
-                                                        ]
-                                                    });
-                                                },1000);
-                                            });
-                                        }
-                                    });
-                                });
-                    $("#next2").click(function() {
-                        $("#therapist-div").addClass('fadeout-1');
-                        $("#next2").addClass('fadeout-1');
-                        setTimeout(function () {
-
-
-                        }, 1000);
-                    });
-                </script>
-
                 <!-- /.col-lg-8 -->
                 <!-- /.col-lg-4 -->
             </div>
@@ -207,18 +82,160 @@
                                 <td colspan="2"><strong>Hora de Inicio</strong></td><td colspan="2" id="table-time"></td>
                             </tr>
                             <tr>
-                                <td colspan="2">Duracion</td><td colspan="2"></td><td><select class="form-control" name="duration" id="duration"></select></td>
+                                <td colspan="2">Duracion</td><td colspan="2"><select class="form-control" name="duration" id="duration"></select></td>
                             </tr>
                         </table>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary">Guardar</button>
+                        <a href="#" class="btn btn-primary" id="save"  therapist-id="0" patient-id="0">Guardar</a>
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+            $('#patient').keyup(function(){
+                $.ajax({
+                    url: "/patient/list",
+                    type: "POST",
+                    data:{
+                        name:$("#patient").val()
+                    },
+                    success:function(data){
+                        $("#patient-body").html('');
+                        for(var i =0;i<data.length;i++){
+                            $("#patient-body").append('<tr>' +
+                                    '<td style="text-align: center;">'+data[i]['name']+'</td>' +
+                                    '<td style="text-align: center;"><a href="#" class="btn btn-primary" patient-name="'+data[i]['name']+'" patient-phone="'+data[i]['phone']+'" patient-cellphone="'+data[i]['cellphone']+'" patient-id="'+data[i]['id']+'"> Seleccionar</a></td>' +
+                                    '</tr>');
+                        }
+                        $("#patient-body a").click(function(){
+                            $("#save").attr('patient-id',$(this).attr('patient-id'));
+                            $('#patient').val($(this).attr('patient-name'));
+                            $(this).attr('disabled','disabled');
+                            $("#therapist-div").css('display','block').addClass('fadein-1');
+                            $("#table-patient-name").html($(this).attr('patient-name'));
+                            $("#table-patient-cellphone").html($(this).attr('patient-cellphone'));
+                            $("#table-patient-phone").html($(this).attr('patient-phone'))
+                        });
+                    }
+                });
+            });
+            $('#therapist').keyup(function() {
 
+                $.ajax({
+                    url: "/therapist/list",
+                    type: "POST",
+                    data: {
+                        name: $("#therapist").val()
+                    },
+                    success: function (data) {
+                        $("#therapist-body").html('');
+                        for (var i = 0; i < data.length; i++) {
+                            $("#therapist-body").append('<tr>' +
+                                    '<td style="text-align: center;">' + data[i]['name'] + '</td>' +
+                                    '<td style="text-align: center;"><a href="#" class="btn btn-primary" therapist-name="'+data[i]['name']+'" therapist-phone="'+data[i]['phone']+'" therapist-cellphone="'+data[i]['cellphone']+'" therapist-id="' + data[i]['id'] + '"> Seleccionar</a></td>' +
+                                    '</tr>');
+                        }
+                        $("#therapist-body a").click(function () {
+                            $(this).attr('disabled', 'disabled');
+                            var id = $(this).attr('therapist-id');
+                            $('#therapist').val($(this).attr('therapist-name'));
+                            $("#save").attr('therapist-id',id);
+                            $("#inputs").addClass('fadeout-1');
+                            $("#table-therapist-name").html($(this).attr('therapist-name'));
+                            $("#table-therapist-cellphone").html($(this).attr('therapist-cellphone'));
+                            $("#table-therapist-phone").html($(this).attr('therapist-phone'));
+                            $.ajax({
+                                url: "/therapist/duration",
+                                type: "POST",
+                                data: { id: $(this).attr('therapist-id')
+                                },
+                                success: function( data ) {
+                                    var duration = $("#duration");
+                                    duration.html('');
+                                    for (var i = 0; i<data.length;i++){
+                                        duration.append('<option value="'+data[i]['id']+'">'+data[i]['name']+'</option>');
+                                    }
+                                }
+                            });
+                            setTimeout(function(){
+                                $("#inputs").css('display', 'none');
+                                $("#calendar-div").css('display', 'block').addClass('fadein-1');
+                                $('#calendar').fullCalendar({
+                                    theme: true,
+                                    defaultView: 'agendaWeek',
+                                    header: {
+                                        left: 'prev,next today',
+                                        center: 'title',
+                                        right: 'agendaWeek,agendaDay'
+                                    },
+                                    dayClick: function (date, jsEvent, view) {
+
+                                        //alert('Clicked on: ' + date.format()+' / '+view.name);
+                                        $("#resumen").modal('show');
+                                        $("#table-time").html(date.format());
+
+                                    },
+                                    allDaySlot: false,
+                                    slotDuration: '00:15:00',
+                                    scrollTime: '07:00:00',
+                                    minTime: '07:00:00',
+                                    maxTime: '20:00:00',
+                                    weekends: true,
+                                    defaultDate: new Date(),
+                                    timeFormat: 'H:mm',
+                                    editable: false,
+                                    eventLimit: true, // allow "more" link when too many events
+                                    eventSources: [
+
+                                        // your event source
+                                        {
+                                            url: '/calendar/hours',
+                                            type: 'POST',
+                                            data: {
+                                                id: id
+                                            },
+                                            error: function () {
+                                                alert('El Terapeuta no Registra Horas.');
+                                            }
+                                        }
+
+                                        // any other sources...
+
+                                    ]
+                                });
+                            },1000);
+                        });
+                    }
+                });
+            });
+            $("#next2").click(function() {
+                $("#therapist-div").addClass('fadeout-1');
+                $("#next2").addClass('fadeout-1');
+                setTimeout(function () {
+
+
+                }, 1000);
+            });
+
+            $("#save").click(function(){
+                $("#resumen").modal('hide');
+                $.ajax({
+                    url: "/schedule/create",
+                    type: "POST",
+                    data: {
+                        therapist: $(this).attr('therapist-id'),
+                        patient : $(this).attr('patient-id'),
+                        start: $("#table-time").html(),
+                        duration: $("#duration").val()
+                    },
+                    success: function (data) {
+                        window.location.href = '/';
+                    }
+                });
+            });
+        </script>
     </div>
 
     <!-- /#wrapper -->

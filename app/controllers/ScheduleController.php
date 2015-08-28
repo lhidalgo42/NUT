@@ -24,6 +24,31 @@ class ScheduleController extends \BaseController {
 		return View::make('calendar.add');
 	}
 
+
+    public function save()
+    {
+        $patient = Input::get('patient');
+        $therapist = Input::get('therapist');
+        $duration = Input::get('duration');
+        $start = strtotime(Input::get('start'));
+        $duration = Duration::find($duration);
+        $end = $start+ $duration->timestamp;
+        $schedule = new Schedule();
+        $schedule->users_id = Auth::user()->id;
+        $schedule->patients_id = $patient;
+        $schedule->therapists_id = $therapist;
+        $schedule->rooms_id = 1;
+        $schedule->start = date("Y-m-d H:i:s",$start);
+        $schedule->end =  date("Y-m-d H:i:s",$end);
+        $schedule->status = 1;
+        if($schedule->save()) {
+            return Redirect::route('home')->with('Success', 'Hora Agendada Correctamente');
+        }
+        else{
+            return "Error";
+        }
+    }
+
 	/**
 	 * Store a newly created resource in storage.
 	 * POST /schedule

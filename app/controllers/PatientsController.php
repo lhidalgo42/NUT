@@ -98,8 +98,14 @@ class PatientsController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		$patient = Patient::find($id);
-        $patient->delete();
+        $exist = Schedule::where('patients_id','=',$id)->count();
+        if($exist == 0) {
+            $patient = Patient::find($id);
+            $patient->delete();
+        }
+        else{
+            return Redirect::route('home')->with('No puede Borrar un Paciente que Tenga Horas Asignadas.');
+        }
 	}
 
 }

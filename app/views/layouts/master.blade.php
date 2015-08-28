@@ -116,6 +116,28 @@
 </script>
 @yield('content')
 
+@if(Session::has('success'))
+    <script>
+        swal({
+            title: "Proceso Exitoso",
+            text: "{{Session::get('success')}}",
+            timer: 2000,
+            showConfirmButton: false,
+            type: "success"
+        });
+    </script>
+@endif
+@if(Session::has('error'))
+    <script>
+        swal({
+            title: "Proceso Exitoso",
+            text: "{{Session::get('error')}}",
+            timer: 2000,
+            showConfirmButton: false,
+            type: "error"
+        });
+    </script>
+@endif
 </body>
 
 </html>

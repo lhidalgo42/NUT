@@ -10,9 +10,6 @@
                     <li>
                         <a href="/calendar/add">Agregar Hora</a>
                     </li>
-                    <li>
-                        <a href="/calendar/therapists">Consultar Calendario Terapeutas.</a>
-                    </li>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
@@ -20,13 +17,7 @@
                 <a href="#"><i class="fa fa-users"></i> Pacientes<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse" aria-expanded="false">
                     <li>
-                        <a href="/patients/add">Agregar Paciente</a>
-                    </li>
-                    <li>
                         <a href="/patients">Ver Listado de Pacientes</a>
-                    </li>
-                    <li>
-                        <a href="/patients/calendar">Consultar Calendario</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
@@ -35,16 +26,10 @@
                 <a href="#"><i class="fa fa-users"></i> Terapeutas<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse" aria-expanded="false">
                     <li>
-                        <a href="/patients/add">Agregar Terapeuta</a>
-                    </li>
-                    <li>
                         <a href="/therapists">Ver Listado de Terapeutas</a>
                     </li>
                     <li>
                         <a href="/therapists/config">Configuraciones</a>
-                    </li>
-                    <li>
-                        <a href="/therapists/calendar">Consultar Calendario</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
