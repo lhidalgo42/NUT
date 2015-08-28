@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder {
             'name' => 'Eduardo Ortega'
         ]);
         User::create([
-            'email' => 'glury@psiconutricion.cl',
+            'email' => 'gjury@psiconutricion.cl',
             'password' => '1234',
             'img' => 'avatar_2x.png',
             'name' => 'Gloria Jury'
