@@ -10,7 +10,7 @@ class PatientsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$patients = Patient::all()->take(1000);
+		$patients = Patient::all();
         return View::make('patients.index')->with(compact('patients'));
 	}
 
