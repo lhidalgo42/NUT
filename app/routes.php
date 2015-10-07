@@ -45,6 +45,9 @@ Route::group(array('before' => 'auth'), function() {
     Route::post('/therapist/duration/new','TherapistsController@durationNew');
     Route::post('/therapist/duration/save','TherapistsController@durationSave');
     Route::post('/therapist/duration/delete','TherapistsController@durationDelete');
+
+
+    Route::get('/admin','AdminsController@index');
 });
 
 

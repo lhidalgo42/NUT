@@ -29,6 +29,7 @@ class TherapistsController extends \BaseController {
         $therapist->phone = Input::get('phone');
         $therapist->cellphone = Input::get('cellphone');
         $therapist->email = Input::get('email');
+        $therapist->colors_id = 1;
         $therapist->save();
         return $therapist;
     }

@@ -39,6 +39,9 @@
                 <a href="/rooms"><i class="fa fa-bookmark"></i> Salas y Salones</a>
             </li>
             <li>
+                <a href="/admin"><i class="fa fa-bookmark"></i> Admin</a>
+            </li>
+            <li>
                 <a href="/logout"><i class="fa fa-sign-out"></i> Cerrar Sesión </a>
             </li>
         </ul>

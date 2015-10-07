@@ -6,7 +6,7 @@ class UsersController extends \BaseController {
 	{
         $schedules = Schedule::join('patients','patients.id','=','schedule.patients_id')
                             ->join('therapists','therapists.id','=','schedule.therapists_id')
-                            ->select('schedule.id','patients.name as patient','therapists.name as therapist','schedule.start','schedule.end','schedule.status')->get();
+                            ->select('schedule.id','patients.name as patient','therapists.name as therapist','therapists.id as therapists_id','schedule.start','schedule.end','schedule.status')->get();
 
         $data = array();
         $datos = array();
@@ -15,18 +15,11 @@ class UsersController extends \BaseController {
             $data['title'] = $schedule->patient.' / '.$schedule->therapist;
             $data['start'] = $schedule->start;
             $data['end'] = $schedule->end;
-            if($schedule->status == 1) {
-                $data['color'] = '#0000FF';
-                $data['textColor'] ='#ffffff';
-            }
-            elseif($schedule->status == 2) {
-                $data['color'] = '#FF6347';
-                $data['textColor'] ='#ffffff';
-            }
-            else{
-                $data['color'] = '#ffffff';
-                $data['textColor'] ='#3c3d3d';
-            }
+                $color = Therapist::join('colors','colors.id','=','therapists.colors_id')->where('therapists.id',$schedule->therapists_id)->get()->first();
+                //$data['backgroundColor'] = $color->color;
+                //$data['textColor'] = $color->text;
+                //$data['borderColor'] = $color->border;
+                $data['className'] = 'btn btn-success';
             $datos[] =  $data;
         }
 
