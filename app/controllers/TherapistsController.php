@@ -29,7 +29,6 @@ class TherapistsController extends \BaseController {
         $therapist->phone = Input::get('phone');
         $therapist->cellphone = Input::get('cellphone');
         $therapist->email = Input::get('email');
-        $therapist->colors_id = 1;
         $therapist->save();
         return $therapist;
     }
@@ -144,6 +143,18 @@ class TherapistsController extends \BaseController {
             return Redirect::route('home')->with('No puede Borrar un Paciente que Tenga Horas Asignadas.');
         }
 
+    }
+
+    public function color(){
+        $therapist = Therapist::find(Input::get('therapist'));
+        $therapist->colors_id = Input::get('color');
+        $therapist->save();
+    }
+
+    public function access(){
+        $therapist = Therapist::find(Input::get('therapist'));
+        $therapist->access = Input::get('access');
+        $therapist->save();
     }
 
 }

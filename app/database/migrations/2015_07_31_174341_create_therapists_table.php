@@ -21,8 +21,9 @@ class CreateTherapistsTable extends Migration {
             $table->string('phone');
             $table->string('cellphone');
             $table->string('email');
-            $table->string('colors_id');
+            $table->integer('colors_id')->default('1');
 			$table->boolean('access')->default('0');
+			$table->string('password');
 			$table->timestamps();
 		});
 	}

@@ -11,7 +11,8 @@ class TherapistTableSeeder extends Seeder {
 			'phone' => '79496212',
 			'cellphone' => '',
 			'email' => 'lhidalgo@alumnos.uai.cl',
-			'colors_id' => 3
+			'colors_id' => 3,
+            'password' => '1556'
 		]);
 
 	}

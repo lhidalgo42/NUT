@@ -12,14 +12,14 @@ class UsersController extends \BaseController {
         $datos = array();
         foreach($schedules as $schedule){
             $data['id'] = $schedule->id;
-            $data['title'] = $schedule->patient.' / '.$schedule->therapist;
+            $data['title'] = $schedule->patient;
             $data['start'] = $schedule->start;
             $data['end'] = $schedule->end;
                 $color = Therapist::join('colors','colors.id','=','therapists.colors_id')->where('therapists.id',$schedule->therapists_id)->get()->first();
-                //$data['backgroundColor'] = $color->color;
-                //$data['textColor'] = $color->text;
-                //$data['borderColor'] = $color->border;
-                $data['className'] = 'btn btn-success';
+                $data['backgroundColor'] = $color->color;
+                $data['textColor'] = $color->text;
+                $data['borderColor'] = $color->border;
+                //$data['className'] = 'btn btn-success';
             $datos[] =  $data;
         }
 
