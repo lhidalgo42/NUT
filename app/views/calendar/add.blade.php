@@ -177,7 +177,7 @@
 
                                         //alert('Clicked on: ' + date.format()+' / '+view.name);
                                         $("#resumen").modal('show');
-                                        $("#table-time").html(date.format());
+                                        $("#table-time").html(date.format('DD')+' de '+date.format('MMMM')+' del '+date.format('YYYY, h:mm:ss a'));
 
                                     },
                                     allDaySlot: false,

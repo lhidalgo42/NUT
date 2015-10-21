@@ -51,6 +51,7 @@
 
 
                             },
+                            defaultView: 'agendaWeek',
                             allDaySlot:false,
                             slotDuration:'00:15:00',
                             scrollTime:'07:00:00',
