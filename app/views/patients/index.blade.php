@@ -34,14 +34,14 @@
                     <tbody>
                     @foreach($patients as $patient)
                         <tr id="dat-id-{{$patient->id}}">
-                            <td>{{$patient->rut}}</td>
-                            <td>{{$patient->name}}</td>
-                            <td>{{$patient->birth}}</td>
-                            <td>{{$patient->phone}}</td>
-                            <td>{{$patient->cellphone}}</td>
-                            <td>{{$patient->email}}</td>
-                            <td><a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" patient-id="{{$patient->id}}"></i></a></td>
-                            <td><a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" patient-id="{{$patient->id}}"></i></a></td>
+                            <td style="text-align:center">@if($patient->rut != ""){{$patient->rut}}@else - @endif</td>
+                            <td style="text-align:center">@if($patient->name != ""){{$patient->name}}@else - @endif</td>
+                            <td style="text-align:center">@if($patient->birth != ""){{$patient->birth}}@else - @endif</td>
+                            <td style="text-align:center">@if($patient->phone != ""){{$patient->phone}}@else - @endif</td>
+                            <td style="text-align:center">@if($patient->cellphone != ""){{$patient->cellphone}}@else - @endif</td>
+                            <td style="text-align:center">@if($patient->email != ""){{$patient->email}}@else - @endif</td>
+                            <td style="text-align:center"><a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" patient-id="{{$patient->id}}"></i></a></td>
+                            <td style="text-align:center"><a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" patient-id="{{$patient->id}}"></i></a></td>
                         </tr>
                     @endforeach
                     </tbody>

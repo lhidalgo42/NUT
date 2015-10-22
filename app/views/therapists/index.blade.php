@@ -34,14 +34,14 @@
                     <tbody>
                     @foreach($therapists as $therapist)
                         <tr id="dat-id-{{$therapist->id}}">
-                            <td>{{$therapist->rut}}</td>
-                            <td>{{$therapist->name}}</td>
-                            <td>{{$therapist->birth}}</td>
-                            <td>{{$therapist->phone}}</td>
-                            <td>{{$therapist->cellphone}}</td>
-                            <td>{{$therapist->email}}</td>
-                            <td><a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" therapist-id="{{$therapist->id}}"></i></a></td>
-                            <td><a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" therapist-id="{{$therapist->id}}"></i></a></td>
+                            <td style="text-align:center">@if($therapist->rut != ""){{$therapist->rut}}@else - @endif</td>
+                            <td style="text-align:center">@if($therapist->name != ""){{$therapist->name}}@else - @endif</td>
+                            <td style="text-align:center">@if($therapist->birth != ""){{$therapist->birth}}@else - @endif</td>
+                            <td style="text-align:center">@if($therapist->phone != ""){{$therapist->phone}}@else - @endif</td>
+                            <td style="text-align:center">@if($therapist->cellphone != ""){{$therapist->cellphone}}@else - @endif</td>
+                            <td style="text-align:center">@if($therapist->email != ""){{$therapist->email}}@else - @endif</td>
+                            <td style="text-align:center"><a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" patient-id="{{$therapist->id}}"></i></a></td>
+                            <td style="text-align:center"><a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" patient-id="{{$therapist->id}}"></i></a></td>
                         </tr>
                     @endforeach
                     </tbody>
