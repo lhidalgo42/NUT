@@ -40,8 +40,8 @@
                             <td style="text-align:center">@if($therapist->phone != ""){{$therapist->phone}}@else - @endif</td>
                             <td style="text-align:center">@if($therapist->cellphone != ""){{$therapist->cellphone}}@else - @endif</td>
                             <td style="text-align:center">@if($therapist->email != ""){{$therapist->email}}@else - @endif</td>
-                            <td style="text-align:center"><a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" patient-id="{{$therapist->id}}"></i></a></td>
-                            <td style="text-align:center"><a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" patient-id="{{$therapist->id}}"></i></a></td>
+                            <td style="text-align:center"><a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" therapist-id="{{$therapist->id}}"></i></a></td>
+                            <td style="text-align:center"><a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" therapist-id="{{$therapist->id}}"></i></a></td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -133,7 +133,7 @@
                             }
                         });
                     });
-                    $("#save").click(function(){
+                    function save(){
                         $.ajax({
                             url: "/therapist/save",
                             type: "POST",
@@ -159,8 +159,14 @@
                                 $("#email").val('');
                             }
                         });
-                    });
+                    }
                 });
+                function validateEmail() {
+
+                    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    return re.test($("#email").val());
+                }
+
             </script>
             <!-- /.row -->
         </div>
@@ -174,6 +180,7 @@
                         <h4 class="modal-title" id="dataTitle">Terapeuta Agregar/Editar</h4>
                     </div>
                     <div class="modal-body">
+                        {{Form::open(array(null, null, 'onsubmit' => 'save(this); return false;'))}}
                         {{Form::hidden('id',Input::old('id'),array('id'=> 'id'))}}
                         <div class="form-group">
                             <label for="rut">RUT</label>
@@ -197,8 +204,9 @@
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            {{ Form::email('email', Input::old('email'), array('placeholder' => 'Email','class' => 'form-control','id' => 'email','required' => 'required')) }}
+                            {{ Form::email('email', Input::old('email'), array('placeholder' => 'Email','class' => 'form-control','id' => 'email','required' => 'required',)) }}
                         </div>
+                        {{Form::close()}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal" id="cancel">Cancelar</button>

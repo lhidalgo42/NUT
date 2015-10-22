@@ -11,6 +11,9 @@ class PatientsController extends \BaseController {
 	public function index()
 	{
 		$patients = Patient::all();
+		for ($i=0;$i<count($patients);$i++){
+			$patients[$i]->birth = date('d-m-Y', strtotime($patients[$i]->birth));
+		}
         return View::make('patients.index')->with(compact('patients'));
 	}
 
@@ -25,7 +28,7 @@ class PatientsController extends \BaseController {
 		$patient = new Patient();
         $patient->rut = Input::get('rut');
         $patient->name = Input::get('name');
-        $patient->birth = Input::get('birth');
+        $patient->birth = date('Y-m-d', strtotime(Input::get('birth')));
         $patient->phone = Input::get('phone');
         $patient->cellphone = Input::get('cellphone');
         $patient->email = Input::get('email');

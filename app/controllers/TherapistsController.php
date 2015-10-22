@@ -11,6 +11,9 @@ class TherapistsController extends \BaseController {
 	public function index()
 	{
 		$therapists = Therapist::all();
+        for ($i=0;$i<count($therapists);$i++){
+            $therapists[$i]->birth = date('d-m-Y', strtotime($therapists[$i]->birth));
+        }
 		return View::make('therapists.index')->with(compact('therapists'));
 	}
 
@@ -25,7 +28,7 @@ class TherapistsController extends \BaseController {
         $therapist = new Therapist();
         $therapist->rut = Input::get('rut');
         $therapist->name = Input::get('name');
-        $therapist->birth = Input::get('birth');
+        $therapist->birth = date('Y-m-d', strtotime(Input::get('birth')));
         $therapist->phone = Input::get('phone');
         $therapist->cellphone = Input::get('cellphone');
         $therapist->email = Input::get('email');
