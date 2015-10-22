@@ -15,7 +15,8 @@
     "flot.tooltip": "~0.8.4",
     "morrisjs": "~0.5.1",
     "fullcalendar": "~2.3.2",
-    "sweetalert": "~1.1.0"
+    "sweetalert": "~1.1.0",
+    "animate.css": "~3.4.0"
   },
   "resolutions": {
     "jquery": "~1.11.x",

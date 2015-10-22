@@ -11,8 +11,9 @@ class AdminsController extends \BaseController {
 	public function index()
 	{
 		$therapists= Therapist::all();
-		$colors = Color::all();
-		return View::make('admins.index')->with(compact('therapists','colors'));
+		$colors = Color::lists('name','id');
+		$durations = Duration::all();
+		return View::make('admins.index')->with(compact('therapists','colors','durations'));
 	}
 
 	/**

@@ -30,6 +30,12 @@ class TherapistsController extends \BaseController {
         $therapist->cellphone = Input::get('cellphone');
         $therapist->email = Input::get('email');
         $therapist->save();
+        foreach(range(3,5) as $id) {
+            $durations = new TherapistDuration();
+            $durations->therapists_id = $therapist->id;
+            $durations->duration_id = $id;
+            $durations->save();
+            }
         return $therapist;
     }
 
