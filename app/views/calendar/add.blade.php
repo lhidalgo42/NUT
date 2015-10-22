@@ -20,7 +20,7 @@
 
             <!-- /.row -->
             <div class="row" id="inputs">
-                <div class="col-lg-6"  id="patient-div">
+                <div class="col-md-6"  id="patient-div">
                     <div class="form-group">
                         <label for="patient">Paciente</label>
                         {{ Form::text('patient', Input::old('patient'), array('placeholder' => 'Paciente','class' => 'form-control','id' => 'patient','autocomplete' => 'off')) }}
@@ -35,7 +35,10 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-lg-6" id="therapist-div" style="display: none;">
+                <div class="animated col-md-6 img-rounded bounceInRight" style="background-color: white;padding: 20px;">
+                       - Por Favor comience a escribir el nombre del Paciente que desea atender.
+                </div>
+                <div class="col-md-6" id="therapist-div" style="display: none;">
                     <div class="form-group">
                         <label for="therapist">Terapeuta</label>
                         {{ Form::text('therapist', Input::old('therapist'), array('placeholder' => 'Terapeuta','class' => 'form-control','id' => 'therapist','autocomplete' => 'off')) }}
@@ -200,7 +203,7 @@
                                                 id: id
                                             },
                                             error: function () {
-                                                alert('El Terapeuta no Registra Horas.');
+                                               swal('Aviso','El terapeuta no registra horas, porfavor haga click en el dia y hora que desea.','warning')
                                             }
                                         }
 

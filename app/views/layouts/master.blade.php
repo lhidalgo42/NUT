@@ -44,6 +44,7 @@
 
             <!-- DataTables Plugins Bootstrap-->
     {{HTML::style('/packages/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css')}}
+    {{HTML::style('/packages/sweetalert/dist/sweetalert.css')}}
     {{HTML::style('/packages/animate.css/animate.min.css')}}
 
 
@@ -59,6 +60,12 @@
         #calendar {
             max-width: 900px;
             margin: 0 auto;
+        }
+        .sombra{
+            margin: 0 auto;
+            -moz-box-shadow: 0px 5px 20px #ccc;
+            -webkit-box-shadow: 0px 5px 20px #ccc;
+            box-shadow: 0px 5px 20px #ccc;
         }
     </style>
 
