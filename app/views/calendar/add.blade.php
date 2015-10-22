@@ -35,10 +35,16 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="animated col-md-6 img-rounded bounceInRight" style="background-color: white;padding: 20px;">
-                       - Por Favor comience a escribir el nombre del Paciente que desea atender.
+                <div class="col-md-6">
+                    <div class="animated img-rounded bounceInLeft" id="alert1" style="background-color: white;padding: 20px;margin-bottom: 15px;">
+                        - Por Favor comience a escribir el nombre del Paciente que desea atender.
+                    </div>
+                    <div class="animated img-rounded bounceInUp" id="alert2" style="background-color: white;padding: 20px;margin-bottom: 15px;">
+                        - Haga Click en Seleccionar
+                    </div>
                 </div>
-                <div class="col-md-6" id="therapist-div" style="display: none;">
+
+                <div class="col-md-6 animated bounceInDown" id="therapist-div" style="display: none;">
                     <div class="form-group">
                         <label for="therapist">Terapeuta</label>
                         {{ Form::text('therapist', Input::old('therapist'), array('placeholder' => 'Terapeuta','class' => 'form-control','id' => 'therapist','autocomplete' => 'off')) }}
