@@ -43,6 +43,12 @@
                 <a href="/admin"><i class="fa fa-bookmark"></i> Admin</a>
             </li>
             <li>
+                <a href="/my/calendar"><i class="fa fa-calendar-check-o"></i> Mi Calendario</a>
+            </li>
+            <li>
+                <a href="/my/durations"><i class="fa fa-clock-o"></i> Mis Duraciones</a>
+            </li>
+            <li>
                 <a href="/logout"><i class="fa fa-sign-out"></i> Cerrar Sesión </a>
             </li>
         </ul>

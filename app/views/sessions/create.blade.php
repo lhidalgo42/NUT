@@ -47,6 +47,9 @@
                 @if(Session::has('error'))
                     <span class="text-danger">{{Session::get('error')}}</span>
                 @endif
+                @if(Session::has('info'))
+                    <span class="text-primary">{{Session::get('info')}}</span>
+                @endif
                 {{ Form::close() }}
             </div>
         </div>

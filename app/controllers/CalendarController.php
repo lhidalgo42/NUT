@@ -48,7 +48,7 @@ class CalendarController extends \BaseController {
         $calendar = Schedule::join('rooms','rooms.id','=','schedule.rooms_id')->join('patients','patients.id','=','schedule.patients_id')->where('therapists_id',$therapist->id)->select('patients.name as name','schedule.start','schedule.end','schedule.rooms_id','rooms.name as room','schedule.id')->get();
         foreach($calendar as $schedule){
             $datos['id'] = $schedule->id;
-            $datos['name'] = $schedule->name.' / '.$schedule->room;
+            $datos['title'] = $schedule->name.' / '.$schedule->room;
             $datos['start'] = $schedule->start;
             $datos['end'] = $schedule->end;
             $data[] = $datos;
@@ -63,9 +63,9 @@ class CalendarController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function byTherapist()
 	{
-		//
+		return View::make('calendar.byTherapist');
 	}
 
 	/**
@@ -91,5 +91,6 @@ class CalendarController extends \BaseController {
 	{
 		//
 	}
+
 
 }

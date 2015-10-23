@@ -20,6 +20,8 @@ class CreateUsersTable extends Migration {
             $table->string('img');
             $table->string('name');
             $table->string('remember_token');
+			$table->integer('roles_id');
+			$table->boolean('access')->default('0');
 			$table->timestamps();
 		});
 	}

@@ -25,13 +25,21 @@ class TherapistsController extends \BaseController {
 	 */
     public function create()
     {
+        $user = new User();
         $therapist = new Therapist();
+        $user->email = Input::get('email');
+        $user->password =substr(Input::get('rut'),strlen(Input::get('rut'))-4,strlen(Input::get('rut')));
+        $user->img = 'avatar_2x.png';
+        $user->name = Input::get('name');
+        $user->roles_id = 3;
+        $user->save();
         $therapist->rut = Input::get('rut');
         $therapist->name = Input::get('name');
         $therapist->birth = date('Y-m-d', strtotime(Input::get('birth')));
         $therapist->phone = Input::get('phone');
         $therapist->cellphone = Input::get('cellphone');
         $therapist->email = Input::get('email');
+        $therapist->users_id = $user->id;
         $therapist->save();
         foreach(range(3,5) as $id) {
             $durations = new TherapistDuration();
@@ -146,6 +154,8 @@ class TherapistsController extends \BaseController {
         $exist = Schedule::where('therapists_id','=',$id)->count();
         if($exist == 0) {
             $therapist = Therapist::find($id);
+            $user = User::find($therapist->users_id);
+            $user->delete();
             $therapist->delete();
         }
         else{
@@ -162,8 +172,13 @@ class TherapistsController extends \BaseController {
 
     public function access(){
         $therapist = Therapist::find(Input::get('therapist'));
-        $therapist->access = Input::get('access');
-        $therapist->save();
+        $user = User::find($therapist->users_id);
+        $user->access = Input::get('access');
+        $user->save();
+    }
+    public function calendar(){
+        $therapist = Therapist::where('users_id',Auth::user()->id)->get()->first();
+        return View::make('therapists.calendar')->with(compact('therapist'));
     }
 
 }

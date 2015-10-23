@@ -23,6 +23,9 @@ Route::group(array('before' => 'auth'), function() {
     Route::get('/calendar', ['as' => 'calendar', 'uses' => 'CalendarController@index']);
     Route::get('/calendar/add', ['as' => 'addSchedule', 'uses' => 'ScheduleController@create']);
     Route::post('/calendar/hours', 'CalendarController@show');
+    Route::get('/calendar/therapist', 'CalendarController@byTherapist');
+    Route::get('/my/calendar', 'TherapistsController@calendar');
+    Route::get('/my/durations', 'TherapistsController@durations');
     Route::get('/rooms', ['as' => 'room', 'uses' => 'RoomsController@index']);
     Route::post('/schedule/create','ScheduleController@save');
     Route::get('/room/list','RoomsController@show');
@@ -47,7 +50,6 @@ Route::group(array('before' => 'auth'), function() {
     Route::post('/therapist/duration/delete','TherapistsController@durationDelete');
     Route::post('/therapist/color','TherapistsController@color');
     Route::post('/therapist/access','TherapistsController@access');
-
 
     Route::get('/admin','AdminsController@index');
 });

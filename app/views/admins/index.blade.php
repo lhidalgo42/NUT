@@ -28,6 +28,7 @@
                     <span class="col-md-3"><h3>Nombre</h3></span>
                     <span class="col-md-3"><h3>Acceso</h3></span>
                     <span class="col-md-3"><h3>Color</h3></span>
+                    <span class="col-md-3"><h3>Contraseña</h3></span>
                 </div>
                 @foreach($therapists as $therapist)
                     <div class="row" style="padding-bottom: 15px;">
@@ -48,7 +49,10 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            {{Form::select('color', $colors, $therapist->colors_id ,array('class' => 'form-control','id' => 'color')) }}
+                            {{Form::select('color', $colors, $therapist->colors_id ,array('class' => 'form-control color','therapist-id' => $therapist->id)) }}
+                        </div>
+                        <div class="col-md-3">
+
                         </div>
                     </div>
 
@@ -83,19 +87,19 @@
     </div>
     <!-- /#wrapper -->
     <script>
-        $(".color").click(function () {
+        $(".color").change(function () {
             $.ajax({
                 url: "/therapist/color",
                 data: {
-                    color: $(this).attr('color-id'),
+                    color: $(this).val(),
                     therapist: $(this).attr('therapist-id')
                 },
                 type: "POST",
                 success: function (data) {
-                    $(this).parent().children("button").removeClass('disabled active')
-                    $(this).addClass('disabled active')
                 }
             });
+            $(this).parent().children("button").removeClass('disabled active')
+            $(this).addClass('disabled active')
         });
 
         $(".access").click(function () {
@@ -107,10 +111,10 @@
                 },
                 type: "POST",
                 success: function (data) {
-                    $(this).parent().children("button").removeClass('disabled active');
-                    $(this).addClass('disabled active')
                 }
             });
+            $(this).parent().children("button").removeClass('disabled active');
+            $(this).addClass('disabled active')
         });
 
     </script>

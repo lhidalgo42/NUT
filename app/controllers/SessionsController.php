@@ -30,6 +30,10 @@ class SessionsController extends \BaseController {
 
 		$this->loginForm->validate($formData);
 
+		$user = User::where('email','=',Input::get('email'))->get()->first();
+		if($user->access == 0){
+			return Redirect::back()->withInput()->with('info', 'Usted no tiene permiso para acceder a la plataforma.');
+		}
 
 		if ( ! Auth::attempt($formData, $remember))
 		{

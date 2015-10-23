@@ -58,7 +58,7 @@
                             weekends:true,
                             defaultDate: new Date(),
                             timeFormat:'H:mm',
-                            editable: true,
+                            editable: false,
                             eventLimit: true, // allow "more" link when too many events
                             events: {{json_encode($datos)}}
 

@@ -4,12 +4,6 @@ class UsersTableSeeder extends Seeder {
 
 	public function run()
 	{
-		User::create([
-        'email' => 'lhidalgo@alumnos.uai.cl',
-        'password' => 'l30ntun4',
-        'img' => 'avatar_2x.png',
-        'name' => 'Leonardo Hidalgo'
-        ]);
         User::create([
             'email' => 'eortega@inia.cl',
             'password' => '1234',
@@ -21,6 +15,12 @@ class UsersTableSeeder extends Seeder {
             'password' => '1234',
             'img' => 'avatar_2x.png',
             'name' => 'Gloria Jury'
+        ]);
+        User::create([
+            'email' => 'leontuna@gmail.com',
+            'password' => '1234',
+            'img' => 'avatar_2x.png',
+            'name' => 'Leonardo Hidalgo'
         ]);
 	}
 
