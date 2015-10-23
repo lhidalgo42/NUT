@@ -1,6 +1,6 @@
 <?php
 
-class PermissionroleTableSeeder extends Seeder {
+class PermissionRoleTableSeeder extends Seeder {
 
 	public function run()
 	{
