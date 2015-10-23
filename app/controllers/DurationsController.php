@@ -10,7 +10,8 @@ class DurationsController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+		$durations = Duration::all();
+		return $durations;
 	}
 
 	/**
@@ -21,7 +22,10 @@ class DurationsController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		$duration = new Duration();
+		$duration->name = (Input::get('timestamp')/60 ).' Minutos';
+		$duration->timestamp = Input::get('timestamp');
+		$duration->save();
 	}
 
 	/**
@@ -44,7 +48,8 @@ class DurationsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$duration = Duration::find($id);
+		return $duration;
 	}
 
 	/**
@@ -56,7 +61,10 @@ class DurationsController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$duration = Duration::find($id);
+		$duration->name = Input::get('name');
+		$duration->timestamp = Input::get('timestamp');
+		$duration->save();
 	}
 
 	/**
@@ -80,7 +88,8 @@ class DurationsController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$duration = Duration::find($id);
+		$duration->destroy();
 	}
 
 }

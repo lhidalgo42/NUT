@@ -52,6 +52,8 @@ Route::group(array('before' => 'auth'), function() {
     Route::post('/therapist/access','TherapistsController@access');
 
     Route::get('/admin','AdminsController@index');
+
+    Route::post('/duration/new','DurationsController@create');
 });
 
 
