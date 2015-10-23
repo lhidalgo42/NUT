@@ -20,7 +20,7 @@
 
             <!-- /.row -->
             <div class="row" id="inputs">
-                <div class="col-md-6"  id="patient-div">
+                <div class="col-md-6 animated bounceInUp"  id="patient-div">
                     <div class="form-group">
                         <label for="patient">Paciente</label>
                         {{ Form::text('patient', Input::old('patient'), array('placeholder' => 'Paciente','class' => 'form-control','id' => 'patient','autocomplete' => 'off')) }}
@@ -35,15 +35,6 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-6">
-                    <div class="animated img-rounded bounceInLeft" id="alert1" style="background-color: white;padding: 20px;margin-bottom: 15px;">
-                        - Por Favor comience a escribir el nombre del Paciente que desea atender.
-                    </div>
-                    <div class="animated img-rounded bounceInUp" id="alert2" style="background-color: white;padding: 20px;margin-bottom: 15px;">
-                        - Haga Click en Seleccionar
-                    </div>
-                </div>
-
                 <div class="col-md-6 animated bounceInDown" id="therapist-div" style="display: none;">
                     <div class="form-group">
                         <label for="therapist">Terapeuta</label>
@@ -88,7 +79,7 @@
                             <tr><td><strong>Celular</strong></td><td id="table-patient-cellphone"></td><td><strong>Telefono</strong></td><td id="table-patient-phone"></td>
                             </tr>
                             <tr>
-                                <td colspan="2"><strong>Hora de Inicio</strong></td><td colspan="2" id="table-time" class="h4"></td>
+                                <td colspan="2"><strong>Hora de Inicio</strong></td><td colspan="2" id="table-time" class="h4" data="0"></td>
                             </tr>
                             <tr>
                                 <td colspan="2">Duracion</td><td colspan="2"><select class="form-control" name="duration" id="duration"></select></td>
@@ -186,7 +177,7 @@
 
                                         //alert('Clicked on: ' + date.format()+' / '+view.name);
                                         $("#resumen").modal('show');
-                                        $("#table-time").html(date.format('DD')+' de '+date.format('MMMM')+' del '+date.format('YYYY, h:mm:ss a'));
+                                        $("#table-time").html(date.format('DD')+' de '+date.format('MMMM')+' del '+date.format('YYYY, h:mm:ss a')).attr('data',date.format());
 
                                     },
                                     allDaySlot: false,
@@ -239,7 +230,7 @@
                     data: {
                         therapist: $(this).attr('therapist-id'),
                         patient : $(this).attr('patient-id'),
-                        start: $("#table-time").html(),
+                        start: $("#table-time").attr('data'),
                         duration: $("#duration").val(),
                         observation: $("#observation").val()
                     },

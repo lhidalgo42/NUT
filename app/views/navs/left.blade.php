@@ -9,6 +9,7 @@
                 <ul class="nav nav-second-level collapse" aria-expanded="false">
                     <li>
                         <a href="/calendar/add">Agregar Hora</a>
+                        <a href="/calendar/therapist">Calendario por Terapeuta</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
