@@ -180,5 +180,9 @@ class TherapistsController extends \BaseController {
         $therapist = Therapist::where('users_id',Auth::user()->id)->get()->first();
         return View::make('therapists.calendar')->with(compact('therapist'));
     }
+    public function durations(){
+        $therapist = Therapist::where('users_id',Auth::user()->id)->get()->first();
+        return View::make('therapists.durations')->with(compact('therapist'));
+    }
 
 }

@@ -21,7 +21,7 @@
             <!-- /.row -->
             <div class="row">
             <h3 class="col-lg-12 h3">Duracion de las Horas</h3>
-            <div class="col-lg-6" id="therapist-div" style="display: block;">
+            <div class="col-lg-6 animated fadeInLeft" id="therapist-div" style="display: block;">
                 <h4 class="h4">Seleccione Terapeuta</h4>
                 <div class="form-group">
                     <label for="therapist">Terapeuta</label>
@@ -93,7 +93,7 @@
                     });
                 });
             </script>
-                <div class="col-lg-6">
+                <div class="col-lg-6 animated fadeInRight">
                     <h4 class="h4">Duraciones Activas</h4>
                     <table class="table" style="background-color: white;position: relative;" >
                         <tr>
