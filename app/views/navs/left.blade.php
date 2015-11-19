@@ -1,9 +1,19 @@
+<?php $hasRole = new Acme\helpers\hasRole(); ?>
+
 <div class="navbar-default sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
+            @if($hasRole::Administrador())
             <li>
                 <a href="/"><i class="fa fa-home"></i> Inicio</a>
             </li>
+            @endif
+                @if($hasRole::Therapist())
+            <li>
+                <a href="/therapist/calendar/add"><i class="fa fa-calendar-plus-o"></i></i>Agregar Hora</a>
+            </li>
+                @endif
+                @if($hasRole::Administrador() || $hasRole::Secretaria())
             <li>
                 <a href="#"><i class="fa fa-calendar"></i> Calendario<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse" aria-expanded="false">
@@ -14,6 +24,7 @@
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
+                @endif
             <li>
                 <a href="#"><i class="fa fa-users"></i> Pacientes<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse" aria-expanded="false">

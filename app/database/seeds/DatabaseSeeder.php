@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder {
 		 $this->call('DurationTableSeeder');
 		 $this->call('TherapistDurationTableSeeder');
 		 $this->call('ColorTableSeeder');
+		 $this->call('RoleTableSeeder');
+		 $this->call('PermissionTableSeeder');
+		 $this->call('PermissionRoleTableSeeder');
 	}
 
 }

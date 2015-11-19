@@ -105,7 +105,7 @@
                                 id: id
                             },
                             error: function () {
-                                swal('Aviso','El terapeuta no registra horas, porfavor haga click en el dia y hora que desea.','warning')
+
                             }
                         }
 

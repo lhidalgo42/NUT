@@ -124,7 +124,7 @@ return array(
         'Laracasts\Validation\ValidationServiceProvider',
         'Barryvdh\DomPDF\ServiceProvider',
         'Way\Generators\GeneratorsServiceProvider',
-        'MaddHatter\LaravelFullcalendar\ServiceProvider',
+        'MaddHatter\LaravelFullcalendar\ServiceProvider'
 
 
 	),

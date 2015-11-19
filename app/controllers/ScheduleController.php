@@ -23,6 +23,11 @@ class ScheduleController extends \BaseController {
 	{
 		return View::make('calendar.add');
 	}
+	public function TherapistCreate()
+	{
+		$therapist= Therapist::where('users_id',Auth::user()->id)->get()->first();
+		return View::make('calendar.therapistAdd')->with(compact('therapist'));
+	}
 
 
     public function save()
@@ -32,13 +37,21 @@ class ScheduleController extends \BaseController {
         $duration = Input::get('duration');
         $start = strtotime(Input::get('start'));
         $observation = Input::get('observation');
+		$price = Input::get('price');
         $duration = Duration::find($duration);
         $end = $start+ $duration->timestamp;
+
+		$payment = new Payment();
+		$payment->payment_types_id = 5;
+		$payment->mount = $price;
+		$payment->save();
+
         $schedule = new Schedule();
         $schedule->users_id = Auth::user()->id;
         $schedule->patients_id = $patient;
         $schedule->therapists_id = $therapist;
         $schedule->rooms_id = 1;
+		$schedule->payments_id = $payment->id;
         $schedule->start = date("Y-m-d H:i:s",$start);
         $schedule->end =  date("Y-m-d H:i:s",$end);
         $schedule->status = 1;
@@ -69,9 +82,21 @@ class ScheduleController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show()
 	{
-		//
+		$schedule = Schedule::find(Input::get('id'));
+		$patient = Patient::find($schedule->patients_id);
+        $therapist = Therapist::find($schedule->therapists_id);
+        $room = Room::find($schedule->rooms_id);
+        if($schedule->payments_id != 0){
+            $payment = Payment::find($schedule->payments_id);
+        }
+        $data = array(
+            'patient' => array('id' => $patient->id,'name' => $patient->name,'phone' => $patient->phone,'cellphone' => $patient->cellphone),
+            'therapist' => array('id' => $therapist->id,'name' => $therapist->name,'phone' => $therapist->phone,'cellphone' => $therapist->cellphone),
+            'room' => array('id' => $room->id,'name' => $room->name)
+        );
+        return json_encode($data);
 	}
 
 	/**
@@ -81,9 +106,14 @@ class ScheduleController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function pending()
 	{
-		//
+		$schedule = Schedule::find(Input::get('schedule_id'));
+		$payment = Payment::find(Input::get('payment_id'));
+		$schedule->status = 5;
+		$schedule->save();
+		$payment->payment_types_id = 5;
+		$payment->save();
 	}
 
 	/**
@@ -105,9 +135,14 @@ class ScheduleController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy()
 	{
-		//
+		$schedule = Schedule::find(Input::get('schedule_id'));
+		$schedule->delete();
+		$payment = Payment::find(Input::get('payment_id'));
+		$payment->delete();
+
+
 	}
 
 }

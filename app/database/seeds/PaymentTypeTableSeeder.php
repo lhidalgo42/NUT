@@ -1,10 +1,11 @@
 <?php
 
 
-class PaymentTypeTableSeeder extends Seeder {
+class PaymentTypeTableSeeder extends Seeder
+{
 
-	public function run()
-	{
+    public function run()
+    {
         PaymentType::create([
             'name' => 'Efectivo'
         ]);
@@ -17,6 +18,9 @@ class PaymentTypeTableSeeder extends Seeder {
         PaymentType::create([
             'name' => 'Transferencia Bancaria'
         ]);
-	}
+        PaymentType::create([
+            'name' => 'Pendiente'
+        ]);
+    }
 
 }

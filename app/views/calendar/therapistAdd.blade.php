@@ -20,39 +20,24 @@
 
             <!-- /.row -->
             <div class="row" id="inputs">
-                <div class="col-md-6 animated bounceInUp"  id="patient-div">
+                <div class="col-md-12 animated bounceInUp" id="patient-div">
                     <div class="form-group">
                         <label for="patient">Paciente</label>
                         {{ Form::text('patient', Input::old('patient'), array('placeholder' => 'Paciente','class' => 'form-control','id' => 'patient','autocomplete' => 'off')) }}
 
                     </div>
-                    <table class="table table-bordered"  style="background-color: white;position: relative;">
+                    <table class="table table-bordered" style="background-color: white;position: relative;">
                         <tr>
                             <th>Nombre</th>
-                            <th style="text-align: center;"> / </th>
+                            <th style="text-align: center;"> /</th>
                         </tr>
                         <tbody id="patient-body">
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-6 animated bounceInDown" id="therapist-div" style="display: none;">
-                    <div class="form-group">
-                        <label for="therapist">Terapeuta</label>
-                        {{ Form::text('therapist', Input::old('therapist'), array('placeholder' => 'Terapeuta','class' => 'form-control','id' => 'therapist','autocomplete' => 'off')) }}
-                    </div>
-                    <table class="table table-bordered"  style="background-color: white;position: relative;">
-                        <tr>
-                            <th>Nombre</th>
-                            <th style="text-align: center;"> / </th>
-                        </tr>
-                        <tbody id="therapist-body">
-
-                        </tbody>
-                    </table>
-                </div>
             </div>
             <div class="row" id="calendar-div" style="display: none;">
-                    <div id="calendar"></div>
+                <div id="calendar"></div>
                 <!-- /.col-lg-8 -->
                 <!-- /.col-lg-4 -->
             </div>
@@ -63,29 +48,44 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">Resumen</h4>
                     </div>
                     <div class="modal-body">
                         <table class="table">
                             <tr>
-                                <td colspan="2"><strong>Terapeuta</strong></td><td colspan="2" id="table-therapist-name"></td>
-                            </tr>
-                            <tr><td><strong>Celular</strong></td><td id="table-therapist-cellphone"></td><td><strong>Telefono</strong></td><td id="table-therapist-phone"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"><strong>Paciente</strong></td><td colspan="2" id="table-patient-name"></td>
-                            </tr>
-                            <tr><td><strong>Celular</strong></td><td id="table-patient-cellphone"></td><td><strong>Telefono</strong></td><td id="table-patient-phone"></td>
+                                <td colspan="2"><strong>Terapeuta</strong></td>
+                                <td colspan="2" id="table-therapist-name">{{$therapist->name}}</td>
                             </tr>
                             <tr>
-                                <td colspan="2"><strong>Hora de Inicio</strong></td><td colspan="2" id="table-time" class="h4" data="0"></td>
+                                <td><strong>Celular</strong></td>
+                                <td id="table-therapist-cellphone">{{$therapist->cellphone}}</td>
+                                <td><strong>Telefono</strong></td>
+                                <td id="table-therapist-phone">{{$therapist->phone}}</td>
                             </tr>
                             <tr>
-                                <td colspan="2">Duracion</td><td colspan="2"><select class="form-control" name="duration" id="duration"></select></td>
+                                <td colspan="2"><strong>Paciente</strong></td>
+                                <td colspan="2" id="table-patient-name"></td>
                             </tr>
                             <tr>
-                                <td colspan="4"><input id="observation" name="observation" placeholder="Observaciones" class="form-control" style="width: 100%"></td>
+                                <td><strong>Celular</strong></td>
+                                <td id="table-patient-cellphone"></td>
+                                <td><strong>Telefono</strong></td>
+                                <td id="table-patient-phone"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><strong>Hora de Inicio</strong></td>
+                                <td colspan="2" id="table-time" class="h4" data="0"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Duracion</td>
+                                <td colspan="2"><select class="form-control" name="duration" id="duration"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"><input id="observation" name="observation" placeholder="Observaciones"
+                                                       class="form-control" style="width: 100%"></td>
                             </tr>
                             <tr>
                                 <td colspan="2"><strong>Precio</strong></td>
@@ -96,78 +96,57 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <a href="#" class="btn btn-primary" id="save"  therapist-id="0" patient-id="0">Guardar</a>
+                        <a href="#" class="btn btn-primary" id="save" patient-id="0">Guardar</a>
                     </div>
                 </div>
             </div>
         </div>
         <script>
-            $('#patient').keyup(function(){
+            $('#patient').keyup(function () {
                 $.ajax({
                     url: "/patient/list",
                     type: "POST",
-                    data:{
-                        name:$("#patient").val()
+                    data: {
+                        name: $("#patient").val()
                     },
-                    success:function(data){
+                    success: function (data) {
                         $("#patient-body").html('');
-                        for(var i =0;i<data.length;i++){
+                        for (var i = 0; i < data.length; i++) {
                             $("#patient-body").append('<tr>' +
-                                    '<td style="text-align: center;">'+data[i]['name']+'</td>' +
-                                    '<td style="text-align: center;"><a href="#" class="btn btn-primary" patient-name="'+data[i]['name']+'" patient-phone="'+data[i]['phone']+'" patient-cellphone="'+data[i]['cellphone']+'" patient-id="'+data[i]['id']+'"> Seleccionar</a></td>' +
+                                    '<td style="text-align: center;">' + data[i]['name'] + '</td>' +
+                                    '<td style="text-align: center;"><a href="#" class="btn btn-primary" patient-name="' + data[i]['name'] + '" patient-phone="' + data[i]['phone'] + '" patient-cellphone="' + data[i]['cellphone'] + '" patient-id="' + data[i]['id'] + '"> Seleccionar</a></td>' +
                                     '</tr>');
                         }
-                        $("#patient-body a").click(function(){
-                            $("#save").attr('patient-id',$(this).attr('patient-id'));
+                        $("#patient-body a").click(function () {
+                            $("#save").attr('patient-id', $(this).attr('patient-id'));
                             $('#patient').val($(this).attr('patient-name'));
-                            $(this).attr('disabled','disabled');
-                            $("#therapist-div").css('display','block').addClass('fadein-1');
+                            $(this).attr('disabled', 'disabled');
+                            $("#therapist-div").css('display', 'block').addClass('fadein-1');
                             $("#table-patient-name").html($(this).attr('patient-name'));
                             $("#table-patient-cellphone").html($(this).attr('patient-cellphone'));
                             $("#table-patient-phone").html($(this).attr('patient-phone'))
-                        });
-                    }
-                });
-            });
-            $('#therapist').keyup(function() {
-
-                $.ajax({
-                    url: "/therapist/list",
-                    type: "POST",
-                    data: {
-                        name: $("#therapist").val()
-                    },
-                    success: function (data) {
-                        $("#therapist-body").html('');
-                        for (var i = 0; i < data.length; i++) {
-                            $("#therapist-body").append('<tr>' +
-                                    '<td style="text-align: center;">' + data[i]['name'] + '</td>' +
-                                    '<td style="text-align: center;"><a href="#" class="btn btn-primary" therapist-name="'+data[i]['name']+'" therapist-phone="'+data[i]['phone']+'" therapist-cellphone="'+data[i]['cellphone']+'" therapist-id="' + data[i]['id'] + '"> Seleccionar</a></td>' +
-                                    '</tr>');
-                        }
-                        $("#therapist-body a").click(function () {
-                            $(this).attr('disabled', 'disabled');
-                            var id = $(this).attr('therapist-id');
-                            $('#therapist').val($(this).attr('therapist-name'));
-                            $("#save").attr('therapist-id',id);
                             $("#inputs").addClass('fadeout-1');
-                            $("#table-therapist-name").html($(this).attr('therapist-name'));
-                            $("#table-therapist-cellphone").html($(this).attr('therapist-cellphone'));
-                            $("#table-therapist-phone").html($(this).attr('therapist-phone'));
                             $.ajax({
                                 url: "/therapist/duration",
                                 type: "POST",
-                                data: { id: $(this).attr('therapist-id')
+                                data: {
+                                    id: {{$therapist->id}}
+
+
+
+
+
+
                                 },
-                                success: function( data ) {
+                                success: function (data) {
                                     var duration = $("#duration");
                                     duration.html('');
-                                    for (var i = 0; i<data.length;i++){
-                                        duration.append('<option value="'+data[i]['id']+'">'+data[i]['name']+'</option>');
+                                    for (var i = 0; i < data.length; i++) {
+                                        duration.append('<option value="' + data[i]['id'] + '">' + data[i]['name'] + '</option>');
                                     }
                                 }
                             });
-                            setTimeout(function(){
+                            setTimeout(function () {
                                 $("#inputs").css('display', 'none');
                                 $("#calendar-div").css('display', 'block').addClass('fadein-1');
                                 $('#calendar').fullCalendar({
@@ -182,7 +161,7 @@
 
                                         //alert('Clicked on: ' + date.format()+' / '+view.name);
                                         $("#resumen").modal('show');
-                                        $("#table-time").html(date.format('DD')+' de '+date.format('MMMM')+' del '+date.format('YYYY, h:mm:ss a')).attr('data',date.format());
+                                        $("#table-time").html(date.format('DD') + ' de ' + date.format('MMMM') + ' del ' + date.format('YYYY, h:mm:ss a')).attr('data', date.format());
 
                                     },
                                     allDaySlot: false,
@@ -202,42 +181,39 @@
                                             url: '/calendar/hours',
                                             type: 'POST',
                                             data: {
-                                                id: id
+                                                id: {{$therapist->id}}
+
+
+
+
+
                                             },
                                             error: function () {
-                                               }
+                                                swal('Aviso', 'El terapeuta no registra horas, porfavor haga click en el dia y hora que desea.', 'warning')
+                                            }
                                         }
 
                                         // any other sources...
 
                                     ]
                                 });
-                            },1000);
+                            }, 1000);
                         });
                     }
                 });
             });
-            $("#next2").click(function() {
-                $("#therapist-div").addClass('fadeout-1');
-                $("#next2").addClass('fadeout-1');
-                setTimeout(function () {
-
-
-                }, 1000);
-            });
-
-            $("#save").click(function(){
+            $("#save").click(function () {
                 $("#resumen").modal('hide');
                 $.ajax({
                     url: "/schedule/create",
                     type: "POST",
                     data: {
-                        therapist: $(this).attr('therapist-id'),
-                        patient : $(this).attr('patient-id'),
+                        therapist: {{$therapist->id}},
+                        patient: $(this).attr('patient-id'),
                         start: $("#table-time").attr('data'),
                         duration: $("#duration").val(),
                         observation: $("#observation").val(),
-                        price : $("#price").val()
+                        price: $("#price").val()
                     },
                     success: function (data) {
                         window.location.href = '/';
