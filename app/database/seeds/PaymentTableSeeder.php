@@ -14,11 +14,6 @@ class PaymentTableSeeder extends Seeder {
             'ticket' => 0,
             'mount' => 10000
         ]);
-        Payment::create([
-            'payment_types_id' => 1,
-            'ticket' => 0,
-            'mount' => 30000
-        ]);
 	}
 
 }

@@ -22,6 +22,7 @@ class CreatePatientsTable extends Migration {
             $table->string('cellphone');
             $table->string('email');
             $table->integer('recommendation_id');
+			$table->integer('addedByUserId');
 			$table->timestamps();
 		});
 	}

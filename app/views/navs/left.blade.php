@@ -3,7 +3,7 @@
 <div class="navbar-default sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
-            @if($hasRole::Administrador())
+            @if($hasRole::Administrador() || $hasRole::Secretaria() || $hasRole::Therapist())
             <li>
                 <a href="/"><i class="fa fa-home"></i> Inicio</a>
             </li>
@@ -34,6 +34,7 @@
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
+                @if($hasRole::Administrador() || $hasRole::Secretaria())
             <li>
                 <a href="#"><i class="fa fa-users"></i> Terapeutas<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse" aria-expanded="false">
@@ -46,19 +47,22 @@
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
-
+                @endif
+                @if($hasRole::Administrador() || $hasRole::Secretaria())
             <li>
                 <a href="/rooms"><i class="fa fa-bookmark"></i> Salas y Salones</a>
             </li>
+                @endif
+                @if($hasRole::Administrador() || $hasRole::Secretaria())
             <li>
                 <a href="/admin"><i class="fa fa-bookmark"></i> Admin</a>
             </li>
-            <li>
-                <a href="/my/calendar"><i class="fa fa-calendar-check-o"></i> Mi Calendario</a>
-            </li>
+                @endif
+                @if($hasRole::Therapist())
             <li>
                 <a href="/my/durations"><i class="fa fa-clock-o"></i> Mis Duraciones</a>
             </li>
+                @endif
             <li>
                 <a href="/logout"><i class="fa fa-sign-out"></i> Cerrar Sesión </a>
             </li>

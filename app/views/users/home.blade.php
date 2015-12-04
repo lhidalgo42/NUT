@@ -25,7 +25,7 @@
                         <div class="panel-heading">
                             <i class="fa fa-calendar"></i> Calendario
                             <div class="pull-right">
-                                <a href="/calendar/add" class="btn btn-xs btn-info"><i class="fa fa-plus"></i> A�adir
+                                <a href="/calendar/add" class="btn btn-xs btn-info"><i class="fa fa-plus"></i> Añadir
                                 </a>
                             </div>
                         </div>
@@ -98,11 +98,13 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="list-group">
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-user"></i> Leonardo Hidalgo
-                                    <span class="pull-right text-muted small"><em>50.000</em>
+                                @foreach($pendings as $pending)
+                                <a href="#/patients/{{$pending->id}}" class="list-group-item">
+                                    <i class="fa fa-user"></i> {{$pending->name}}
+                                    <span class="pull-right text-muted small"><em>{{number_format($pending->mount,0,",",".")}}</em>
                                     </span>
                                 </a>
+                                @endforeach
                             </div>
                             <!-- /.list-group -->
                             <a href="#" class="btn btn-default btn-block">Ver Todos los Pagos Pendientes</a>
@@ -192,12 +194,12 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal" id="editCalendarDelete">
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal" id="editCalendarDelete" data-toggle="tooltip" data-placement="top" title="Elimina la Hora">
                         Eliminar
                     </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-info" id="editCalendarPending">Pago Pendiente</button>
-                    <button type="button" class="btn btn-primary" id="editCalendarConfirm">Confirmar Asistencia</button>
+                    <button type="button" class="btn btn-info" id="editCalendarPending" data-toggle="tooltip" data-placement="top" title="Confirma la Asistencia, y deja el pago pendiente.">Pago Pendiente</button>
+                    <button type="button" class="btn btn-success" id="editCalendarConfirm" data-toggle="tooltip" data-placement="top" title="Confirma la asistencia, y deja cancelado el pago.">Confirmar Asistencia</button>
                 </div>
             </div>
         </div>
@@ -211,6 +213,7 @@
             $("#editCalendarEnd").html(moment(end).format('DD-MM-YYYY HH:mm'));
         });
         $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
             display('editCalendarTransactionNumber', 'none');
             display('editCalendarCheckNumber', 'none');
             display('editCalendarCheckNumber', 'none');
@@ -267,15 +270,35 @@
                         url: '/schedule/delete',
                         type: 'POST',
                         data: {
-                            schedule_id: $(this).attr('schedule_id'),
-                            payment_id: $(this).attr('payment_id')
+                            schedule_id: $("#editCalendarDelete").attr('schedule_id'),
+                            payment_id: $("#editCalendarDelete").attr('payment_id')
                         },
                         success: function () {
+                            $("#editCalendar").modal('hide');
                             $("#calendar").fullCalendar('removeEvents', $("#editCalendar").attr('event-id'))
                         }
                     });
                     swal("Borrado!", "La Hora Seleccionada ha sido borrada.", "success");
                 });
+            });
+            $("#editCalendarConfirm").click(function () {
+                    $.ajax({
+                        url: '/schedule/pending',
+                        type: 'POST',
+                        data: {
+                            schedule_id: $("#editCalendarConfirm").attr('schedule_id'),
+                            payment_id: $("#editCalendarConfirm").attr('payment_id'),
+
+                        },
+                        success: function () {
+                            $("#editCalendar").modal('hide');
+                            var hour = $("#calendar").fullCalendar( 'clientEvents' , $("#editCalendar").attr('event-id'))[0];
+                            hour.borderColor = '#FFFFFF';
+                            hour.backgroundColor = '#000000';
+                            hour.textColor = '#FFFFFF';
+                            $('#calendar').fullCalendar('updateEvent', hour);
+                        }
+                    });
             });
             $("#editCalendarPending").click(function () {
                 swal({
@@ -291,8 +314,8 @@
                         url: '/schedule/pending',
                         type: 'POST',
                         data: {
-                            schedule_id: $(this).attr('schedule_id'),
-                            payment_id: $(this).attr('payment_id')
+                            schedule_id: $("#editCalendarPending").attr('schedule_id'),
+                            payment_id: $("#editCalendarPending").attr('payment_id')
                         },
                         success: function () {
                             var hour = $("#calendar").fullCalendar( 'clientEvents' , $("#editCalendar").attr('event-id'))[0];

@@ -45,21 +45,13 @@
                         editable: false,
                         eventLimit: true, // allow "more" link when too many events
                         eventSources: [
-
-                            // your event source
                             {
                                 url: '/calendar/hours',
                                 type: 'POST',
                                 data: {
                                     id: id
-                                },
-                                error: function () {
-                                    swal('Aviso','El terapeuta no registra horas, porfavor haga click en el dia y hora que desea.','warning')
                                 }
                             }
-
-                            // any other sources...
-
                         ]
                     });
                 }

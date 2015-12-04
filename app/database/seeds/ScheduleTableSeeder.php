@@ -11,6 +11,7 @@ class ScheduleTableSeeder extends Seeder {
             'rooms_id' => 3,
             'start' => date("Y-m-d H:i").':00',
             'end' => date("Y-m-d H:i",(time()+60*90)).':00',
+			'payments_id' => 1,
             'status' => '1'
         ]);
         Schedule::create([
@@ -20,6 +21,7 @@ class ScheduleTableSeeder extends Seeder {
             'rooms_id' => 3,
             'start' => date("Y-m-d H:i",(time()+60*95)).':00',
             'end' => date("Y-m-d H:i",(time()+60*185)).':00',
+			'payments_id' => 2,
             'status' => '2'
         ]);
 	}

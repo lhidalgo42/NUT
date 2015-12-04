@@ -40,8 +40,14 @@
                             <td style="text-align:center">@if($patient->phone != ""){{$patient->phone}}@else - @endif</td>
                             <td style="text-align:center">@if($patient->cellphone != ""){{$patient->cellphone}}@else - @endif</td>
                             <td style="text-align:center">@if($patient->email != ""){{$patient->email}}@else - @endif</td>
-                            <td style="text-align:center"><a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" patient-id="{{$patient->id}}"></i></a></td>
-                            <td style="text-align:center"><a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" patient-id="{{$patient->id}}"></i></a></td>
+                            @if($patient->addedByUserId == Auth::user()->id || \Role::find(\Auth::user()->roles_id)->name != "Terapeuta")
+                                <td style="text-align:center"><a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" patient-id="{{$patient->id}}"></i></a></td>
+                                <td style="text-align:center"><a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" patient-id="{{$patient->id}}"></i></a></td>
+                            @else
+                                <td style="text-align:center"> - </td>
+                                <td style="text-align:center"> - </td>
+                            @endif
+
                         </tr>
                     @endforeach
                     </tbody>

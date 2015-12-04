@@ -141,8 +141,5 @@ class ScheduleController extends \BaseController {
 		$schedule->delete();
 		$payment = Payment::find(Input::get('payment_id'));
 		$payment->delete();
-
-
 	}
-
 }

@@ -32,6 +32,7 @@ class PatientsController extends \BaseController {
         $patient->phone = Input::get('phone');
         $patient->cellphone = Input::get('cellphone');
         $patient->email = Input::get('email');
+		$patient->addedByUserId = Auth::user()->id;
         $patient->save();
         return $patient;
 	}
