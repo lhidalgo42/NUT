@@ -34,18 +34,18 @@
                     <tbody>
                     @foreach($patients as $patient)
                         <tr id="dat-id-{{$patient->id}}">
-                            <td style="text-align:center">@if($patient->rut != ""){{$patient->rut}}@else - @endif</td>
-                            <td style="text-align:center">@if($patient->name != ""){{$patient->name}}@else - @endif</td>
-                            <td style="text-align:center">@if($patient->birth != ""){{$patient->birth}}@else - @endif</td>
-                            <td style="text-align:center">@if($patient->phone != ""){{$patient->phone}}@else - @endif</td>
-                            <td style="text-align:center">@if($patient->cellphone != ""){{$patient->cellphone}}@else - @endif</td>
-                            <td style="text-align:center">@if($patient->email != ""){{$patient->email}}@else - @endif</td>
+                            <td>@if($patient->rut != ""){{$patient->rut}}@else - @endif</td>
+                            <td>@if($patient->name != ""){{$patient->name}}@else - @endif</td>
+                            <td>@if($patient->birth != ""){{$patient->birth}}@else - @endif</td>
+                            <td>@if($patient->phone != ""){{$patient->phone}}@else - @endif</td>
+                            <td>@if($patient->cellphone != ""){{$patient->cellphone}}@else - @endif</td>
+                            <td>@if($patient->email != ""){{$patient->email}}@else - @endif</td>
                             @if($patient->addedByUserId == Auth::user()->id || \Role::find(\Auth::user()->roles_id)->name != "Terapeuta")
-                                <td style="text-align:center"><a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" patient-id="{{$patient->id}}"></i></a></td>
-                                <td style="text-align:center"><a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" patient-id="{{$patient->id}}"></i></a></td>
+                                <td><a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" patient-id="{{$patient->id}}"></i></a></td>
+                                <td><a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" patient-id="{{$patient->id}}"></i></a></td>
                             @else
-                                <td style="text-align:center"> - </td>
-                                <td style="text-align:center"> - </td>
+                                <td> - </td>
+                                <td> - </td>
                             @endif
 
                         </tr>
@@ -118,14 +118,14 @@
                             },
                             success: function (data) {
                                 table.row.add([
-                                    '<span style="text-align:center">'+data.rut+'</span>',
-                                    '<span style="text-align:center">'+data.name+'</span>',
-                                    '<span style="text-align:center">'+data.birth+'</span>',
-                                    '<span style="text-align:center">'+data.phone+'</span>',
-                                    '<span style="text-align:center">'+data.cellphone+'</span>',
-                                    '<span style="text-align:center">'+data.email+'</span>',
-                                    '<span style="text-align:center"><a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" patient-id="'+data.id+'"></i></a></span>',
-                                    '<span style="text-align:center"><a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" patient-id="'+data.id+'"></i></a></span>'
+                                   data.rut,
+                                   data.name,
+                                   data.birth,
+                                   data.phone,
+                                   data.cellphone,
+                                   data.email,
+                                   '<a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" patient-id="'+data.id+'"></i></a>',
+                                   '<a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" patient-id="'+data.id+'"></i></a>'
                                 ]).draw();
                                 $("#dataModal").modal('hide');
                                 $("#dataTitle").html('Paciente Agregar/Editar');
@@ -155,14 +155,14 @@
                             success:function(data){
                                 table.row( $("i.fa-pencil-square-o[patient-id='"+data.id+"']").parents('tr') ).remove().draw();
                                 table.row.add([
-                                    '<span style="text-align:center">'+data.rut+'</span>',
-                                    '<span style="text-align:center">'+data.name+'</span>',
-                                    '<span style="text-align:center">'+data.birth+'</span>',
-                                    '<span style="text-align:center">'+data.phone+'</span>',
-                                    '<span style="text-align:center">'+data.cellphone+'</span>',
-                                    '<span style="text-align:center">'+data.email+'</span>',
-                                    '<span style="text-align:center"><a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" patient-id="'+data.id+'"></i></a></span>',
-                                    '<span style="text-align:center"><a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" patient-id="'+data.id+'"></i></a></span>'
+                                   data.rut,
+                                   data.name,
+                                   data.birth,
+                                   data.phone,
+                                   data.cellphone,
+                                   data.email,
+                                   '<a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" patient-id="'+data.id+'"></i></a>',
+                                   '<a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" patient-id="'+data.id+'"></i></a>'
                                 ]).draw();
                                 $("#dataModal").modal('hide');
                                 $("#dataTitle").html('Terapeuta Agregar/Editar');

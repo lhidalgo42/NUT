@@ -34,14 +34,14 @@
                     <tbody>
                     @foreach($therapists as $therapist)
                         <tr id="dat-id-{{$therapist->id}}">
-                            <td style="text-align:center">@if($therapist->rut != ""){{$therapist->rut}}@else - @endif</td>
-                            <td style="text-align:center">@if($therapist->name != ""){{$therapist->name}}@else - @endif</td>
-                            <td style="text-align:center">@if($therapist->birth != ""){{$therapist->birth}}@else - @endif</td>
-                            <td style="text-align:center">@if($therapist->phone != ""){{$therapist->phone}}@else - @endif</td>
-                            <td style="text-align:center">@if($therapist->cellphone != ""){{$therapist->cellphone}}@else - @endif</td>
-                            <td style="text-align:center">@if($therapist->email != ""){{$therapist->email}}@else - @endif</td>
-                            <td style="text-align:center"><a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" therapist-id="{{$therapist->id}}"></i></a></td>
-                            <td style="text-align:center"><a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" therapist-id="{{$therapist->id}}"></i></a></td>
+                            <td>@if($therapist->rut != ""){{$therapist->rut}}@else - @endif</td>
+                            <td>@if($therapist->name != ""){{$therapist->name}}@else - @endif</td>
+                            <td>@if($therapist->birth != ""){{$therapist->birth}}@else - @endif</td>
+                            <td>@if($therapist->phone != ""){{$therapist->phone}}@else - @endif</td>
+                            <td>@if($therapist->cellphone != ""){{$therapist->cellphone}}@else - @endif</td>
+                            <td>@if($therapist->email != ""){{$therapist->email}}@else - @endif</td>
+                            <td><a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" therapist-id="{{$therapist->id}}"></i></a></td>
+                            <td><a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" therapist-id="{{$therapist->id}}"></i></a></td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -122,14 +122,14 @@
                             },
                             success: function (data) {
                                 table.row.add([
-                                    '<span style="text-align:center">'+data.rut+'</span>',
-                                    '<span style="text-align:center">'+data.name+'</span>',
-                                    '<span style="text-align:center">'+data.birth+'</span>',
-                                    '<span style="text-align:center">'+data.phone+'</span>',
-                                    '<span style="text-align:center">'+data.cellphone+'</span>',
-                                    '<span style="text-align:center">'+data.email+'</span>',
-                                    '<span style="text-align:center"><a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" therapist-id="'+data.id+'"></i></a></span>',
-                                    '<span style="text-align:center"><a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" therapist-id="'+data.id+'"></i></a></span>'
+                                    data.rut,
+                                    data.name,
+                                    data.birth,
+                                    data.phone,
+                                    data.cellphone,
+                                    data.email,
+                                    '<a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" therapist-id="'+data.id+'"></i></a>',
+                                    '<a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" therapist-id="'+data.id+'"></i></a>'
                                 ]).draw();
                                 $("#dataModal").modal('hide');
                                 $("#dataTitle").html('Terapeuta Agregar/Editar');
@@ -159,14 +159,14 @@
                             success:function(data){
                                 table.row( $("i.fa-pencil-square-o[therapist-id='"+data.id+"']").parents('tr') ).remove().draw();
                                 table.row.add([
-                                    '<span style="text-align:center">'+data.rut+'</span>',
-                                    '<span style="text-align:center">'+data.name+'</span>',
-                                    '<span style="text-align:center">'+data.birth+'</span>',
-                                    '<span style="text-align:center">'+data.phone+'</span>',
-                                    '<span style="text-align:center">'+data.cellphone+'</span>',
-                                    '<span style="text-align:center">'+data.email+'</span>',
-                                    '<span style="text-align:center"><a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" therapist-id="'+data.id+'"></i></a></span>',
-                                    '<span style="text-align:center"><a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" therapist-id="'+data.id+'"></i></a></span>'
+                                    data.rut,
+                                    data.name,
+                                    data.birth,
+                                    data.phone,
+                                    data.cellphone,
+                                    data.email,
+                                    '<a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" therapist-id="'+data.id+'"></i></a>',
+                                    '<a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" therapist-id="'+data.id+'"></i></a>'
                                 ]).draw();
                                 $("#dataModal").modal('hide');
                                 $("#dataTitle").html('Terapeuta Agregar/Editar');

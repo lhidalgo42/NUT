@@ -67,6 +67,9 @@
             -webkit-box-shadow: 0px 5px 20px #ccc;
             box-shadow: 0px 5px 20px #ccc;
         }
+        #dtes > tbody > tr >td{
+            text-align:center
+        }
     </style>
 
     <!-- jQuery -->
