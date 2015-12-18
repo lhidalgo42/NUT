@@ -50,16 +50,26 @@
             </div>
             <script>
                 $(document).ready(function(){
+                    var edit;
                     var table = $('#dtes').DataTable({
                         "language": {
                             "url": "https://cdn.datatables.net/plug-ins/1.10.7/i18n/Spanish.json"
                         }
                     });
                     $('#dtes tbody').on( 'click', 'i.fa-trash-o', function () {
-                        table.row( $(this).parents('tr') ).remove().draw();
+                        var _this =this;
                         $.ajax({
                             url: "/therapist/delete/"+$(this).attr('therapist-id'),
-                            type: "POST"
+                            type: "POST",
+                            success:function(data){
+                                data = JSON.parse(data);
+                                if(data.remove == 0) {
+                                    swal('Ooops', 'No se Puede Eliminar un Terapeuta que registre horas. Se le puede Denegar el Acceso via el menu Administrador.', 'warning');
+                                }
+                                else if(data.response == 1){
+                                    table.row( $(_this).parents('tr') ).remove().draw();
+                                }
+                            }
                         });
                     } );
                     $('#dtes tbody').on( 'click', 'i.fa-pencil-square-o', function () {
@@ -112,14 +122,14 @@
                             },
                             success: function (data) {
                                 table.row.add([
-                                    data.rut,
-                                    data.name,
-                                    data.birth,
-                                    data.phone,
-                                    data.cellphone,
-                                    data.email,
-                                    '<a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" therapist-id="'+data.id+'"></i></a>',
-                                    '<a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" therapist-id="'+data.id+'"></i></a>'
+                                    '<span style="text-align:center">'+data.rut+'</span>',
+                                    '<span style="text-align:center">'+data.name+'</span>',
+                                    '<span style="text-align:center">'+data.birth+'</span>',
+                                    '<span style="text-align:center">'+data.phone+'</span>',
+                                    '<span style="text-align:center">'+data.cellphone+'</span>',
+                                    '<span style="text-align:center">'+data.email+'</span>',
+                                    '<span style="text-align:center"><a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" therapist-id="'+data.id+'"></i></a></span>',
+                                    '<span style="text-align:center"><a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" therapist-id="'+data.id+'"></i></a></span>'
                                 ]).draw();
                                 $("#dataModal").modal('hide');
                                 $("#dataTitle").html('Terapeuta Agregar/Editar');
@@ -133,7 +143,7 @@
                             }
                         });
                     });
-                    function save(){
+                    $("#save").click(function () {
                         $.ajax({
                             url: "/therapist/save",
                             type: "POST",
@@ -147,7 +157,17 @@
                                 email:$("#email").val()
                             },
                             success:function(data){
-                                table.row( $(this).parents('tr') ).remove().draw();
+                                table.row( $("i.fa-pencil-square-o[therapist-id='"+data.id+"']").parents('tr') ).remove().draw();
+                                table.row.add([
+                                    '<span style="text-align:center">'+data.rut+'</span>',
+                                    '<span style="text-align:center">'+data.name+'</span>',
+                                    '<span style="text-align:center">'+data.birth+'</span>',
+                                    '<span style="text-align:center">'+data.phone+'</span>',
+                                    '<span style="text-align:center">'+data.cellphone+'</span>',
+                                    '<span style="text-align:center">'+data.email+'</span>',
+                                    '<span style="text-align:center"><a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" therapist-id="'+data.id+'"></i></a></span>',
+                                    '<span style="text-align:center"><a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" therapist-id="'+data.id+'"></i></a></span>'
+                                ]).draw();
                                 $("#dataModal").modal('hide');
                                 $("#dataTitle").html('Terapeuta Agregar/Editar');
                                 $("#id").val('');
@@ -159,7 +179,7 @@
                                 $("#email").val('');
                             }
                         });
-                    }
+                    });
                 });
             </script>
             <!-- /.row -->
@@ -174,7 +194,6 @@
                         <h4 class="modal-title" id="dataTitle">Terapeuta Agregar/Editar</h4>
                     </div>
                     <div class="modal-body">
-                        {{Form::open(array(null, null, 'onsubmit' => 'save(this); return false;'))}}
                         {{Form::hidden('id',Input::old('id'),array('id'=> 'id'))}}
                         <div class="form-group">
                             <label for="rut">RUT</label>
@@ -200,7 +219,6 @@
                             <label for="email">Email</label>
                             {{ Form::email('email', Input::old('email'), array('placeholder' => 'Email','class' => 'form-control','id' => 'email','required' => 'required',)) }}
                         </div>
-                        {{Form::close()}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal" id="cancel">Cancelar</button>

@@ -87,6 +87,7 @@
 
 
 
+
                     });
                 </script>
                 <!-- /.col-lg-8 -->
@@ -99,11 +100,11 @@
                         <div class="panel-body">
                             <div class="list-group">
                                 @foreach($pendings as $pending)
-                                <a href="#/patients/{{$pending->id}}" class="list-group-item">
-                                    <i class="fa fa-user"></i> {{$pending->name}}
-                                    <span class="pull-right text-muted small"><em>{{number_format($pending->mount,0,",",".")}}</em>
+                                    <a href="#/patients/{{$pending->id}}" class="list-group-item">
+                                        <i class="fa fa-user"></i> {{$pending->name}}
+                                        <span class="pull-right text-muted small"><em>{{number_format($pending->mount,0,",",".")}}</em>
                                     </span>
-                                </a>
+                                    </a>
                                 @endforeach
                             </div>
                             <!-- /.list-group -->
@@ -194,12 +195,19 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal" id="editCalendarDelete" data-toggle="tooltip" data-placement="top" title="Elimina la Hora">
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal" id="editCalendarDelete"
+                            data-toggle="tooltip" data-placement="top" title="Elimina la Hora">
                         Eliminar
                     </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-info" id="editCalendarPending" data-toggle="tooltip" data-placement="top" title="Confirma la Asistencia, y deja el pago pendiente.">Pago Pendiente</button>
-                    <button type="button" class="btn btn-success" id="editCalendarConfirm" data-toggle="tooltip" data-placement="top" title="Confirma la asistencia, y deja cancelado el pago.">Confirmar Asistencia</button>
+                    <button type="button" class="btn btn-info" id="editCalendarPending" data-toggle="tooltip"
+                            data-placement="top" title="Confirma la Asistencia, y deja el pago pendiente.">Pago
+                        Pendiente
+                    </button>
+                    <button type="button" class="btn btn-success" id="editCalendarConfirm" data-toggle="tooltip"
+                            data-placement="top" title="Confirma la asistencia, y deja cancelado el pago.">Confirmar
+                        Asistencia
+                    </button>
                 </div>
             </div>
         </div>
@@ -281,25 +289,38 @@
                     swal("Borrado!", "La Hora Seleccionada ha sido borrada.", "success");
                 });
             });
+
             $("#editCalendarConfirm").click(function () {
+                swal({
+                    title: "Se encuentra Seguro?",
+                    text: "Se confirmara la visita.",
+                    type: "success",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Confirmar!",
+                    closeOnConfirm: false
+                }, function () {
                     $.ajax({
-                        url: '/schedule/pending',
+                        url: '/schedule/confirm',
                         type: 'POST',
                         data: {
-                            schedule_id: $("#editCalendarConfirm").attr('schedule_id'),
-                            payment_id: $("#editCalendarConfirm").attr('payment_id'),
+                            schedule_id: $("#editCalendarPending").attr('schedule_id'),
+                            payment_id: $("#editCalendarPending").attr('payment_id'),
 
                         },
                         success: function () {
-                            $("#editCalendar").modal('hide');
-                            var hour = $("#calendar").fullCalendar( 'clientEvents' , $("#editCalendar").attr('event-id'))[0];
+                            var hour = $("#calendar").fullCalendar('clientEvents', $("#editCalendar").attr('event-id'))[0];
                             hour.borderColor = '#FFFFFF';
                             hour.backgroundColor = '#000000';
                             hour.textColor = '#FFFFFF';
-                            $('#calendar').fullCalendar('updateEvent', hour);
+                            $('#calendar').fullCalendar('updateEvent', hour)
+                            $("#editCalendar").modal('hide');
                         }
                     });
+                    swal("Pago Pendiente!", "La Hora Seleccionada ha sido seleccionada como Pago Pendiente.", "success");
+                });
             });
+
             $("#editCalendarPending").click(function () {
                 swal({
                     title: "Se encuentra Seguro?",
@@ -318,11 +339,13 @@
                             payment_id: $("#editCalendarPending").attr('payment_id')
                         },
                         success: function () {
-                            var hour = $("#calendar").fullCalendar( 'clientEvents' , $("#editCalendar").attr('event-id'))[0];
+                            var hour = $("#calendar").fullCalendar('clientEvents', $("#editCalendar").attr('event-id'))[0];
                             hour.borderColor = '#FFFFFF';
                             hour.backgroundColor = '#000000';
                             hour.textColor = '#FFFFFF';
                             $('#calendar').fullCalendar('updateEvent', hour);
+                            $("#editCalendar").modal('hide');
+
                         }
                     });
                     swal("Pago Pendiente!", "La Hora Seleccionada ha sido seleccionada como Pago Pendiente.", "success");

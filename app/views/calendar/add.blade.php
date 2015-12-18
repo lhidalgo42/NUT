@@ -22,7 +22,7 @@
             <div class="row" id="inputs">
                 <div class="col-md-6 animated bounceInUp"  id="patient-div">
                     <div class="form-group">
-                        <label for="patient">Paciente</label>
+                        <label for="patient" style="padding-bottom: 18px;">Paciente</label>
                         {{ Form::text('patient', Input::old('patient'), array('placeholder' => 'Paciente','class' => 'form-control','id' => 'patient','autocomplete' => 'off')) }}
 
                     </div>
@@ -37,8 +37,7 @@
                 </div>
                 <div class="col-md-6 animated bounceInDown" id="therapist-div" style="display: none;">
                     <div class="form-group">
-                        <label for="therapist">Terapeuta</label>
-                        {{ Form::text('therapist', Input::old('therapist'), array('placeholder' => 'Terapeuta','class' => 'form-control','id' => 'therapist','autocomplete' => 'off')) }}
+                        <label for="patient">Terapeuta</label>
                     </div>
                     <table class="table table-bordered"  style="background-color: white;position: relative;">
                         <tr>
@@ -129,8 +128,6 @@
                     }
                 });
             });
-            $('#therapist').keyup(function() {
-
                 $.ajax({
                     url: "/therapist/list",
                     type: "POST",
@@ -216,7 +213,6 @@
                         });
                     }
                 });
-            });
             $("#next2").click(function() {
                 $("#therapist-div").addClass('fadeout-1');
                 $("#next2").addClass('fadeout-1');

@@ -157,9 +157,12 @@ class TherapistsController extends \BaseController {
             $user = User::find($therapist->users_id);
             $user->delete();
             $therapist->delete();
+            $data =array('remove' => '1');
+            return json_encode($data);
         }
         else{
-            return Redirect::route('home')->with('No puede Borrar un Paciente que Tenga Horas Asignadas.');
+            $data =array('remove' => '0');
+            return json_encode($data);
         }
 
     }
