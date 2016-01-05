@@ -21,7 +21,7 @@
                          <a href="/calendar/add">Agregar Hora</a>
                     </li>
                     <li>
-                        <a href="/calendar/therapist">Agregarme una Hora</a>
+                        <a href="/therapist/calendar/add">Agregarme una Hora</a>
                     </li>
                     <li>
                         <a href="/my/calendar">Mi Calendario</a>
