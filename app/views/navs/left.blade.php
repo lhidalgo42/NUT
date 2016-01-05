@@ -18,7 +18,15 @@
                 <a href="#"><i class="fa fa-calendar"></i> Calendario<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse" aria-expanded="false">
                     <li>
-                        <a href="/calendar/add">Agregar Hora</a>
+                         <a href="/calendar/add">Agregar Hora</a>
+                    </li>
+                    <li>
+                        <a href="/calendar/therapist">Agregarme una Hora</a>
+                    </li>
+                    <li>
+                        <a href="/my/calendar">Mi Calendario</a>
+                    </li>
+                    <li>
                         <a href="/calendar/therapist">Calendario por Terapeuta</a>
                     </li>
                 </ul>
