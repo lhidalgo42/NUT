@@ -10,7 +10,9 @@ class RoomsController extends \BaseController {
 	 */
 	public function index()
 	{
-        return View::make('rooms.index');
+		$rooms = Room::lists('name','id');
+		$schedules = Schedule::join('therapists','therapists.id','=','schedule.therapists_id')->where('schedule.start','>',date("Y-m-d"))->select('schedule.id','therapists.name','schedule.therapists_id','schedule.start','schedule.end','schedule.rooms_id')->get();
+        return View::make('rooms.index')->with(compact('schedules','rooms'));
 	}
 
 	/**
@@ -67,9 +69,13 @@ class RoomsController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update()
 	{
-		//
+		$room = Input::get('room');
+		$schedule = Input::get('schedule');
+		$schedule = Schedule::find($schedule);
+		$schedule->rooms_id = $room;
+		$schedule->save();
 	}
 
 	/**

@@ -8,7 +8,7 @@ class ScheduleController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function confirm()
 	{
 		//
 	}

@@ -176,11 +176,22 @@
                                         right: 'agendaWeek,agendaDay'
                                     },
                                     dayClick: function (date, jsEvent, view) {
+                                        var check = moment(date).format('yyyy-MM-dd hh:mm:ss');
+                                        var today = moment(new Date()).format('yyyy-MM-dd hh:mm:ss');
+                                        if(check < today)
+                                        {
+                                            swal({
+                                                title: "Fecha fuera de Rango",
+                                                text: "No puede seleccionar una hora inferior a la actual.",
+                                                timer: 1000,
+                                                showConfirmButton: false });
+                                        }
+                                        else
+                                        {
+                                            $("#resumen").modal('show');
+                                            $("#table-time").html(date.format('DD')+' de '+date.format('MMMM')+' del '+date.format('YYYY, h:mm:ss a')).attr('data',date.format());
 
-                                        //alert('Clicked on: ' + date.format()+' / '+view.name);
-                                        $("#resumen").modal('show');
-                                        $("#table-time").html(date.format('DD')+' de '+date.format('MMMM')+' del '+date.format('YYYY, h:mm:ss a')).attr('data',date.format());
-
+                                        }
                                     },
                                     allDaySlot: false,
                                     slotDuration: '00:15:00',

@@ -313,11 +313,10 @@
                             hour.borderColor = '#FFFFFF';
                             hour.backgroundColor = '#000000';
                             hour.textColor = '#FFFFFF';
-                            $('#calendar').fullCalendar('updateEvent', hour)
+                            $('#calendar').fullCalendar('updateEvent', hour);
                             $("#editCalendar").modal('hide');
                         }
                     });
-                    swal("Pago Pendiente!", "La Hora Seleccionada ha sido seleccionada como Pago Pendiente.", "success");
                 });
             });
 

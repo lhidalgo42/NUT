@@ -62,6 +62,7 @@ Route::group(array('before' => 'auth'), function() {
     Route::post('/therapist/access','TherapistsController@access');
 
     Route::post('/duration/new','DurationsController@create');
+    Route::post('/rooms/update/therapist','RoomsController@update');
 });
 
 
