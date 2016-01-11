@@ -20,6 +20,14 @@ class UsersTableSeeder extends Seeder {
             'access' => 1,
             'roles_id' => 1
         ]);
+            User::create([
+                'email' => 'secretaria@psiconutricion.cl',
+                'password' => 's3cr3t4r14',
+                'img' => 'avatar_2x.png',
+                'name' => 'Magdalena',
+                'access' => 1,
+                'roles_id' => 1
+            ]);
         User::create([
             'email' => 'leontuna@gmail.com',
             'password' => '1234',
