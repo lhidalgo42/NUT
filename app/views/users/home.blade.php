@@ -8,8 +8,6 @@
             @include('navs.top')
             @include('navs.left')
         </nav>
-
-
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
@@ -17,7 +15,6 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
-
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
@@ -48,16 +45,15 @@
                             right: 'month,agendaWeek,agendaDay'
                         },
                         eventClick: function (calEvent, jsEvent, view) {
-
                             //alert('Event: ' + calEvent.title);
                             console.log(calEvent);
                             $("#editCalendarStart").val(moment(calEvent.start._i).format('DD-MM-YYYY HH:mm'));
-                            $("#editCalendarPrice").val(parseInt(calEvent.price));
+                            $("#editCalendarPrice").val(calEvent['price']);
                             $("#editCalendarEnd").html(moment(calEvent.end._i).format('DD-MM-YYYY HH:mm'));
                             var tim = (Date.parse(calEvent.end._i) - Date.parse(calEvent.start._i)) / 1000;
                             $("#editCalendar").modal('show');
                             $('#editCalendarDuration').children('option[value="' + tim + '"]').attr('selected', 'selected');
-                            $("#editCalendarDelete").attr('schedule_id', calEvent.schedule_id).attr('payment_id', calEvent.payment_id);
+                           $("#editCalendarDelete").attr('schedule_id', calEvent.schedule_id).attr('payment_id', calEvent.payment_id);
                             $("#editCalendarPending").attr('schedule_id', calEvent.schedule_id).attr('payment_id', calEvent.payment_id);
                             $("#editCalendarConfirm").attr('schedule_id', calEvent.schedule_id).attr('payment_id', calEvent.payment_id);
                             $("#editCalendar").attr('event-id', calEvent._id);
@@ -70,9 +66,43 @@
                                     $("#EditCalendarTherapist").html(data.therapist.name);
                                     $("#EditCalendarTherapist").attr('data-id', data.therapist.id);
                                     $("#EditCalendarPatient").html(data.patient.name);
+                                    $("#EditCalendarPatientPhone").html(data.patient.cellphone+' '+data.patient.phone);
+                                    $("#EditCalendarPatientMail").html(data.patient.mail);
                                     $("#EditCalendarPatient").attr('data-id', data.patient.id);
                                 }
-                            })
+                            });
+                            $.ajax({
+                                url: '/payment/show',
+                                data: {id: calEvent.payment_id},
+                                type: 'POST',
+                                success: function (data) {
+                                    if (data.payment_types_id == "1" || data.payment_types_id== "2" || data.payment_types_id == "5") {
+                                        display('editCalendarTransactionNumber', 'none');
+                                        display('editCalendarCheckNumber', 'none');
+                                        display('editCalendarPaymentDate', 'none');
+                                        display('editCalendarBanks', 'none');
+                                    }
+                                    if (data.payment_types_id == "4") {
+                                        display('editCalendarTransactionNumber', '');
+                                        display('editCalendarCheckNumber', 'none');
+                                        display('editCalendarPaymentDate', 'none');
+                                        display('editCalendarBanks', 'none');
+                                    }
+                                    if (data.payment_types_id == "3") {
+                                        display('editCalendarTransactionNumber', 'none');
+                                        display('editCalendarCheckNumber', '');
+                                        display('editCalendarPaymentDate', '');
+                                        display('editCalendarBanks', '');
+                                    }
+
+                                    $("#editCalendarPaymentType").val(data.payment_types_id);
+                                    $("#editCalendarTransactionNumber").val(data.transaction_number);
+                                    $("#editCalendarCheckNumber").val(data.paycheck_number);
+                                    $("#editCalendarPaymentDate").val(moment(data.paycheck_date,'YYYY-MM-DD').format('DD-MM-YYYY'));
+                                    if(data.banks_id != 0)
+                                    $("#editCalendarBanks").val(data.banks_id);
+                                }
+                            });
                         },
                         defaultView: 'agendaWeek',
                         allDaySlot: false,
@@ -84,25 +114,21 @@
                         editable: false,
                         eventLimit: true, // allow "more" link when too many events
                         events: {{json_encode($datos)}}
-
-
-
-
                     });
                 </script>
                 <!-- /.col-lg-8 -->
                 <div class="col-lg-4">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-money"></i> Pagos Pendientes
+                        <div class="panel-heading" style="color: red;">
+                            <i class="fa fa-money"></i> Pagos Pendientes (MOROSOS)
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="list-group">
                                 @foreach($pendings as $pending)
-                                    <a href="#/patients/{{$pending->id}}" class="list-group-item">
+                                    <a href="#/patients/{{$pending->id}}" class="list-group-item"  style="color: red;">
                                         <i class="fa fa-user"></i> {{$pending->name}}
-                                        <span class="pull-right text-muted small"><em>{{number_format($pending->mount,0,",",".")}}</em>
+                                        <span class="pull-right small"><em><strong>{{number_format($pending->mount,0,",",".")}}</strong></em>
                                     </span>
                                     </a>
                                 @endforeach
@@ -119,7 +145,6 @@
             <!-- /.row -->
         </div>
         <!-- /#page-wrapper -->
-
     </div>
     <!-- Modal -->
     <div class="modal fade" id="editCalendar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" event-id="">
@@ -139,6 +164,14 @@
                         <tr>
                             <td><strong>Paciente</strong></td>
                             <td id="EditCalendarPatient"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Telefono Paciente</strong></td>
+                            <td id="EditCalendarPatientPhone"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Correo Paciente</strong></td>
+                            <td id="EditCalendarPatientMail"></td>
                         </tr>
                         <tr>
                             <td><strong>Hora de Inicio</strong></td>
@@ -199,11 +232,7 @@
                             data-toggle="tooltip" data-placement="top" title="Elimina la Hora">
                         Eliminar
                     </button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-info" id="editCalendarPending" data-toggle="tooltip"
-                            data-placement="top" title="Confirma la Asistencia, y deja el pago pendiente.">Pago
-                        Pendiente
-                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
                     <button type="button" class="btn btn-success" id="editCalendarConfirm" data-toggle="tooltip"
                             data-placement="top" title="Confirma la asistencia, y deja cancelado el pago.">Confirmar
                         Asistencia
@@ -217,8 +246,7 @@
             $("#" + id + "").parent().parent().css('display', view);
         }
         $("#editCalendarDuration").change(function () {
-            var end = Date.parse($("#editCalendarStart").val()) + parseInt($(this).val()) * 1000;
-            $("#editCalendarEnd").html(moment(end).format('DD-MM-YYYY HH:mm'));
+            $("#editCalendarEnd").html(moment($("#editCalendarStart").val(), 'DD-MM-YYYY HH:mm').add(parseFloat($(this).val()),'s').format('DD-MM-YYYY HH:mm'));
         });
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
@@ -245,7 +273,7 @@
                 minDate: new Date()
             });
             $("#editCalendarPaymentType").change(function () {
-                if ($(this).val() == "1" || $(this).val() == "2") {
+                if ($(this).val() == "1" || $(this).val() == "2" || $(this).val() == "5") {
                     display('editCalendarTransactionNumber', 'none');
                     display('editCalendarCheckNumber', 'none');
                     display('editCalendarPaymentDate', 'none');
@@ -291,22 +319,23 @@
             });
 
             $("#editCalendarConfirm").click(function () {
-                swal({
-                    title: "Se encuentra Seguro?",
-                    text: "Se confirmara la visita.",
-                    type: "success",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Confirmar!",
-                    closeOnConfirm: false
-                }, function () {
+               var start =  moment($("#editCalendarStart").val(), 'DD-MM-YYYY HH:mm').format("YYYY-MM-DD HH:mm:ss");
+               var end =  moment($("#editCalendarEnd").html(), 'DD-MM-YYYY HH:mm').format("YYYY-MM-DD HH:mm:ss");
+               var payment = moment($("#editCalendarPaymentDate").val(),'DD-MM-YYYY').format('YYYY-MM-DD');
                     $.ajax({
                         url: '/schedule/confirm',
                         type: 'POST',
                         data: {
-                            schedule_id: $("#editCalendarPending").attr('schedule_id'),
-                            payment_id: $("#editCalendarPending").attr('payment_id'),
-
+                            schedule_id: $("#editCalendarConfirm").attr('schedule_id'),
+                            payment_id: $("#editCalendarConfirm").attr('payment_id'),
+                            start:start,
+                            end: end,
+                            price:$("#editCalendarPrice").val(),
+                            payType:$("#editCalendarPaymentType").val(),
+                            transactionNumber: $("#editCalendarTransactionNumber").val(),
+                            checkNumber:$("#editCalendarCheckNumber").val(),
+                            paymentDate:payment,
+                            bank:$("#editCalendarBanks").val()
                         },
                         success: function () {
                             var hour = $("#calendar").fullCalendar('clientEvents', $("#editCalendar").attr('event-id'))[0];
@@ -318,7 +347,6 @@
                         }
                     });
                 });
-            });
 
             $("#editCalendarPending").click(function () {
                 swal({
@@ -335,7 +363,15 @@
                         type: 'POST',
                         data: {
                             schedule_id: $("#editCalendarPending").attr('schedule_id'),
-                            payment_id: $("#editCalendarPending").attr('payment_id')
+                            payment_id: $("#editCalendarPending").attr('payment_id'),
+                            start:$("#editCalendarStart").val(),
+                            end: $("#editCalendarEnd").html(),
+                            price:$("#editCalendarPrice").val(),
+                            payType:$("#editCalendarPaymentType").val(),
+                            transactionNumber: $("#editCalendarTransactionNumber").val(),
+                            checkNumber:$("#editCalendarCheckNumber").val(),
+                            paymentDate:$("#editCalendarPaymentDate").val(),
+                            bank:$("#editCalendarBanks").val()
                         },
                         success: function () {
                             var hour = $("#calendar").fullCalendar('clientEvents', $("#editCalendar").attr('event-id'))[0];

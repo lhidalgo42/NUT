@@ -187,5 +187,13 @@ class TherapistsController extends \BaseController {
         $therapist = Therapist::where('users_id',Auth::user()->id)->get()->first();
         return View::make('therapists.durations')->with(compact('therapist'));
     }
+    public function exist(){
+        $rut = Input::get('rut');
+        $exist = Therapist::where('rut','=',$rut)->count();
+        if($exist == 0){
+            return 1;
+        }
+        return 0;
+    }
 
 }

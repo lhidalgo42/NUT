@@ -3,7 +3,7 @@
 <div class="navbar-default sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
-            @if($hasRole::Administrador() || $hasRole::Secretaria() || $hasRole::Therapist())
+            @if($hasRole::All())
             <li>
                 <a href="/"><i class="fa fa-home"></i> Inicio</a>
             </li>
@@ -61,15 +61,36 @@
                 <a href="/rooms"><i class="fa fa-bookmark"></i> Salas y Salones</a>
             </li>
                 @endif
-                @if($hasRole::Administrador() || $hasRole::Secretaria())
-            <li>
-                <a href="/admin"><i class="fa fa-bookmark"></i> Admin</a>
-            </li>
-                @endif
+
                 @if($hasRole::Therapist())
             <li>
                 <a href="/my/durations"><i class="fa fa-clock-o"></i> Mis Duraciones</a>
             </li>
+                @endif
+                @if($hasRole::Administrador() || $hasRole::Secretaria())
+                    <li>
+                        <a href="#"><i class="fa fa-dollar"></i> Finanzas<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse" aria-expanded="false">
+                            <li>
+                                <a href="/finance/therapists"><i class="fa fa-money"></i> Pagos Pendientes</a>
+                            </li>
+                            <li>
+                                <a href="/finance/exprenses"><i class="fa fa-arrow-right"></i> Egresos</a>
+                            </li>
+                            <li>
+                                <a href="/finance/income"><i class="fa fa-arrow-left"></i> Ingresos </a>
+                            </li>
+                            <li>
+                                <a href="/finance/voucher"><i class="fa fa-ticket"></i> Recibos</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+                @endif
+                @if($hasRole::Administrador() || $hasRole::Secretaria())
+                    <li>
+                        <a href="/admin"><i class="fa fa-bookmark"></i> Admin</a>
+                    </li>
                 @endif
             <li>
                 <a href="/logout"><i class="fa fa-sign-out"></i> Cerrar Sesión </a>

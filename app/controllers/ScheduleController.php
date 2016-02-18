@@ -10,7 +10,47 @@ class ScheduleController extends \BaseController {
 	 */
 	public function confirm()
 	{
-		//
+		/**
+		schedule_id:3
+		payment_id:3
+		start:2016-02-18 13:00:00
+		end:2016-02-18 13:45:00
+		price:
+		payType:0
+		transactionNumber:
+		checkNumber:
+		paymentDate:
+		bank:0
+		 */
+
+		$schedule_id = Input::get('schedule_id');
+		$payment_id = Input::get('payment_id');
+		$start = Input::get('start');
+		$end = Input::get('end');
+		$price = Input::get('price');
+		$payType = Input::get('payType');
+		$transactionNumber = Input::get('transactionNumber');
+		$checkNumber = Input::get('checkNumber');
+		$paymentDate = Input::get('paymentDate');
+		$bank= Input::get('bank');
+		$schedule = Schedule::find($schedule_id);
+		$payment = Payment::find($payment_id);
+
+		$schedule->start = $start;
+		$schedule->end = $end;
+		$schedule->status = 1;
+		$schedule->save();
+		if($payType != 0){
+			$payment->payment_types_id = $payType;
+			$payment->paycheck_number = $checkNumber;
+			$payment->paycheck_date = $paymentDate;
+			$payment->mount = $price;
+			$payment->transaction_Number = $transactionNumber;
+			$payment->banks_id = $bank;
+			$payment->save();
+		}
+		return 1;
+
 	}
 
 	/**
@@ -92,7 +132,7 @@ class ScheduleController extends \BaseController {
             $payment = Payment::find($schedule->payments_id);
         }
         $data = array(
-            'patient' => array('id' => $patient->id,'name' => $patient->name,'phone' => $patient->phone,'cellphone' => $patient->cellphone),
+            'patient' => array('id' => $patient->id,'name' => $patient->name,'phone' => $patient->phone,'cellphone' => $patient->cellphone,'mail' => $patient->email),
             'therapist' => array('id' => $therapist->id,'name' => $therapist->name,'phone' => $therapist->phone,'cellphone' => $therapist->cellphone),
             'room' => array('id' => $room->id,'name' => $room->name)
         );

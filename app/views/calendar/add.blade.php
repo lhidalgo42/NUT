@@ -176,8 +176,8 @@
                                         right: 'agendaWeek,agendaDay'
                                     },
                                     dayClick: function (date, jsEvent, view) {
-                                        var check = moment(date).format('yyyy-MM-dd hh:mm:ss');
-                                        var today = moment(new Date()).format('yyyy-MM-dd hh:mm:ss');
+                                        var check = moment(date).format();
+                                        var today = moment(new Date()).format();
                                         if(check < today)
                                         {
                                             swal({

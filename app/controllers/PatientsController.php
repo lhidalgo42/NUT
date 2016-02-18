@@ -111,5 +111,13 @@ class PatientsController extends \BaseController {
             return Redirect::route('home')->with('No puede Borrar un Paciente que Tenga Horas Asignadas.');
         }
 	}
+	public function exist(){
+		$rut = Input::get('rut');
+		$exist = Patient::where('rut','=',$rut)->count();
+		if($exist == 0){
+			return 1;
+		}
+		return 0;
+	}
 
 }

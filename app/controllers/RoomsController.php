@@ -32,9 +32,25 @@ class RoomsController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function printer($time,$pag = 0)
 	{
-		//
+		$start = time();
+		$end = $start;
+		if($time == 'weakly'){
+			$end = $end+7*24*60*60;
+
+		}
+		elseif($time == 'monthly'){
+			$end = $end+28*24*60*60;
+		}
+		elseif($time == 'yearly'){
+			$end = $end+364*24*60*60;
+		}
+		$start = date("Y-m-d H:i:s",$start);
+		$end = date("Y-m-d H:i:s",$end);
+		$schedules = Schedule::where('start','>',$start)->get();
+		return $schedules;
+		return View::make('rooms.printer');
 	}
 
 	/**

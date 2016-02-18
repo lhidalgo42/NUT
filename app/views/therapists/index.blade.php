@@ -40,8 +40,12 @@
                             <td>@if($therapist->phone != ""){{$therapist->phone}}@else - @endif</td>
                             <td>@if($therapist->cellphone != ""){{$therapist->cellphone}}@else - @endif</td>
                             <td>@if($therapist->email != ""){{$therapist->email}}@else - @endif</td>
-                            <td><a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" therapist-id="{{$therapist->id}}"></i></a></td>
-                            <td><a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" therapist-id="{{$therapist->id}}"></i></a></td>
+                            <td><a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x"
+                                                                 style="margin-left: 20px;"
+                                                                 therapist-id="{{$therapist->id}}"></i></a></td>
+                            <td><a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x"
+                                                                   style="margin-left: 20px;"
+                                                                   therapist-id="{{$therapist->id}}"></i></a></td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -49,37 +53,37 @@
                 <a id="create" class="btn btn-success" style="position: relative;">Agregar Nuevo Terapeuta</a>
             </div>
             <script>
-                $(document).ready(function(){
+                $(document).ready(function () {
                     var edit;
                     var table = $('#dtes').DataTable({
                         "language": {
                             "url": "https://cdn.datatables.net/plug-ins/1.10.7/i18n/Spanish.json"
                         }
                     });
-                    $('#dtes tbody').on( 'click', 'i.fa-trash-o', function () {
-                        var _this =this;
+                    $('#dtes tbody').on('click', 'i.fa-trash-o', function () {
+                        var _this = this;
                         $.ajax({
-                            url: "/therapist/delete/"+$(this).attr('therapist-id'),
+                            url: "/therapist/delete/" + $(this).attr('therapist-id'),
                             type: "POST",
-                            success:function(data){
+                            success: function (data) {
                                 data = JSON.parse(data);
-                                if(data.remove == 0) {
+                                if (data.remove == 0) {
                                     swal('Ooops', 'No se Puede Eliminar un Terapeuta que registre horas. Se le puede Denegar el Acceso via el menu Administrador.', 'warning');
                                 }
-                                else if(data.response == 1){
-                                    table.row( $(_this).parents('tr') ).remove().draw();
+                                else if (data.response == 1) {
+                                    table.row($(_this).parents('tr')).remove().draw();
                                 }
                             }
                         });
-                    } );
-                    $('#dtes tbody').on( 'click', 'i.fa-pencil-square-o', function () {
-                        $("#save").css('display','block');
-                        $("#save2").css('display','none');
+                    });
+                    $('#dtes tbody').on('click', 'i.fa-pencil-square-o', function () {
+                        $("#save").css('display', 'block');
+                        $("#save2").css('display', 'none');
                         $.ajax({
-                            url: "/therapist/show/"+$(this).attr('therapist-id'),
+                            url: "/therapist/show/" + $(this).attr('therapist-id'),
                             type: "POST",
-                            success:function(data){
-                                $("#dataTitle").html('Editar '+data.name);
+                            success: function (data) {
+                                $("#dataTitle").html('Editar ' + data.name);
                                 $("#id").val(data.id);
                                 $("#rut").val(data.rut);
                                 $("#name").val(data.name);
@@ -91,10 +95,10 @@
                             }
                         });
 
-                    } );
-                    $("#create").click(function(){
-                        $("#save2").css('display','block');
-                        $("#save").css('display','none');
+                    });
+                    $("#create").click(function () {
+                        $("#save2").css('display', 'block');
+                        $("#save").css('display', 'none');
                         $("#dataModal").modal('show');
                     });
                     $("#cancel").click(function () {
@@ -109,76 +113,98 @@
                         $("#email").val('');
                     });
                     $("#save2").click(function () {
-                        $.ajax({
-                            url: "/therapist/create",
-                            type: "POST",
-                            data: {
-                                rut: $("#rut").val(),
-                                name: $("#name").val(),
-                                birth: $("#birth").val(),
-                                phone: $("#phone").val(),
-                                cellphone: $("#cellphone").val(),
-                                email: $("#email").val()
-                            },
-                            success: function (data) {
-                                table.row.add([
-                                    data.rut,
-                                    data.name,
-                                    data.birth,
-                                    data.phone,
-                                    data.cellphone,
-                                    data.email,
-                                    '<a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" therapist-id="'+data.id+'"></i></a>',
-                                    '<a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" therapist-id="'+data.id+'"></i></a>'
-                                ]).draw();
-                                $("#dataModal").modal('hide');
-                                $("#dataTitle").html('Terapeuta Agregar/Editar');
-                                $("#id").val('');
-                                $("#rut").val('');
-                                $("#name").val('');
-                                $("#birth").val('');
-                                $("#phone").val('');
-                                $("#cellphone").val('');
-                                $("#email").val('');
-                            }
-                        });
+                        if (Rut($("#rut").val())) {
+                            if ($("#name").val() != '') {
+                                if ($("#phone").val() != '' || $("#cellphone").val() != '') {
+                                    if (validaTerapist($("#rut").val())) {
+                                        $.ajax({
+                                            url: "/therapist/create",
+                                            type: "POST",
+                                            data: {
+                                                rut: $("#rut").val(),
+                                                name: $("#name").val(),
+                                                birth: $("#birth").val(),
+                                                phone: $("#phone").val(),
+                                                cellphone: $("#cellphone").val(),
+                                                email: $("#email").val()
+                                            },
+                                            success: function (data) {
+                                                table.row.add([
+                                                    data.rut,
+                                                    data.name,
+                                                    data.birth,
+                                                    data.phone,
+                                                    data.cellphone,
+                                                    data.email,
+                                                    '<a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" therapist-id="' + data.id + '"></i></a>',
+                                                    '<a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" therapist-id="' + data.id + '"></i></a>'
+                                                ]).draw();
+                                                $("#dataModal").modal('hide');
+                                                $("#dataTitle").html('Terapeuta Agregar/Editar');
+                                                $("#id").val('');
+                                                $("#rut").val('');
+                                                $("#name").val('');
+                                                $("#birth").val('');
+                                                $("#phone").val('');
+                                                $("#cellphone").val('');
+                                                $("#email").val('');
+                                            }
+                                        });
+                                    } else {
+                                        alert("El Terapeuta ya Existe en la Base de Datos");
+                                    }
+                                } else {
+                                    alert('El Telefono es un Dato Obligatorio');
+                                }
+                            } else
+                                alert('El Nombre es un Dato Obligatorio')
+                        }
                     });
                     $("#save").click(function () {
-                        $.ajax({
-                            url: "/therapist/save",
-                            type: "POST",
-                            data:{
-                                id:$("#id").val(),
-                                rut:$("#rut").val(),
-                                name:$("#name").val(),
-                                birth:$("#birth").val(),
-                                phone:$("#phone").val(),
-                                cellphone:$("#cellphone").val(),
-                                email:$("#email").val()
-                            },
-                            success:function(data){
-                                table.row( $("i.fa-pencil-square-o[therapist-id='"+data.id+"']").parents('tr') ).remove().draw();
-                                table.row.add([
-                                    data.rut,
-                                    data.name,
-                                    data.birth,
-                                    data.phone,
-                                    data.cellphone,
-                                    data.email,
-                                    '<a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" therapist-id="'+data.id+'"></i></a>',
-                                    '<a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" therapist-id="'+data.id+'"></i></a>'
-                                ]).draw();
-                                $("#dataModal").modal('hide');
-                                $("#dataTitle").html('Terapeuta Agregar/Editar');
-                                $("#id").val('');
-                                $("#rut").val('');
-                                $("#name").val('');
-                                $("#birth").val('');
-                                $("#phone").val('');
-                                $("#cellphone").val('');
-                                $("#email").val('');
-                            }
-                        });
+                        if (Rut($("#rut").val())) {
+                            if ($("#name").val() != '') {
+                                if ($("#phone").val() != '' || $("#cellphone").val() != '') {
+                                    $.ajax({
+                                        url: "/therapist/save",
+                                        type: "POST",
+                                        data: {
+                                            id: $("#id").val(),
+                                            rut: $("#rut").val(),
+                                            name: $("#name").val(),
+                                            birth: $("#birth").val(),
+                                            phone: $("#phone").val(),
+                                            cellphone: $("#cellphone").val(),
+                                            email: $("#email").val()
+                                        },
+                                        success: function (data) {
+                                            table.row($("i.fa-pencil-square-o[therapist-id='" + data.id + "']").parents('tr')).remove().draw();
+                                            table.row.add([
+                                                data.rut,
+                                                data.name,
+                                                data.birth,
+                                                data.phone,
+                                                data.cellphone,
+                                                data.email,
+                                                '<a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" therapist-id="' + data.id + '"></i></a>',
+                                                '<a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" therapist-id="' + data.id + '"></i></a>'
+                                            ]).draw();
+                                            $("#dataModal").modal('hide');
+                                            $("#dataTitle").html('Terapeuta Agregar/Editar');
+                                            $("#id").val('');
+                                            $("#rut").val('');
+                                            $("#name").val('');
+                                            $("#birth").val('');
+                                            $("#phone").val('');
+                                            $("#cellphone").val('');
+                                            $("#email").val('');
+                                        }
+                                    });
+                                } else {
+                                    alert('El Telefono es un Dato Obligatorio');
+                                }
+                            } else
+                                alert('El Nombre es un Dato Obligatorio')
+                        }
                     });
                 });
             </script>
@@ -190,7 +216,8 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="dataTitle">Terapeuta Agregar/Editar</h4>
                     </div>
                     <div class="modal-body">
@@ -222,8 +249,12 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal" id="cancel">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="save" style="display: block;">Guardar Cambios</button>
-                        <button type="button" class="btn btn-primary" id="save2" style="display: none;">Guardar Cambios</button>
+                        <button type="button" class="btn btn-primary" id="save" style="display: block;">Guardar
+                            Cambios
+                        </button>
+                        <button type="button" class="btn btn-primary" id="save2" style="display: none;">Guardar
+                            Cambios
+                        </button>
                     </div>
                 </div>
             </div>
@@ -238,6 +269,7 @@
             });
         </script>
     </div>
+
     <!-- /#wrapper -->
 
 @stop

@@ -20,6 +20,9 @@
              return true;
          return false;
      }
+     public static function All(){
+        return true;
+     }
 
 
  }

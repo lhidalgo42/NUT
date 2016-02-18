@@ -39,11 +39,11 @@
 
                                 <div class="btn-group" role="group" aria-label="...">
                                     <button type="button" access="0" therapist-id="{{$therapist->id}}"
-                                            class="btn btn-danger @if($therapist->access == 0)active disabled @endif access">
+                                            class="btn btn-default @if($therapist->access == 0)active disabled @endif access">
                                         NO
                                     </button>
                                     <button type="button" access="1" therapist-id="{{$therapist->id}}"
-                                            class="btn btn-success @if($therapist->access == 1)active disabled @endif access">
+                                            class="btn btn-default @if($therapist->access == 1)active disabled @endif access">
                                         SI
                                     </button>
                                 </div>

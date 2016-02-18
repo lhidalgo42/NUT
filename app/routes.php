@@ -30,6 +30,8 @@ Route::group(array('before' => 'auth'), function() {
     Route::get('/rooms', ['as' => 'room', 'uses' => 'RoomsController@index']);
     Route::get('/admin','AdminsController@index');
     Route::get('/room/list','RoomsController@show');
+    Route::get('/print/room/{time}','RoomsController@printer');
+    Route::get('/finance','FinanceController@index');
     Route::get('/therapists/config','TherapistsController@configDuracion');
 
     ########################### RUTAS AJAX ########################
@@ -53,6 +55,7 @@ Route::group(array('before' => 'auth'), function() {
     Route::post('/patient/save','PatientsController@update');
     Route::post('/patient/create','PatientsController@create');
     Route::post('/patient/delete/{id}','PatientsController@destroy');
+    Route::post('/patient/exist','PatientsController@exist');
 
     Route::post('/therapist/duration','TherapistsController@duration');
     Route::post('/therapist/duration/new','TherapistsController@durationNew');
@@ -60,9 +63,12 @@ Route::group(array('before' => 'auth'), function() {
     Route::post('/therapist/duration/delete','TherapistsController@durationDelete');
     Route::post('/therapist/color','TherapistsController@color');
     Route::post('/therapist/access','TherapistsController@access');
+    Route::post('/therapist/exist','TherapistsController@exist');
 
     Route::post('/duration/new','DurationsController@create');
     Route::post('/rooms/update/therapist','RoomsController@update');
+
+    Route::post('/payment/show','PaymentsController@show');
 });
 
 

@@ -24,7 +24,5 @@ class TherapistTableSeeder extends Seeder {
 			'colors_id' => 3,
 			'users_id' => 2
 		]);
-
 	}
-
 }
