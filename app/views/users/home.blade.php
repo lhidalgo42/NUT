@@ -21,9 +21,14 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-calendar"></i> Calendario
+                                <strong>Leyenda : </strong>
+                                <span style="border-color:#398439;color: #449d44;"> Pagado <i class="fa fa-long-arrow-right"></i> <i class="fa fa-check-square"></i> / </span>
+                                <span style="border-color:#9D0101;color: #C52929;"> Pendiente <i class="fa fa-long-arrow-right"></i> <i class="fa fa-money"></i> / </span>
+                                <span style="border-color:#516BED;color: #6B51ED;"> Confirmado <i class="fa fa-long-arrow-right"></i> <i class="fa fa-circle"></i></span>
                             <div class="pull-right">
                                 <a href="/calendar/add" class="btn btn-xs btn-info"><i class="fa fa-plus"></i> Añadir
                                 </a>
+
                             </div>
                         </div>
                         <!-- /.panel-heading -->

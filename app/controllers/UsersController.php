@@ -20,19 +20,30 @@ class UsersController extends \BaseController {
         foreach($schedules as $schedule){
             $data['schedule_id'] = $schedule->schedule_id;
             $data['payment_id'] = $schedule->payment_id;
-            $data['title'] = $schedule->patient ."\r\n\r\n".$schedule->therapist."\r\n\r\n".$schedule->observation;
+            $data['title'] = $schedule->patient ."\r\n".$schedule->therapist."\r\n".$schedule->observation;
             $data['patient'] = $schedule->patient;
             $data['therapist'] = $schedule->therapist;
             $data['start'] = $schedule->start;
             $data['end'] = $schedule->end;
             $data['status'] = $schedule->status;
             $data['price'] = Payment::find($schedule->payments_id)->mount;
-                $color = Therapist::join('colors','colors.id','=','therapists.colors_id')->where('therapists.id',$schedule->therapists_id)->get()->first();
-            if($data['status'] == 5) {
-                $data['borderColor'] = '#FFFFFF';
-                $data['backgroundColor'] = '#000000';
+            $color = Therapist::join('colors','colors.id','=','therapists.colors_id')->where('therapists.id',$schedule->therapists_id)->get()->first();
+            if($data['status'] == 1) {  //confirma Asistencia
+                $data['className'] = 'fa fa-circle';
+                $data['borderColor'] = '#516BED';
+                $data['backgroundColor'] = '#6B51ED';
                 $data['textColor'] = '#FFFFFF';
-            }else {
+            }else if($data['status'] == 2) { // Pendiente / Moroso
+                $data['className'] = 'fa fa-money';
+                $data['borderColor'] = '#9D0101';
+                $data['backgroundColor'] = '#C52929';
+                $data['textColor'] = '#FFFFFF';
+            }else if($data['status'] == 3) { // Pagado y Acceptado
+                $data['className'] = 'fa fa-check-square';
+                $data['borderColor'] = '#9D0101';
+                $data['backgroundColor'] = '#C52929';
+                $data['textColor'] = '#FFFFFF';
+            }else if($data['status'] == 0){ //default
                 $data['backgroundColor'] = $color->color;
                 $data['textColor'] = $color->text;
                 $data['borderColor'] = $color->border;
