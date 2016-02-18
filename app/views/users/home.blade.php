@@ -128,7 +128,7 @@
                                 @foreach($pendings as $pending)
                                     <a href="#/patients/{{$pending->id}}" class="list-group-item"  style="color: red;">
                                         <i class="fa fa-user"></i> {{$pending->name}}
-                                        <span class="pull-right small"><em><strong>{{number_format($pending->mount,0,",",".")}}</strong></em>
+                                        <span class="pull-right small"><em><strong>{{$pending->mount}}</strong></em>
                                     </span>
                                     </a>
                                 @endforeach
