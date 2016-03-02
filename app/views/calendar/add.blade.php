@@ -124,6 +124,16 @@
                             $("#table-patient-name").html($(this).attr('patient-name'));
                             $("#table-patient-cellphone").html($(this).attr('patient-cellphone'));
                             $("#table-patient-phone").html($(this).attr('patient-phone'))
+                            $.ajax({
+                                url:'/patient/debt',
+                                type:'POST',
+                                data:{id:$(this).attr('patient-id')},
+                                success:function(data){
+                                    if(data.result != 0){
+                                        sweetAlert("Oops...", "El Paciente Registra Deuda Pendiente, confirme antes de continuar.", "warning");
+                                    }
+                                }
+                            })
                         });
                     }
                 });

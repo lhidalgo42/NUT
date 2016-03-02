@@ -8,7 +8,6 @@ function Rut( Valor )
 		largo = crut.length;
 		if ( largo <2 )
 		{
-			alert("El rut ingresado no es válido")
 			return false;
 		}
 		for ( i=0; i <crut.length ; i++ )
@@ -55,7 +54,6 @@ function Rut( Valor )
 		}
 		if ( dvr != dv.toLowerCase() )
 		{
-			alert("El rut ingresado no es válido")
 			return false;
 		}
 		//alert('El Rut Ingresado es Correcto!')
@@ -63,31 +61,43 @@ function Rut( Valor )
 	}
 }
 function validaPatient (rut){
+   /* var data = false;
     $.ajax({
         url:'/patient/exist',
         type:'POST',
         data:{rut:rut},
         success:function(response){
-            if(response == 1)
-                return true;
-            else
-            return false;
+            response = JSON.parse(response);
+            if(response.result == 0){
+                data = true;
+            }
         }
-    })
+
+    });
+    if(data)
+        return true;
+    return false;
+    */
+    return true;
 }
 
 function validaTerapist (rut){
-    function validaPaciente (rut){
-        $.ajax({
-            url:'/patient/exist',
-            type:'POST',
-            data:{rut:rut},
-            success:function(response){
-                if(response == 1)
-                    return true;
-                else
-                    return false;
-            }
-        })
+    /* var data = false;
+     $.ajax({
+     url:'/patient/exist',
+     type:'POST',
+     data:{rut:rut},
+     success:function(response){
+     response = JSON.parse(response);
+     if(response.result == 0){
+     data = true;
+     }
+     }
+
+     });
+     if(data)
+     return true;
+     return false;
+     */
+    return true;
     }
-}

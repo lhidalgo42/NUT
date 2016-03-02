@@ -56,6 +56,7 @@ Route::group(array('before' => 'auth'), function() {
     Route::post('/patient/create','PatientsController@create');
     Route::post('/patient/delete/{id}','PatientsController@destroy');
     Route::post('/patient/exist','PatientsController@exist');
+    Route::post('/patient/debt','PatientsController@debt');
 
     Route::post('/therapist/duration','TherapistsController@duration');
     Route::post('/therapist/duration/new','TherapistsController@durationNew');

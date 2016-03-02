@@ -73,7 +73,7 @@
                         });
                     });
                     $('#dtes tbody').on('click', 'i.fa-pencil-square-o', function () {
-                        $("#save").css('display', 'block');
+                        $("#save").removeAttr('style');
                         $("#save2").css('display', 'none');
                         $.ajax({
                             url: "/patient/show/" + $(this).attr('patient-id'),
@@ -93,7 +93,7 @@
 
                     });
                     $("#create").click(function () {
-                        $("#save2").css('display', 'block');
+                        $("#save2").removeAttr('style');
                         $("#save").css('display', 'none');
                         $("#dataModal").modal('show');
                     });
@@ -148,13 +148,16 @@
                                             }
                                         });
                                     } else {
-                                        alert("El Paciente ya Existe en la Base de Datos");
+                                        sweetAlert("Oops...", "El Paciente ya Existe en la Base de Datos", "warning");
                                     }
                                 } else {
-                                    alert('El Telefono es un Dato Obligatorio');
+                                    sweetAlert("Oops...", "El Telefono es un Dato Obligatorio", "warning");
                                 }
                             } else
-                                alert('El Nombre es un Dato Obligatorio')
+                                sweetAlert("Oops...", "El Nombre es un Dato Obligatorio", "warning");
+                        }
+                        else {
+                            sweetAlert("Oops...", "El rut ingresado no es válido", "warning");
                         }
                     });
                     $("#save").click(function () {
@@ -199,11 +202,16 @@
                                     });
 
                                 } else {
-                                    alert('El Telefono es un Dato Obligatorio');
+                                    sweetAlert("Oops...", "El Telefono es un Dato Obligatorio", "warning");
                                 }
                             } else
-                                alert('El Nombre es un Dato Obligatorio')
+                                sweetAlert("Oops...", "El Nombre es un Dato Obligatorio", "warning");
                         }
+                        else {
+                            sweetAlert("Oops...", "El rut ingresado no es válido", "warning");
+
+                        }
+
                     });
                 });
             </script>

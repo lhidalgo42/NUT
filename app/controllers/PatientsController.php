@@ -113,11 +113,14 @@ class PatientsController extends \BaseController {
 	}
 	public function exist(){
 		$rut = Input::get('rut');
-		$exist = Patient::where('rut','=',$rut)->count();
-		if($exist == 0){
-			return 1;
-		}
-		return 0;
+		$exist = Patient::where('rut','like','%'.$rut.'%')->count();
+		return json_encode(array('result' => $exist));
+	}
+
+	public function debt(){
+		$id = Input::get('id');
+		$patient = Schedule::where('patients_id','=',$id)->where('status','=',2)->count();
+		return json_encode(array('result' => $patient));
 	}
 
 }

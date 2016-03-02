@@ -7,7 +7,7 @@ class UsersController extends \BaseController {
         if (\Role::find(\Auth::user()->roles_id)->name == "Terapeuta")
             return Redirect::action('TherapistsController@calendar');
 
-        $pendings = Payment::join('schedule','schedule.payments_id','=','payments.id')->join('patients','patients.id','=','schedule.patients_id')->where('schedule.status',5)->select('patients.name','patients.id','payments.mount')->get();
+        $pendings = Payment::join('schedule','schedule.payments_id','=','payments.id')->join('patients','patients.id','=','schedule.patients_id')->where('schedule.status',2)->select('patients.name','patients.id','payments.mount')->get();
         $banks = Bank::all();
         $durations = Duration::all();
         $paymentTypes = PaymentType::all();
