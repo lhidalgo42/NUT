@@ -40,10 +40,11 @@ class UsersController extends \BaseController {
                 $data['textColor'] = '#FFFFFF';
             }else if($data['status'] == 3) { // Pagado y Acceptado
                 $data['className'] = 'fa fa-check-square';
-                $data['borderColor'] = '#9D0101';
-                $data['backgroundColor'] = '#C52929';
+                $data['borderColor'] = '#398439';
+                $data['backgroundColor'] = '#449d44';
                 $data['textColor'] = '#FFFFFF';
             }else if($data['status'] == 0){ //default
+                $data['className'] = '';
                 $data['backgroundColor'] = $color->color;
                 $data['textColor'] = $color->text;
                 $data['borderColor'] = $color->border;

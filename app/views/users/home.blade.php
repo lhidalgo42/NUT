@@ -56,9 +56,9 @@
                             $("#editCalendarPrice").val(calEvent['price']);
                             $("#editCalendarEnd").html(moment(calEvent.end._i).format('DD-MM-YYYY HH:mm'));
                             var tim = (Date.parse(calEvent.end._i) - Date.parse(calEvent.start._i)) / 1000;
-                            $("#editCalendar").modal('show');
+
                             $('#editCalendarDuration').children('option[value="' + tim + '"]').attr('selected', 'selected');
-                           $("#editCalendarDelete").attr('schedule_id', calEvent.schedule_id).attr('payment_id', calEvent.payment_id);
+                            $("#editCalendarDelete").attr('schedule_id', calEvent.schedule_id).attr('payment_id', calEvent.payment_id);
                             $("#editCalendarPending").attr('schedule_id', calEvent.schedule_id).attr('payment_id', calEvent.payment_id);
                             $("#editCalendarConfirm").attr('schedule_id', calEvent.schedule_id).attr('payment_id', calEvent.payment_id);
                             $("#editCalendar").attr('event-id', calEvent._id);
@@ -108,6 +108,34 @@
                                     $("#editCalendarBanks").val(data.banks_id);
                                 }
                             });
+                            var status = calEvent['status'];
+                            if(status == 0){
+                                $("#editCalendarDelete").removeAttr('disabled');
+                                $("#editCalendarPending").css('display','none');
+                                $("#editCalendarConfirm").attr('style','');
+                                $("#editCalendarConfirm").attr('status',1);
+                            }
+                            if(status == 1){
+                                $("#editCalendarDelete").removeAttr('disabled');
+                                $("#editCalendarPending").attr('style','');
+                                $("#editCalendarConfirm").attr('style','');
+                                $("#editCalendarConfirm").attr('status',3);
+                                $("#editCalendarConfirm").html('Pagar Ahora!')
+                            }
+                            if(status == 2){
+                                $("#editCalendarDelete").attr('disabled','disabled');
+                                $("#editCalendarPending").css('display','none');
+                                $("#editCalendarConfirm").attr('style','');
+                                $("#editCalendarConfirm").attr('status',3);
+                                $("#editCalendarConfirm").html('Pagar Ahora!')
+                            }
+                            if(status == 3){
+                                $("#editCalendarDelete").attr('disabled','disabled');
+                                $("#editCalendarPending").css('display','none');
+                                $("#editCalendarConfirm").css('display','none');
+                            }
+
+                            $("#editCalendar").modal('show');
                         },
                         defaultView: 'agendaWeek',
                         allDaySlot: false,
@@ -237,9 +265,12 @@
                             data-toggle="tooltip" data-placement="top" title="Elimina la Hora">
                         Eliminar
                     </button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="exitButton">Salir</button>
+
+                    <button type="button" class="btn btn-danger" id="editCalendarPending" status="2">Pago Pendiente</button>
+
                     <button type="button" class="btn btn-success" id="editCalendarConfirm" data-toggle="tooltip"
-                            data-placement="top" title="Confirma la asistencia, y deja cancelado el pago.">Confirmar
+                            data-placement="top" title="Confirma la asistencia." status="1">Confirmar
                         Asistencia
                     </button>
                 </div>
@@ -254,7 +285,7 @@
             $("#editCalendarEnd").html(moment($("#editCalendarStart").val(), 'DD-MM-YYYY HH:mm').add(parseFloat($(this).val()),'s').format('DD-MM-YYYY HH:mm'));
         });
         $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
+            $('[data-toggle="tooltip"]').tooltip();
             display('editCalendarTransactionNumber', 'none');
             display('editCalendarCheckNumber', 'none');
             display('editCalendarCheckNumber', 'none');
@@ -275,7 +306,7 @@
                 format: 'DD-MM-YYYY',
                 locale: 'es',
                 viewMode: 'months',
-                minDate: new Date()
+                minDate: moment(new Date()).format('DD-MM-YYYY')
             });
             $("#editCalendarPaymentType").change(function () {
                 if ($(this).val() == "1" || $(this).val() == "2" || $(this).val() == "5") {
@@ -327,6 +358,151 @@
                var start =  moment($("#editCalendarStart").val(), 'DD-MM-YYYY HH:mm').format("YYYY-MM-DD HH:mm:ss");
                var end =  moment($("#editCalendarEnd").html(), 'DD-MM-YYYY HH:mm').format("YYYY-MM-DD HH:mm:ss");
                var payment = moment($("#editCalendarPaymentDate").val(),'DD-MM-YYYY').format('YYYY-MM-DD');
+                if($("#editCalendarPrice").val() != 0 && $("#editCalendarPrice").val() != ''){
+                    if($("#editCalendarConfirm").attr('status') == 3){
+                        if($("#editCalendarPaymentType").val() == 0)
+                            sweetAlert("Oops...", "Falta Agregar el Tipo de Pago", "warning");
+                        else{
+                            if($("#editCalendarPaymentType").val() == 5)
+                                sweetAlert("Oops...", "El tipo de Pago no Puede Ser Pendiente", "warning");
+                            else {
+                                if($("#editCalendarPaymentType").val() == 3){
+                                    if($("#editCalendarCheckNumber").val() != 0 && $("#editCalendarCheckNumber").val() != ''){
+                                        if($("#editCalendarPaymentDate").val() != ''){
+                                            if($("#editCalendarBanks").val() != 0){
+                                                $.ajax({
+                                                    url: '/schedule/confirm',
+                                                    type: 'POST',
+                                                    data: {
+                                                        schedule_id: $("#editCalendarConfirm").attr('schedule_id'),
+                                                        payment_id: $("#editCalendarConfirm").attr('payment_id'),
+                                                        start: start,
+                                                        end: end,
+                                                        price: $("#editCalendarPrice").val(),
+                                                        payType: $("#editCalendarPaymentType").val(),
+                                                        transactionNumber: $("#editCalendarTransactionNumber").val(),
+                                                        checkNumber: $("#editCalendarCheckNumber").val(),
+                                                        paymentDate: payment,
+                                                        bank: $("#editCalendarBanks").val(),
+                                                        status: $("#editCalendarConfirm").attr('status')
+                                                    },
+                                                    success: function () {
+                                                        var hour = $("#calendar").fullCalendar('clientEvents', $("#editCalendar").attr('event-id'))[0];
+                                                        if($("#editCalendarConfirm").attr('status') == 3){
+                                                            hour.borderColor = '#398439';
+                                                            hour.backgroundColor = '#449d44';
+                                                            hour.textColor = '#FFFFFF';
+                                                            hour.className = 'fa fa-check-square';
+                                                        }
+                                                        if($("#editCalendarConfirm").attr('status') == 1) {
+                                                            hour.borderColor = '#516BED';
+                                                            hour.backgroundColor = '#6B51ED';
+                                                            hour.textColor = '#FFFFFF';
+                                                            hour.className = 'fa fa-circle';
+                                                        }
+
+                                                        hour.price = $("#editCalendarPrice").val();
+                                                        $('#calendar').fullCalendar('updateEvent', hour);
+                                                        $("#editCalendar").modal('hide');
+                                                    }
+                                                });
+                                            }else{
+                                                sweetAlert("Oops...", "Falta Completar el Banco", "warning");
+                                            }
+
+                                        }else{
+                                            sweetAlert("Oops...", "Falta Completar la Fecha de Vencimiento", "warning");
+                                        }
+                                    }else{
+                                        sweetAlert("Oops...", "Falta Completar el Numero de Cheque", "warning");
+                                    }
+
+                                }
+                                if($("#editCalendarPaymentType").val() == 4) {
+                                    if($("#editCalendarTransactionNumber").val() != '' && $("#editCalendarTransactionNumber").val() != 0){
+                                        $.ajax({
+                                            url: '/schedule/confirm',
+                                            type: 'POST',
+                                            data: {
+                                                schedule_id: $("#editCalendarConfirm").attr('schedule_id'),
+                                                payment_id: $("#editCalendarConfirm").attr('payment_id'),
+                                                start: start,
+                                                end: end,
+                                                price: $("#editCalendarPrice").val(),
+                                                payType: $("#editCalendarPaymentType").val(),
+                                                transactionNumber: $("#editCalendarTransactionNumber").val(),
+                                                checkNumber: $("#editCalendarCheckNumber").val(),
+                                                paymentDate: payment,
+                                                bank: $("#editCalendarBanks").val(),
+                                                status: $("#editCalendarConfirm").attr('status')
+                                            },
+                                            success: function () {
+                                                var hour = $("#calendar").fullCalendar('clientEvents', $("#editCalendar").attr('event-id'))[0];
+                                                hour.borderColor = '#516BED';
+                                                hour.backgroundColor = '#6B51ED';
+                                                hour.textColor = '#FFFFFF';
+                                                hour.className = 'fa fa-circle';
+                                                hour.price = $("#editCalendarPrice").val();
+                                                $('#calendar').fullCalendar('updateEvent', hour);
+                                                $("#editCalendar").modal('hide');
+                                            }
+                                        });
+                                    }else{
+                                        sweetAlert("Oops...", "El numero de Transferencia no Puede ser Vacio", "warning");
+                                    }
+                                }
+                            }
+                        }
+                    }else{
+                        $.ajax({
+                            url: '/schedule/confirm',
+                            type: 'POST',
+                            data: {
+                                schedule_id: $("#editCalendarConfirm").attr('schedule_id'),
+                                payment_id: $("#editCalendarConfirm").attr('payment_id'),
+                                start:start,
+                                end: end,
+                                price:$("#editCalendarPrice").val(),
+                                payType:$("#editCalendarPaymentType").val(),
+                                transactionNumber: $("#editCalendarTransactionNumber").val(),
+                                checkNumber:$("#editCalendarCheckNumber").val(),
+                                paymentDate:payment,
+                                bank:$("#editCalendarBanks").val(),
+                                status:$("#editCalendarConfirm").attr('status')
+                            },
+                            success: function () {
+                                var hour = $("#calendar").fullCalendar('clientEvents', $("#editCalendar").attr('event-id'))[0];
+                                hour.borderColor = '#516BED';
+                                hour.backgroundColor = '#6B51ED';
+                                hour.textColor = '#FFFFFF';
+                                hour.className = 'fa fa-circle';
+                                hour.price = $("#editCalendarPrice").val();
+                                $('#calendar').fullCalendar('updateEvent', hour);
+                                $("#editCalendar").modal('hide');
+                            }
+                        });
+                    }
+
+                }
+                else{
+                    sweetAlert("Oops...", "El Precio no puede estar vacio", "warning");
+                }
+
+                });
+
+            $("#editCalendarPending").click(function () {
+                var start =  moment($("#editCalendarStart").val(), 'DD-MM-YYYY HH:mm').format("YYYY-MM-DD HH:mm:ss");
+                var end =  moment($("#editCalendarEnd").html(), 'DD-MM-YYYY HH:mm').format("YYYY-MM-DD HH:mm:ss");
+                var payment = moment($("#editCalendarPaymentDate").val(),'DD-MM-YYYY').format('YYYY-MM-DD');
+                swal({
+                    title: "Se encuentra Seguro?",
+                    text: "El pago se marcara como pendiente y no se podra Eliminar.",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Confirmar!",
+                    closeOnConfirm: true
+                }, function () {
                     $.ajax({
                         url: '/schedule/confirm',
                         type: 'POST',
@@ -340,55 +516,21 @@
                             transactionNumber: $("#editCalendarTransactionNumber").val(),
                             checkNumber:$("#editCalendarCheckNumber").val(),
                             paymentDate:payment,
-                            bank:$("#editCalendarBanks").val()
+                            bank:$("#editCalendarBanks").val(),
+                            status:$("#editCalendarPending").attr('status')
                         },
                         success: function () {
                             var hour = $("#calendar").fullCalendar('clientEvents', $("#editCalendar").attr('event-id'))[0];
-                            hour.borderColor = '#FFFFFF';
-                            hour.backgroundColor = '#000000';
+                            hour.borderColor = '#9D0101';
+                            hour.backgroundColor = '#C52929';
                             hour.textColor = '#FFFFFF';
+                            hour.className = 'fa fa-money';
+                            hour.price = $("#editCalendarPrice").val();
                             $('#calendar').fullCalendar('updateEvent', hour);
                             $("#editCalendar").modal('hide');
                         }
                     });
-                });
 
-            $("#editCalendarPending").click(function () {
-                swal({
-                    title: "Se encuentra Seguro?",
-                    text: "El pago se marcara como pendiente y no se podra Eliminar.",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Confirmar!",
-                    closeOnConfirm: false
-                }, function () {
-                    $.ajax({
-                        url: '/schedule/pending',
-                        type: 'POST',
-                        data: {
-                            schedule_id: $("#editCalendarPending").attr('schedule_id'),
-                            payment_id: $("#editCalendarPending").attr('payment_id'),
-                            start:$("#editCalendarStart").val(),
-                            end: $("#editCalendarEnd").html(),
-                            price:$("#editCalendarPrice").val(),
-                            payType:$("#editCalendarPaymentType").val(),
-                            transactionNumber: $("#editCalendarTransactionNumber").val(),
-                            checkNumber:$("#editCalendarCheckNumber").val(),
-                            paymentDate:$("#editCalendarPaymentDate").val(),
-                            bank:$("#editCalendarBanks").val()
-                        },
-                        success: function () {
-                            var hour = $("#calendar").fullCalendar('clientEvents', $("#editCalendar").attr('event-id'))[0];
-                            hour.borderColor = '#FFFFFF';
-                            hour.backgroundColor = '#000000';
-                            hour.textColor = '#FFFFFF';
-                            $('#calendar').fullCalendar('updateEvent', hour);
-                            $("#editCalendar").modal('hide');
-
-                        }
-                    });
-                    swal("Pago Pendiente!", "La Hora Seleccionada ha sido seleccionada como Pago Pendiente.", "success");
                 });
             });
         });

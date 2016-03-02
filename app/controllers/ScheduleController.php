@@ -33,12 +33,13 @@ class ScheduleController extends \BaseController {
 		$checkNumber = Input::get('checkNumber');
 		$paymentDate = Input::get('paymentDate');
 		$bank= Input::get('bank');
+		$status = Input::get('status');
 		$schedule = Schedule::find($schedule_id);
 		$payment = Payment::find($payment_id);
 
 		$schedule->start = $start;
 		$schedule->end = $end;
-		$schedule->status = 1;
+		$schedule->status = $status;
 		$schedule->save();
 		if($payType != 0){
 			$payment->payment_types_id = $payType;
@@ -94,7 +95,7 @@ class ScheduleController extends \BaseController {
 		$schedule->payments_id = $payment->id;
         $schedule->start = date("Y-m-d H:i:s",$start);
         $schedule->end =  date("Y-m-d H:i:s",$end);
-        $schedule->status = 1;
+        $schedule->status = 0;
         $schedule->observation = $observation;
         if($schedule->save()) {
             return Redirect::route('home')->with('Success', 'Hora Agendada Correctamente');
