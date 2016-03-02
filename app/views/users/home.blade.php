@@ -366,6 +366,44 @@
                             if($("#editCalendarPaymentType").val() == 5)
                                 sweetAlert("Oops...", "El tipo de Pago no Puede Ser Pendiente", "warning");
                             else {
+                                if($("#editCalendarPaymentType").val() == 2 || $("#editCalendarPaymentType").val() == 1){
+                                    $.ajax({
+                                        url: '/schedule/confirm',
+                                        type: 'POST',
+                                        data: {
+                                            schedule_id: $("#editCalendarConfirm").attr('schedule_id'),
+                                            payment_id: $("#editCalendarConfirm").attr('payment_id'),
+                                            start: start,
+                                            end: end,
+                                            price: $("#editCalendarPrice").val(),
+                                            payType: $("#editCalendarPaymentType").val(),
+                                            transactionNumber: $("#editCalendarTransactionNumber").val(),
+                                            checkNumber: $("#editCalendarCheckNumber").val(),
+                                            paymentDate: payment,
+                                            bank: $("#editCalendarBanks").val(),
+                                            status: $("#editCalendarConfirm").attr('status')
+                                        },
+                                        success: function () {
+                                            var hour = $("#calendar").fullCalendar('clientEvents', $("#editCalendar").attr('event-id'))[0];
+                                            if($("#editCalendarConfirm").attr('status') == 3){
+                                                hour.borderColor = '#398439';
+                                                hour.backgroundColor = '#449d44';
+                                                hour.textColor = '#FFFFFF';
+                                                hour.className = 'fa fa-check-square';
+                                            }
+                                            if($("#editCalendarConfirm").attr('status') == 1) {
+                                                hour.borderColor = '#516BED';
+                                                hour.backgroundColor = '#6B51ED';
+                                                hour.textColor = '#FFFFFF';
+                                                hour.className = 'fa fa-circle';
+                                            }
+
+                                            hour.price = $("#editCalendarPrice").val();
+                                            $('#calendar').fullCalendar('updateEvent', hour);
+                                            $("#editCalendar").modal('hide');
+                                        }
+                                    });
+                                }
                                 if($("#editCalendarPaymentType").val() == 3){
                                     if($("#editCalendarCheckNumber").val() != 0 && $("#editCalendarCheckNumber").val() != ''){
                                         if($("#editCalendarPaymentDate").val() != ''){
