@@ -22,6 +22,8 @@ class CreatePaymentsTable extends Migration {
 			$table->string('paycheck_id');
 			$table->integer('banks_id');
 			$table->string('mount');
+			$table->tinyInteger('paid');
+			$table->integer('vouchers_id');
 			$table->timestamps();
 		});
 	}

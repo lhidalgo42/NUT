@@ -34,7 +34,8 @@ class FinanceController extends \BaseController {
 	 */
 	public function expenses()
 	{
-		return View::make('finance.expenses');
+		$expenses = Expense::all();
+		return View::make('finance.expenses')->with(compact('expenses'));
 	}
 
 	/**
@@ -45,8 +46,8 @@ class FinanceController extends \BaseController {
 	 * @return Response
 	 */
 	public function voucher()
-	{
-		return View::make('finance.voucher');
+	{	$vouchers = Voucher::join('therapists','therapists.id','=','vouchers.therapists_id')->select('vouchers.id','vouchers.mount','therapists.name','vouchers.created_at')->get();
+		return View::make('finance.voucher')->with(compact('vouchers'));
 	}
 
 	/**
@@ -69,9 +70,20 @@ class FinanceController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function payTherapist()
 	{
-		//
+		$id = Input::get('id');
+		$mount = Input::get('mount');
+		$therapist = Therapist::find($id);
+		$expenses = new Expense();
+		$voucher = new Voucher();
+		$expenses->description = "Pago a Terapeuta (".$therapist->name." )";
+		$expenses->mount = $mount;
+		$expenses->save();
+		$voucher->mount = $mount;
+		$voucher->therapists_id = $id;
+		$voucher->save();
+		return 1;
 	}
 
 	/**

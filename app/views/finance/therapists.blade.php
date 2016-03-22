@@ -30,12 +30,11 @@
                             <tbody>
                             <?php $total=0; ?>
                             @foreach($therapists as $therapist)
-
                                 <tr>
                                     <td>{{$therapist->name}}</td>
                                     <td  style="text-align: center;">{{$therapist->mount}}</td>
                                     <?php $total=$total+$therapist->mount; ?>
-                                    <td style="text-align: center;"><a href="#" class="btn btn-info"  therapist-id="{{$therapist->id}}"> Pagar</a></td>
+                                    <td style="text-align: center;"><a href="#" class="btn btn-info"  therapist-id="{{$therapist->id}}" mount="{{$therapist->mount}}"> Pagar</a></td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -53,11 +52,27 @@
                 <script>
 
                     $(document).ready(function () {
-                        $('#therapist').DataTable({
+                        var table = $('#therapist').DataTable({
                             "language": {
                                 "url": "https://cdn.datatables.net/plug-ins/1.10.7/i18n/Spanish.json"
                             }
                         });
+                        $('#therapist').children('tbody').children('tr').children('td').children('a').click(function(){
+                            $.ajax({
+                                url:'/finance/therapist/pay',
+                                type:'POST',
+                                data:{
+                                    id:$(this).attr('therapist-id'),
+                                    mount:$(this).attr('mount')
+                                },
+                                success:function(data){
+                                    if(data == 1){
+                                        alert('Pago Exitoso')
+                                    }
+                                }
+                            })
+                        })
+
                     });
                 </script>
             </div>

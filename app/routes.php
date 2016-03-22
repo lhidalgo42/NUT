@@ -79,6 +79,8 @@ Route::group(array('before' => 'auth'), function() {
     Route::post('/rooms/update/therapist','RoomsController@update');
 
     Route::post('/payment/show','PaymentsController@show');
+
+    Route::post('/finance/therapist/pay','FinanceController@payTherapist');
 });
 
 

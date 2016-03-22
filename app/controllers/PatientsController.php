@@ -114,7 +114,7 @@ class PatientsController extends \BaseController {
 	public function exist(){
 		$rut = Input::get('rut');
 		$exist = Patient::where('rut','like','%'.$rut.'%')->count();
-		if($exist == 1){
+		if($exist == 0){
 			echo 1;
 		}
 		else{
