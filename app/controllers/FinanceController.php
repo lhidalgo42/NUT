@@ -10,7 +10,8 @@ class FinanceController extends \BaseController {
 	 */
 	public function therapists()
 	{
-		return View::make('finance.therapists');
+		$therapists = Schedule::join('payments','schedule.payments_id','=','payments.id')->join('therapists','therapists.id','=','schedule.therapists_id')->where('payments.paid','=',0)->where('schedule.status','=',3)->groupBy('schedule.therapists_id')->select('therapists.name','therapists.id',DB::raw('sum(payments.mount) as mount'))->get();
+		return View::make('finance.therapists')->with(compact('therapists'));
 	}
 
 	/**
@@ -57,8 +58,8 @@ class FinanceController extends \BaseController {
 	 */
 	public function patients()
 	{
-		$pendings = Payment::join('schedule','schedule.payments_id','=','payments.id')->join('patients','patients.id','=','schedule.patients_id')->where('schedule.status',2)->select('patients.name','patients.id','payments.mount')->get();
-		return View::make('finance.patients')->with(compact('pendings'));
+		$payments = Payment::join('schedule','schedule.payments_id','=','payments.id')->join('patients','patients.id','=','schedule.patients_id')->where('schedule.status',2)->select('patients.name','patients.id','payments.mount','schedule.end')->get();
+		return View::make('finance.patients')->with(compact('payments'));
 	}
 
 	/**

@@ -46,7 +46,7 @@
             </div>
             <div class="row">
                 <table>
-                    <th>Total</th></tr>
+                    <th>Total Periodo</th></tr>
                     <tr><td>{{$total}}</td>
                     </tr>
 
@@ -64,5 +64,6 @@
             </script>
     </div>
     <!-- /#wrapper -->
+    </div>
 
 @stop

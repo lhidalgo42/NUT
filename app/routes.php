@@ -34,8 +34,9 @@ Route::group(array('before' => 'auth'), function() {
     Route::get('/admin','AdminsController@index');
     Route::get('/room/list','RoomsController@show');
     Route::get('/print/room/{time}','RoomsController@printer');
-    Route::get('/finance','FinanceController@index');
     Route::get('/therapists/config','TherapistsController@configDuracion');
+
+    Route::get('/finance','FinanceController@index');
     Route::get('/finance/income','FinanceController@income');
     Route::get('/finance/expenses','FinanceController@expenses');
     Route::get('/finance/therapists','FinanceController@therapists');

@@ -64,7 +64,8 @@ class UsersController extends \BaseController {
         return View::make('users.profile');
     }
     public function history(){
-        return View::make('users.history');
+        $history = Schedule::join('payments','schedule.payments_id','=','payments.id')->join('patients','patients.id','=','schedule.patients_id')->where('schedule.therapists_id','=',Auth::user()->id)->select('patients.id','patients.name','payments.mount','payments.paid','schedule.end','schedule.status')->get();
+        return View::make('users.history')->with(compact('history'));
     }
 
 }

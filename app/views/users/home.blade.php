@@ -153,7 +153,7 @@
                 <div class="col-lg-4">
                     <div class="panel panel-default">
                         <div class="panel-heading" style="color: red;">
-                            <i class="fa fa-money"></i> Pagos Pendientes (MOROSOS)
+                            <i class="fa fa-money"></i> Pagos Pendientes (MOROSOS) <small>Mas Recientes</small>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">

@@ -17,7 +17,51 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
-    </div>
-    <!-- /#wrapper -->
+                <div class="row">
+                    @if(isset($therapists))
+                        <table class="table table-striped table-bordered" id="therapist">
+                            <thead style="background-color: white;position: relative;">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Monto</th>
+                                <th>/</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php $total=0; ?>
+                            @foreach($therapists as $therapist)
+
+                                <tr>
+                                    <td>{{$therapist->name}}</td>
+                                    <td  style="text-align: center;">{{$therapist->mount}}</td>
+                                    <?php $total=$total+$therapist->mount; ?>
+                                    <td style="text-align: center;"><a href="#" class="btn btn-info"  therapist-id="{{$therapist->id}}"> Pagar</a></td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                </div>
+                <div class="row">
+                    <table>
+                        <th>Total Periodo</th></tr>
+                        <tr><td>{{$total}}</td>
+                        </tr>
+
+                    </table>
+                </div>
+                <script>
+
+                    $(document).ready(function () {
+                        $('#therapist').DataTable({
+                            "language": {
+                                "url": "https://cdn.datatables.net/plug-ins/1.10.7/i18n/Spanish.json"
+                            }
+                        });
+                    });
+                </script>
+            </div>
+            <!-- /#wrapper -->
+        </div>
 
 @stop
