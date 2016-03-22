@@ -11,9 +11,10 @@ class AdminsController extends \BaseController {
 	public function index()
 	{
 		$therapists= Therapist::join('users','therapists.users_id','=','users.id')->select('therapists.id','therapists.name','therapists.colors_id','users.access')->get();
-		$colors = Color::lists('name','id');
+		$colorLists = Color::lists('name','id');
 		$durations = Duration::all();
-		return View::make('admins.index')->with(compact('therapists','colors','durations'));
+		$colors = Color::all();
+		return View::make('admins.index')->with(compact('therapists','colors','durations','colorLists'));
 	}
 
 	/**

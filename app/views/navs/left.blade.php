@@ -23,9 +23,7 @@
                     <li>
                         <a href="/therapist/calendar/add">Agregar una Hora a Mi Calendario</a>
                     </li>
-                    <li>
-                        <a href="/my/calendar">Mi Calendario</a>
-                    </li>
+
                     <li>
                         <a href="/calendar/therapist">Calendario por Terapeuta</a>
                     </li>
@@ -72,10 +70,13 @@
                         <a href="#"><i class="fa fa-dollar"></i> Finanzas<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse" aria-expanded="false">
                             <li>
-                                <a href="/finance/therapists"><i class="fa fa-money"></i> Pagos Pendientes</a>
+                                <a href="/finance/therapists"><i class="fa fa-money"></i> Pagos Pendientes (Terapeutas)</a>
                             </li>
                             <li>
-                                <a href="/finance/exprenses"><i class="fa fa-arrow-right"></i> Egresos</a>
+                                <a href="/finance/patients" style="color: red;"><i class="fa fa-money"></i> Pagos Pendientes (MOROSOS)</a>
+                            </li>
+                            <li>
+                                <a href="/finance/expenses"><i class="fa fa-arrow-right"></i> Egresos</a>
                             </li>
                             <li>
                                 <a href="/finance/income"><i class="fa fa-arrow-left"></i> Ingresos </a>

@@ -167,7 +167,7 @@
                                 @endforeach
                             </div>
                             <!-- /.list-group -->
-                            <a href="#" class="btn btn-default btn-block">Ver Todos los Pagos Pendientes</a>
+                            <a href="/finance/patients" class="btn btn-default btn-block">Ver Todos los Pagos Pendientes</a>
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -306,7 +306,7 @@
                 format: 'DD-MM-YYYY',
                 locale: 'es',
                 viewMode: 'months',
-                minDate: moment(new Date()).format('DD-MM-YYYY')
+                minDate: moment()
             });
             $("#editCalendarPaymentType").change(function () {
                 if ($(this).val() == "1" || $(this).val() == "2" || $(this).val() == "5") {
@@ -386,15 +386,9 @@
                                         success: function () {
                                             var hour = $("#calendar").fullCalendar('clientEvents', $("#editCalendar").attr('event-id'))[0];
                                             if($("#editCalendarConfirm").attr('status') == 3){
-                                                hour.borderColor = '#398439';
-                                                hour.backgroundColor = '#449d44';
-                                                hour.textColor = '#FFFFFF';
                                                 hour.className = 'fa fa-check-square';
                                             }
                                             if($("#editCalendarConfirm").attr('status') == 1) {
-                                                hour.borderColor = '#516BED';
-                                                hour.backgroundColor = '#6B51ED';
-                                                hour.textColor = '#FFFFFF';
                                                 hour.className = 'fa fa-circle';
                                             }
 
@@ -427,15 +421,9 @@
                                                     success: function () {
                                                         var hour = $("#calendar").fullCalendar('clientEvents', $("#editCalendar").attr('event-id'))[0];
                                                         if($("#editCalendarConfirm").attr('status') == 3){
-                                                            hour.borderColor = '#398439';
-                                                            hour.backgroundColor = '#449d44';
-                                                            hour.textColor = '#FFFFFF';
                                                             hour.className = 'fa fa-check-square';
                                                         }
                                                         if($("#editCalendarConfirm").attr('status') == 1) {
-                                                            hour.borderColor = '#516BED';
-                                                            hour.backgroundColor = '#6B51ED';
-                                                            hour.textColor = '#FFFFFF';
                                                             hour.className = 'fa fa-circle';
                                                         }
 
@@ -476,9 +464,6 @@
                                             },
                                             success: function () {
                                                 var hour = $("#calendar").fullCalendar('clientEvents', $("#editCalendar").attr('event-id'))[0];
-                                                hour.borderColor = '#516BED';
-                                                hour.backgroundColor = '#6B51ED';
-                                                hour.textColor = '#FFFFFF';
                                                 hour.className = 'fa fa-circle';
                                                 hour.price = $("#editCalendarPrice").val();
                                                 $('#calendar').fullCalendar('updateEvent', hour);
@@ -510,9 +495,6 @@
                             },
                             success: function () {
                                 var hour = $("#calendar").fullCalendar('clientEvents', $("#editCalendar").attr('event-id'))[0];
-                                hour.borderColor = '#516BED';
-                                hour.backgroundColor = '#6B51ED';
-                                hour.textColor = '#FFFFFF';
                                 hour.className = 'fa fa-circle';
                                 hour.price = $("#editCalendarPrice").val();
                                 $('#calendar').fullCalendar('updateEvent', hour);

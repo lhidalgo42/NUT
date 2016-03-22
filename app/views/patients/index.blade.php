@@ -160,46 +160,54 @@
                             sweetAlert("Oops...", "El rut ingresado no es válido", "warning");
                         }
                     });
+                 /*   $("#rut").focusout(function() {
+                              validaPatient($( this).val(),function(data){
+                                   if(!data){
+                                       sweetAlert("Oops...", "El paciente ya existe en la base de datos.", "warning");
+                                   }
+                               });
+
+                            }
+                    ); */
                     $("#save").click(function () {
                         if (Rut($("#rut").val())) {
                             if ($("#name").val() != '') {
                                 if ($("#phone").val() != '' || $("#cellphone").val() != '') {
-
-                                    $.ajax({
-                                        url: "/patient/save",
-                                        type: "POST",
-                                        data: {
-                                            id: $("#id").val(),
-                                            rut: $("#rut").val(),
-                                            name: $("#name").val(),
-                                            birth: $("#birth").val(),
-                                            phone: $("#phone").val(),
-                                            cellphone: $("#cellphone").val(),
-                                            email: $("#email").val()
-                                        },
-                                        success: function (data) {
-                                            table.row($("i.fa-pencil-square-o[patient-id='" + data.id + "']").parents('tr')).remove().draw();
-                                            table.row.add([
-                                                data.rut,
-                                                data.name,
-                                                data.birth,
-                                                data.phone,
-                                                data.cellphone,
-                                                data.email,
-                                                '<a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" patient-id="' + data.id + '"></i></a>',
-                                                '<a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" patient-id="' + data.id + '"></i></a>'
-                                            ]).draw();
-                                            $("#dataModal").modal('hide');
-                                            $("#dataTitle").html('Terapeuta Agregar/Editar');
-                                            $("#id").val('');
-                                            $("#rut").val('');
-                                            $("#name").val('');
-                                            $("#birth").val('');
-                                            $("#phone").val('');
-                                            $("#cellphone").val('');
-                                            $("#email").val('');
-                                        }
-                                    });
+                                            $.ajax({
+                                                url: "/patient/save",
+                                                type: "POST",
+                                                data: {
+                                                    id: $("#id").val(),
+                                                    rut: $("#rut").val(),
+                                                    name: $("#name").val(),
+                                                    birth: $("#birth").val(),
+                                                    phone: $("#phone").val(),
+                                                    cellphone: $("#cellphone").val(),
+                                                    email: $("#email").val()
+                                                },
+                                                success: function (data) {
+                                                    table.row($("i.fa-pencil-square-o[patient-id='" + data.id + "']").parents('tr')).remove().draw();
+                                                    table.row.add([
+                                                        data.rut,
+                                                        data.name,
+                                                        data.birth,
+                                                        data.phone,
+                                                        data.cellphone,
+                                                        data.email,
+                                                        '<a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" patient-id="' + data.id + '"></i></a>',
+                                                        '<a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" patient-id="' + data.id + '"></i></a>'
+                                                    ]).draw();
+                                                    $("#dataModal").modal('hide');
+                                                    $("#dataTitle").html('Terapeuta Agregar/Editar');
+                                                    $("#id").val('');
+                                                    $("#rut").val('');
+                                                    $("#name").val('');
+                                                    $("#birth").val('');
+                                                    $("#phone").val('');
+                                                    $("#cellphone").val('');
+                                                    $("#email").val('');
+                                                }
+                                            });
 
                                 } else {
                                     sweetAlert("Oops...", "El Telefono es un Dato Obligatorio", "warning");

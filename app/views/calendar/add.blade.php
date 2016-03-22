@@ -129,6 +129,7 @@
                                 type:'POST',
                                 data:{id:$(this).attr('patient-id')},
                                 success:function(data){
+                                    data = JSON.parse(data);
                                     if(data.result != 0){
                                         sweetAlert("Oops...", "El Paciente Registra Deuda Pendiente, confirme antes de continuar.", "warning");
                                     }

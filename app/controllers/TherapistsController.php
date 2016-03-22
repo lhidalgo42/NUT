@@ -190,7 +190,12 @@ class TherapistsController extends \BaseController {
     public function exist(){
         $rut = Input::get('rut');
         $exist = Therapist::where('rut','=',$rut)->count();
-        return json_encode(array('result' => $exist));
+        if($exist == 1){
+            echo 1;
+        }
+        else{
+            echo 0;
+        }
     }
 
 }

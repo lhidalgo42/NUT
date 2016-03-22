@@ -20,7 +20,7 @@
 
             <!-- /.row -->
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <h2>Terapeutas
                         <small>Claves por defecto 4 ultimos digitos del rut.</small>
                     </h2>
@@ -49,7 +49,7 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                {{Form::select('color', $colors, $therapist->colors_id ,array('class' => 'form-control color','therapist-id' => $therapist->id)) }}
+                                {{Form::select('color', $colorLists, $therapist->colors_id ,array('class' => 'form-control color','therapist-id' => $therapist->id)) }}
                             </div>
                             <div class="col-md-3">
 
@@ -58,31 +58,59 @@
 
                     @endforeach
                 </div>
-                <div class="col-md-4">
-                    <h2>Editar Duraciones</h2>
-                    <table class="table table-hover table-condensed">
-                        <tr>
-                            <th>Duracion</th>
-                            <!-- <th>Editar</th> -->
-                            <!-- <th>Borrar</th> -->
-                        </tr>
-                        <tbody id="tbody-duration">
-                        @foreach($durations as $duration)
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <h2>Editar Duraciones</h2>
+                        <table class="table table-hover table-condensed">
                             <tr>
-                                <td>{{$duration->name}}</td>
-                                <!-- <td><a href="#" duration-id="{{$duration->id}}"><i class="fa fa-pencil-square-o fa-2x"></i></a></td> -->
-                                <!--<td><a href="#" duration-id="{{$duration->id}}"><i class="fa fa-close fa-2x"></i></a></td> -->
+                                <th>Duracion</th>
+                                <th>Editar</th>
+                                <th>Borrar</th>
                             </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                    <a href="#" class="btn btn-success" id="addDuration">Agregar Nueva Duración</a>
-                    <script>
-                        $("#addDuration").click(function(){
+                            <tbody id="tbody-duration">
+                            @foreach($durations as $duration)
+                                <tr>
+                                    <td>{{$duration->name}}</td>
+                                   <td><a href="#" duration-id="{{$duration->id}}"><i class="fa fa-pencil-square-o fa-2x"></i></a></td>
+                                    <td><a href="#" duration-id="{{$duration->id}}"><i class="fa fa-close fa-2x"></i></a></td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                        <a href="#" class="btn btn-success" id="addDuration">Agregar Nueva Duración</a>
+                        <script>
+                            $("#addDuration").click(function(){
                                 $("#modalDuration").modal('show');
-                        });
+                            });
 
-                    </script>
+                        </script>
+                    </div>
+                    <div class="col-md-12">
+                        <h2>Editar Colores</h2>
+                        <table class="table table-hover table-condensed">
+                            <tr>
+                                <th>Nombre</th>
+                                <th colspan="2">Texto</th>
+                                <th colspan="2">Border</th>
+                                <th colspan="2">fondo</th>
+                            </tr>
+                            <tbody id="tbody-colors">
+                            @foreach($colors as $color)
+                                <tr>
+                                    <td>{{$color->name}}</td>
+                                    <td>{{$color->text}}</td>
+                                    <td><button class="btn" style="background-color: {{$color->text}}"></button> </td>
+                                    <td>{{$color->border}}</td>
+                                    <td><button class="btn" style="background-color: {{$color->border}}"></button> </td>
+                                    <td>{{$color->color}}</td>
+                                    <td><button class="btn" style="background-color: {{$color->color}}"></button> </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                        <a href="#" class="btn btn-success" id="addDuration">Agregar Nuevo Color</a>
+                    </div>
+
                 </div>
             </div>
         </div>

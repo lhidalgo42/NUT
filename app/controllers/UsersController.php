@@ -30,19 +30,19 @@ class UsersController extends \BaseController {
             $color = Therapist::join('colors','colors.id','=','therapists.colors_id')->where('therapists.id',$schedule->therapists_id)->get()->first();
             if($data['status'] == 1) {  //confirma Asistencia
                 $data['className'] = 'fa fa-circle';
-                $data['borderColor'] = '#516BED';
-                $data['backgroundColor'] = '#6B51ED';
-                $data['textColor'] = '#FFFFFF';
+                $data['backgroundColor'] = $color->color;
+                $data['textColor'] = $color->text;
+                $data['borderColor'] = $color->border;
             }else if($data['status'] == 2) { // Pendiente / Moroso
                 $data['className'] = 'fa fa-money';
-                $data['borderColor'] = '#9D0101';
-                $data['backgroundColor'] = '#C52929';
-                $data['textColor'] = '#FFFFFF';
+                $data['backgroundColor'] = $color->color;
+                $data['textColor'] = $color->text;
+                $data['borderColor'] = $color->border;
             }else if($data['status'] == 3) { // Pagado y Acceptado
                 $data['className'] = 'fa fa-check-square';
-                $data['borderColor'] = '#398439';
-                $data['backgroundColor'] = '#449d44';
-                $data['textColor'] = '#FFFFFF';
+                $data['backgroundColor'] = $color->color;
+                $data['textColor'] = $color->text;
+                $data['borderColor'] = $color->border;
             }else if($data['status'] == 0){ //default
                 $data['className'] = '';
                 $data['backgroundColor'] = $color->color;
@@ -55,7 +55,16 @@ class UsersController extends \BaseController {
         return View::make('users.home')->with(compact('datos','durations','paymentTypes','banks','pendings'));
 	}
     public function create(){
-        return View::make('app.users.new');
+        return View::make('users.new');
+    }
+    public function config(){
+        return View::make('users.config');
+    }
+    public function profile(){
+        return View::make('users.profile');
+    }
+    public function history(){
+        return View::make('users.history');
     }
 
 }

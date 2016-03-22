@@ -19,6 +19,9 @@ Route::resource('sessions', 'SessionsController', ['only' => ['create', 'store',
 Route::group(array('before' => 'auth'), function() {
     ######################### RUTAS COMUNES ######################
     Route::get('/', ['as' => 'home', 'uses' => 'UsersController@home']);
+    Route::get('/history', ['as' => 'history', 'uses' => 'UsersController@history']);
+    Route::get('/profile', ['as' => 'profile', 'uses' => 'UsersController@profile']);
+    Route::get('/config', ['as' => 'config', 'uses' => 'UsersController@config']);
     Route::get('/patients', ['as' => 'patient', 'uses' => 'PatientsController@index']);
     Route::get('/therapists', ['as' => 'therapist', 'uses' => 'TherapistsController@index']);
     Route::get('therapist/calendar/add', ['uses' => 'ScheduleController@TherapistCreate']);
@@ -33,6 +36,11 @@ Route::group(array('before' => 'auth'), function() {
     Route::get('/print/room/{time}','RoomsController@printer');
     Route::get('/finance','FinanceController@index');
     Route::get('/therapists/config','TherapistsController@configDuracion');
+    Route::get('/finance/income','FinanceController@income');
+    Route::get('/finance/expenses','FinanceController@expenses');
+    Route::get('/finance/therapists','FinanceController@therapists');
+    Route::get('/finance/voucher','FinanceController@voucher');
+    Route::get('/finance/patients','FinanceController@patients');
 
     ########################### RUTAS AJAX ########################
 
