@@ -391,7 +391,7 @@
                                             if($("#editCalendarConfirm").attr('status') == 1) {
                                                 hour.className = 'fa fa-circle';
                                             }
-
+                                            hour.status = $("#editCalendarConfirm").attr('status');
                                             hour.price = $("#editCalendarPrice").val();
                                             $('#calendar').fullCalendar('updateEvent', hour);
                                             $("#editCalendar").modal('hide');
@@ -426,7 +426,7 @@
                                                         if($("#editCalendarConfirm").attr('status') == 1) {
                                                             hour.className = 'fa fa-circle';
                                                         }
-
+                                                        hour.status = $("#editCalendarConfirm").attr('status');
                                                         hour.price = $("#editCalendarPrice").val();
                                                         $('#calendar').fullCalendar('updateEvent', hour);
                                                         $("#editCalendar").modal('hide');
@@ -466,6 +466,7 @@
                                                 var hour = $("#calendar").fullCalendar('clientEvents', $("#editCalendar").attr('event-id'))[0];
                                                 hour.className = 'fa fa-circle';
                                                 hour.price = $("#editCalendarPrice").val();
+                                                hour.status = $("#editCalendarConfirm").attr('status');
                                                 $('#calendar').fullCalendar('updateEvent', hour);
                                                 $("#editCalendar").modal('hide');
                                             }
@@ -497,6 +498,7 @@
                                 var hour = $("#calendar").fullCalendar('clientEvents', $("#editCalendar").attr('event-id'))[0];
                                 hour.className = 'fa fa-circle';
                                 hour.price = $("#editCalendarPrice").val();
+                                hour.status = $("#editCalendarConfirm").attr('status');
                                 $('#calendar').fullCalendar('updateEvent', hour);
                                 $("#editCalendar").modal('hide');
                             }
@@ -546,6 +548,7 @@
                             hour.textColor = '#FFFFFF';
                             hour.className = 'fa fa-money';
                             hour.price = $("#editCalendarPrice").val();
+                            hour.status = $("#editCalendarConfirm").attr('status');
                             $('#calendar').fullCalendar('updateEvent', hour);
                             $("#editCalendar").modal('hide');
                         }

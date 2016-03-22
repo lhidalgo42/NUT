@@ -21,7 +21,8 @@ class FinanceController extends \BaseController {
 	 */
 	public function income()
 	{
-		return View::make('finance.income');
+		$payments = Payment::join('schedule','schedule.payments_id','=','payments.id')->join('patients','patients.id','=','schedule.patients_id')->where('schedule.status',3)->select('patients.name','patients.id','payments.mount','schedule.end')->get();
+		return View::make('finance.income')->with(compact('payments'));
 	}
 
 	/**
