@@ -123,7 +123,7 @@
                 $("#bg").attr('src','/img/'+fondos[ahs]).removeClass('fadebgout-1').addClass('fadebgin-1');
             },1000);
             ahs++;
-        },900000);
+        },9000);
     });
 </script>
 @yield('content')
