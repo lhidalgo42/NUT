@@ -35,6 +35,7 @@ Route::group(array('before' => 'auth'), function() {
     Route::get('/room/list','RoomsController@show');
     Route::get('/print/room/{time}','RoomsController@printer');
     Route::get('/therapists/config','TherapistsController@configDuracion');
+    Route::get('/therapist/{id}','TherapistsController@info');
 
     Route::get('/finance','FinanceController@index');
     Route::get('/finance/income','FinanceController@income');

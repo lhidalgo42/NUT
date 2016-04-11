@@ -21,6 +21,7 @@ class CreateTherapistsTable extends Migration {
             $table->string('phone');
             $table->string('cellphone');
             $table->string('email');
+			$table->integer('percentage')->default('10');
             $table->integer('colors_id')->default('1');
 			$table->integer('users_id');
 			$table->timestamps();

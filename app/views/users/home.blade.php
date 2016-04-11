@@ -225,6 +225,10 @@
                             </td>
                         </tr>
                         <tr>
+                            <td><strong>Numero de Boleta</strong></td>
+                            <td><input type="text" id="editCalendarTicketNumber" class="form-control"></td>
+                        </tr>
+                        <tr>
                             <td><strong>Precio</strong></td>
                             <td><input type="text" class="form-control" id="editCalendarPrice"></td>
                         </tr>
@@ -367,41 +371,49 @@
                                 sweetAlert("Oops...", "El tipo de Pago no Puede Ser Pendiente", "warning");
                             else {
                                 if($("#editCalendarPaymentType").val() == 2 || $("#editCalendarPaymentType").val() == 1){
-                                    $.ajax({
-                                        url: '/schedule/confirm',
-                                        type: 'POST',
-                                        data: {
-                                            schedule_id: $("#editCalendarConfirm").attr('schedule_id'),
-                                            payment_id: $("#editCalendarConfirm").attr('payment_id'),
-                                            start: start,
-                                            end: end,
-                                            price: $("#editCalendarPrice").val(),
-                                            payType: $("#editCalendarPaymentType").val(),
-                                            transactionNumber: $("#editCalendarTransactionNumber").val(),
-                                            checkNumber: $("#editCalendarCheckNumber").val(),
-                                            paymentDate: payment,
-                                            bank: $("#editCalendarBanks").val(),
-                                            status: $("#editCalendarConfirm").attr('status')
-                                        },
-                                        success: function () {
-                                            var hour = $("#calendar").fullCalendar('clientEvents', $("#editCalendar").attr('event-id'))[0];
-                                            if($("#editCalendarConfirm").attr('status') == 3){
-                                                hour.className = 'fa fa-check-square';
+                                    if($("#editCalendarTicketNumber").val() != ""){
+                                        $.ajax({
+                                            url: '/schedule/confirm',
+                                            type: 'POST',
+                                            data: {
+                                                schedule_id: $("#editCalendarConfirm").attr('schedule_id'),
+                                                payment_id: $("#editCalendarConfirm").attr('payment_id'),
+                                                start: start,
+                                                end: end,
+                                                ticket:$("#editCalendarTicketNumber").val(),
+                                                price: $("#editCalendarPrice").val(),
+                                                payType: $("#editCalendarPaymentType").val(),
+                                                transactionNumber: $("#editCalendarTransactionNumber").val(),
+                                                checkNumber: $("#editCalendarCheckNumber").val(),
+                                                paymentDate: payment,
+                                                bank: $("#editCalendarBanks").val(),
+                                                status: $("#editCalendarConfirm").attr('status')
+                                            },
+                                            success: function () {
+                                                var hour = $("#calendar").fullCalendar('clientEvents', $("#editCalendar").attr('event-id'))[0];
+                                                if($("#editCalendarConfirm").attr('status') == 3){
+                                                    hour.className = 'fa fa-check-square';
+                                                }
+                                                if($("#editCalendarConfirm").attr('status') == 1) {
+                                                    hour.className = 'fa fa-circle';
+                                                }
+                                                hour.status = $("#editCalendarConfirm").attr('status');
+                                                hour.price = $("#editCalendarPrice").val();
+                                                $('#calendar').fullCalendar('updateEvent', hour);
+                                                $("#editCalendar").modal('hide');
                                             }
-                                            if($("#editCalendarConfirm").attr('status') == 1) {
-                                                hour.className = 'fa fa-circle';
-                                            }
-                                            hour.status = $("#editCalendarConfirm").attr('status');
-                                            hour.price = $("#editCalendarPrice").val();
-                                            $('#calendar').fullCalendar('updateEvent', hour);
-                                            $("#editCalendar").modal('hide');
-                                        }
-                                    });
+                                        });
+                                    }
+                                    else{
+                                        sweetAlert("Oops...", "El numero de Boleta no puede se vacio", "warning");
+                                    }
+
                                 }
                                 if($("#editCalendarPaymentType").val() == 3){
                                     if($("#editCalendarCheckNumber").val() != 0 && $("#editCalendarCheckNumber").val() != ''){
                                         if($("#editCalendarPaymentDate").val() != ''){
                                             if($("#editCalendarBanks").val() != 0){
+                                                if($("#editCalendarTicketNumber").val() != ""){
                                                 $.ajax({
                                                     url: '/schedule/confirm',
                                                     type: 'POST',
@@ -410,6 +422,7 @@
                                                         payment_id: $("#editCalendarConfirm").attr('payment_id'),
                                                         start: start,
                                                         end: end,
+                                                        ticket:$("#editCalendarTicketNumber").val(),
                                                         price: $("#editCalendarPrice").val(),
                                                         payType: $("#editCalendarPaymentType").val(),
                                                         transactionNumber: $("#editCalendarTransactionNumber").val(),
@@ -432,10 +445,13 @@
                                                         $("#editCalendar").modal('hide');
                                                     }
                                                 });
+                                                }
+                                                else{
+                                                    sweetAlert("Oops...", "El numero de Boleta no puede se vacio", "warning");
+                                                }
                                             }else{
                                                 sweetAlert("Oops...", "Falta Completar el Banco", "warning");
                                             }
-
                                         }else{
                                             sweetAlert("Oops...", "Falta Completar la Fecha de Vencimiento", "warning");
                                         }
@@ -454,6 +470,7 @@
                                                 payment_id: $("#editCalendarConfirm").attr('payment_id'),
                                                 start: start,
                                                 end: end,
+                                                ticket:$("#editCalendarTicketNumber").val(),
                                                 price: $("#editCalendarPrice").val(),
                                                 payType: $("#editCalendarPaymentType").val(),
                                                 transactionNumber: $("#editCalendarTransactionNumber").val(),
@@ -464,8 +481,7 @@
                                             },
                                             success: function () {
                                                 var hour = $("#calendar").fullCalendar('clientEvents', $("#editCalendar").attr('event-id'))[0];
-                                                hour.className = 'fa fa-circle';
-                                                hour.price = $("#editCalendarPrice").val();
+                                                    hour.className = 'fa fa-check-square';
                                                 hour.status = $("#editCalendarConfirm").attr('status');
                                                 $('#calendar').fullCalendar('updateEvent', hour);
                                                 $("#editCalendar").modal('hide');
@@ -486,6 +502,7 @@
                                 payment_id: $("#editCalendarConfirm").attr('payment_id'),
                                 start:start,
                                 end: end,
+                                ticket:$("#editCalendarTicketNumber").val(),
                                 price:$("#editCalendarPrice").val(),
                                 payType:$("#editCalendarPaymentType").val(),
                                 transactionNumber: $("#editCalendarTransactionNumber").val(),
@@ -533,6 +550,7 @@
                             payment_id: $("#editCalendarConfirm").attr('payment_id'),
                             start:start,
                             end: end,
+                            ticket:$("#editCalendarTicketNumber").val(),
                             price:$("#editCalendarPrice").val(),
                             payType:$("#editCalendarPaymentType").val(),
                             transactionNumber: $("#editCalendarTransactionNumber").val(),

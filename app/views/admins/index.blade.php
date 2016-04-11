@@ -26,8 +26,9 @@
                     </h2>
                     <div class="col-md-12">
                         <span class="col-md-3"><h3>Nombre</h3></span>
-                        <span class="col-md-3"><h3>Acceso</h3></span>
+                        <span class="col-md-2"><h3>Acceso</h3></span>
                         <span class="col-md-3"><h3>Color</h3></span>
+                        <span class="col-md-3 col-md-offset-1"><h3>Porcentaje Comisión</h3></span>
                         <!-- <h3>Contraseña</h3></span> -->
                     </div>
                     @foreach($therapists as $therapist)
@@ -35,7 +36,7 @@
                             <div class="col-md-3">
                                 <strong>{{$therapist->name}}</strong>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
 
                                 <div class="btn-group" role="group" aria-label="...">
                                     <button type="button" access="0" therapist-id="{{$therapist->id}}"
@@ -51,8 +52,8 @@
                             <div class="col-md-3">
                                 {{Form::select('color', $colorLists, $therapist->colors_id ,array('class' => 'form-control color','therapist-id' => $therapist->id)) }}
                             </div>
-                            <div class="col-md-3">
-
+                            <div class="col-md-3 col-md-offset-1">
+                                <input type="number" class="form-control" therapist-id ="{{$therapist->id}}" value="{{$therapist->percentage}}">
                             </div>
                         </div>
 

@@ -59,8 +59,11 @@ class FinanceController extends \BaseController {
 	 */
 	public function patients()
 	{
-		$payments = Payment::join('schedule','schedule.payments_id','=','payments.id')->join('patients','patients.id','=','schedule.patients_id')->where('schedule.status',2)->select('patients.name','patients.id','payments.mount','schedule.end')->get();
-		return View::make('finance.patients')->with(compact('payments'));
+		$banks = Bank::all();
+		$durations = Duration::all();
+		$paymentTypes = PaymentType::all();
+		$payments = Payment::join('schedule','schedule.payments_id','=','payments.id')->join('therapists','therapists.id','=','schedule.therapists_id')->join('patients','patients.id','=','schedule.patients_id')->where('schedule.status',2)->select('patients.name as patient','patients.id as patient_id','therapists.id as therapist_id','therapists.name as therapist','payments.mount','schedule.end')->get();
+		return View::make('finance.patients')->with(compact('payments','banks','durations','paymentTypes'));
 	}
 
 	/**

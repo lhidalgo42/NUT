@@ -197,5 +197,8 @@ class TherapistsController extends \BaseController {
             echo 0;
         }
     }
+    public function info($id){
+
+    }
 
 }
