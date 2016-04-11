@@ -113,7 +113,7 @@
                         if (Rut($("#rut").val())) {
                             if ($("#name").val() != '') {
                                 if ($("#phone").val() != '' || $("#cellphone").val() != '') {
-                                    if (true) {
+                                    if (validaPatient($("#rut").val())) {
                                         $.ajax({
                                             url: "/patient/create",
                                             type: "POST",

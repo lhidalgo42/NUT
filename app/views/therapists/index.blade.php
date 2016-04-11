@@ -116,43 +116,48 @@
                         if (Rut($("#rut").val())) {
                             if ($("#name").val() != '') {
                                 if ($("#phone").val() != '' || $("#cellphone").val() != '') {
-                                    if (validaTerapist($("#rut").val())) {
-                                        $.ajax({
-                                            url: "/therapist/create",
-                                            type: "POST",
-                                            data: {
-                                                rut: $("#rut").val(),
-                                                name: $("#name").val(),
-                                                birth: $("#birth").val(),
-                                                phone: $("#phone").val(),
-                                                cellphone: $("#cellphone").val(),
-                                                email: $("#email").val()
-                                            },
-                                            success: function (data) {
-                                                table.row.add([
-                                                    data.rut,
-                                                    data.name,
-                                                    data.birth,
-                                                    data.phone,
-                                                    data.cellphone,
-                                                    data.email,
-                                                    '<a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" therapist-id="' + data.id + '"></i></a>',
-                                                    '<a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" therapist-id="' + data.id + '"></i></a>'
-                                                ]).draw();
-                                                $("#dataModal").modal('hide');
-                                                $("#dataTitle").html('Terapeuta Agregar/Editar');
-                                                $("#id").val('');
-                                                $("#rut").val('');
-                                                $("#name").val('');
-                                                $("#birth").val('');
-                                                $("#phone").val('');
-                                                $("#cellphone").val('');
-                                                $("#email").val('');
-                                            }
-                                        });
+                                    if ($("#email").val() != '') {
+                                        if (validaTerapist($("#rut").val())) {
+                                            $.ajax({
+                                                url: "/therapist/create",
+                                                type: "POST",
+                                                data: {
+                                                    rut: $("#rut").val(),
+                                                    name: $("#name").val(),
+                                                    birth: $("#birth").val(),
+                                                    phone: $("#phone").val(),
+                                                    cellphone: $("#cellphone").val(),
+                                                    email: $("#email").val()
+                                                },
+                                                success: function (data) {
+                                                    table.row.add([
+                                                        data.rut,
+                                                        data.name,
+                                                        data.birth,
+                                                        data.phone,
+                                                        data.cellphone,
+                                                        data.email,
+                                                        '<a href="#" class="text-info"><i class="fa fa-pencil-square-o fa-2x" style="margin-left: 20px;" therapist-id="' + data.id + '"></i></a>',
+                                                        '<a href="#" class="text-danger"><i class="fa fa-trash-o fa-2x" style="margin-left: 20px;" therapist-id="' + data.id + '"></i></a>'
+                                                    ]).draw();
+                                                    $("#dataModal").modal('hide');
+                                                    $("#dataTitle").html('Terapeuta Agregar/Editar');
+                                                    $("#id").val('');
+                                                    $("#rut").val('');
+                                                    $("#name").val('');
+                                                    $("#birth").val('');
+                                                    $("#phone").val('');
+                                                    $("#cellphone").val('');
+                                                    $("#email").val('');
+                                                }
+                                            });
+                                        } else {
+                                            sweetAlert("Oops...", "El Paciente ya Existe en la Base de Datos", "warning");
+                                        }
                                     } else {
-                                        sweetAlert("Oops...", "El Paciente ya Existe en la Base de Datos", "warning");
+                                        sweetAlert("Oops...", "El Correo no Puede Ser Vacio", "warning");
                                     }
+
                                 } else {
                                     sweetAlert("Oops...", "El Telefono es un Dato Obligatorio", "warning");
                                 }

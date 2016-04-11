@@ -54,27 +54,36 @@ function Rut(Valor) {
     }
 }
 function validaPatient(rut) {
-   /* var data = false;
-    $.ajax({
-        url: '/patient/exist',
-        type: 'POST',
-        data: {rut: rut},
-        success: function (response) {
-            data = response;
+    var rut2;
+    var bloob = true;
+    var table = $('#dtes').DataTable();
+    rut = rut.split(".").join("").split("-").join("").split(",").join("");
+    console.log('rut : '+rut);
+    table.data().each( function (d) {
+        rut2 = d[0].split(".").join("").split("-").join("").split(",").join("");
+        if(rut2 != "") {
+            if (rut == rut2) {
+                bloob = false;
+            }
         }
-
     });
-    return data; */
+    return bloob;
 }
 
+
 function validaTerapist(rut) {
-   /* var data = false;
-    $.ajax({
-        url: '/patient/exist',
-        type: 'POST',
-        success: function (response) {
-            data = response;
+    var rut2;
+    var bloob = true;
+    var table = $('#dtes').DataTable();
+    rut = rut.split(".").join("").split("-").join("").split(",").join("");
+    console.log('rut : '+rut);
+    table.data().each( function (d) {
+        rut2 = d[0].split(".").join("").split("-").join("").split(",").join("");
+        if(rut2 != "") {
+            if (rut == rut2) {
+                bloob = false;
+            }
         }
     });
-    return data; */
+    return bloob;
 }
